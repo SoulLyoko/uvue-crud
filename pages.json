@@ -1,0 +1,26 @@
+{
+	"easycom": {
+		// 下载安装的方式需要前面的"@/"，npm安装的方式无需"@/"
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue",
+		"^uvue-(.*)": "@/uvue/components/uvue-$1/index.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/list/list",
+			"style": {
+				"navigationBarTitleText": "uvue-list"
+			}
+		}, {
+			"path": "pages/form/form",
+			"style": {
+				"navigationBarTitleText": "uvue-form"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}
