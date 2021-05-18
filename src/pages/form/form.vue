@@ -1,6 +1,6 @@
 <template>
   <view>
-    <uvue-form v-model="data" :option="option" @submit="handleSubmit"></uvue-form>
+    <uvue-form v-model="formData" :option="option" @submit="handleSubmit"></uvue-form>
   </view>
 </template>
 
@@ -20,12 +20,12 @@ export default {
           }
         ]
       },
-      data: {}
+      formData: {}
     };
   },
   onLoad(options) {
     if (options.formType === "edit") {
-      this.data = options.formData ? JSON.parse(decodeURIComponent(options.formData)) : {};
+      this.formData = options.formData ? JSON.parse(decodeURIComponent(options.formData)) : {};
     }
   },
   methods: {
@@ -35,5 +35,3 @@ export default {
   }
 };
 </script>
-
-<style></style>

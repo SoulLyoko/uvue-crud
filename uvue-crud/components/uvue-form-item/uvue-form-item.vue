@@ -99,6 +99,7 @@ export default {
       const find = dictData.find(dict => dict.value === value) || {};
       return find.label || "";
     },
+    // 已选择action的label
     actionLabel() {
       const { dictData, value } = this.$attrs;
       const find = dictData.find(dict => dict.value === value) || {};

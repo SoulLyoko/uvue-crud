@@ -4,11 +4,11 @@
 
     <u-search
       placeholder="请输入关键字"
-      :action-text="listOption.addBtnText"
+      :action-text="listOption.actionBtnText"
       :value="searchKey"
-      :show-action="listOption.addBtn"
+      :show-action="listOption.actionBtn"
       @search="$emit('search', $event)"
-      @custom="rowAdd"
+      @custom="actionBtnClick"
       @input="$emit('update:searchKey', $event)"
       v-show="listOption.search"
     ></u-search>
@@ -21,7 +21,7 @@
         :key="listOption.rowKey ? row[listOption.rowKey] : index"
         :arrow="false"
         :use-label-slot="false"
-        @click="rowEdit(row)"
+        @click="itemClick(row, index)"
       >
         <template slot="title">
           <slot name="title" :row="row" :index="index"></slot>
@@ -51,26 +51,11 @@ import { defaultOption } from "./option";
 export default {
   name: "uvue-list",
   props: {
-    option: {
-      type: Object,
-      default: () => ({})
-    },
-    data: {
-      type: Array,
-      default: () => []
-    },
-    searchKey: {
-      type: String,
-      default: ""
-    },
-    status: {
-      type: String,
-      default: "nomore"
-    },
-    scrollTop: {
-      type: Number,
-      default: 0
-    }
+    option: { type: Object, default: () => ({}) },
+    data: { type: Array, default: () => [] },
+    searchKey: { type: String, default: "" },
+    status: { type: String, default: "nomore" },
+    scrollTop: { type: Number, default: 0 }
   },
   data() {
     return {
@@ -90,19 +75,28 @@ export default {
     }
   },
   methods: {
+    actionBtnClick() {
+      this.$emit("action-click");
+      this.rowAdd();
+    },
+    itemClick(row, index) {
+      this.$emit("item-click", row, index);
+      this.rowEdit(row);
+    },
     rowAdd() {
-      const { formPath } = this.listOption;
-      if (!formPath) return;
+      const { formPath, addForm } = this.listOption;
+      if (formPath && addForm) return;
       uni.navigateTo({
         url: formPath + "?formType=add"
       });
     },
     rowEdit(row) {
-      const { formPath } = this.listOption;
-      if (!formPath) return;
-      uni.navigateTo({
-        url: `${formPath}?formType=edit&&formData=${encodeURIComponent(JSON.stringify(row))}`
-      });
+      const { formPath, editForm } = this.listOption;
+      if (formPath && editForm) {
+        uni.navigateTo({
+          url: `${formPath}?formType=edit&formData=${encodeURIComponent(JSON.stringify(row))}`
+        });
+      }
     }
   }
 };

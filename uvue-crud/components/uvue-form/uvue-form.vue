@@ -13,6 +13,7 @@
           :dictData="formDict[item.prop]"
           v-if="$scopedSlots.formItem"
         ></slot>
+        <!-- 兼容app -->
 
         <slot
           :name="item.prop"
@@ -59,14 +60,8 @@ import { defaultOption, defaultDictOption } from "./option";
 export default {
   name: "uvue-form",
   props: {
-    value: {
-      type: Object,
-      default: () => ({})
-    },
-    option: {
-      type: Object,
-      default: () => ({})
-    }
+    value: { type: Object, default: () => ({}) },
+    option: { type: Object, default: () => ({}) }
   },
   data() {
     return {

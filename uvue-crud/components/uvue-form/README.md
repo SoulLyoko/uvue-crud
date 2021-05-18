@@ -32,8 +32,8 @@
               prop: "sex",
               type: "action",
               dictData: [
-                { label: "男", text: "男", value: "1" },
-                { label: "女", text: "女", value: "0" }
+                { label: "男", value: "1" },
+                { label: "女", value: "0" }
               ]
             }
           ]
@@ -116,9 +116,11 @@
 
 ## Methods
 
-| 方法名     | 说明     | 参数 |
-| ---------- | -------- | ---- |
-| formSubmit | 表单提交 | -    |
+| 方法名      | 说明     | 参数                                  |
+| ----------- | -------- | ------------------------------------- |
+| formSubmit  | 提交表单 | -                                     |
+| resetFields | 清空表单 | -                                     |
+| validate    | 校验表单 | Function(callback: Function(boolean)) |
 
 ## Slots
 

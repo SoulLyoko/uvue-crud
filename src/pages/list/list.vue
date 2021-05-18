@@ -1,6 +1,6 @@
 <template>
   <view>
-    <uvue-list :option="option" :data="data">
+    <uvue-list :option="option" :data="listData">
       <template #searchTop>
         <view>slot:searchTop</view>
       </template>
@@ -30,7 +30,7 @@ export default {
       option: {
         formPath: "/pages/form/form"
       },
-      data: [
+      listData: [
         {
           title: "title1",
           content: "content1",
@@ -51,5 +51,3 @@ export default {
   }
 };
 </script>
-
-<style></style>
