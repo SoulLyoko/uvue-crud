@@ -6,9 +6,9 @@
 
 ```html
 <template>
-  <v-container>
+  <view>
     <uvue-form v-model="formData" :option="formOption" @submit="handleSubmit"></uvue-form>
-  </v-container>
+  </view>
 </template>
 
 <script>
