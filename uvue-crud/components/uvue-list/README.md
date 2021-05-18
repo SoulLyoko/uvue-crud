@@ -1,24 +1,73 @@
 # uvue-list 列表组件
 
+## 使用示例
+
+```html
+<template>
+  <view>
+    <uvue-list :option="option" :data="data">
+      <template #title="{ row }">
+        <view>{{ row.title }}</view>
+      </template>
+      <template #content="{ row }">
+        <view>{{ row.content }}</view>
+      </template>
+      <template #right="{ row }">
+        <view>{{ row.time }}</view>
+      </template>
+    </uvue-list>
+  </view>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        option: {
+          formPath: "/pages/form/form"
+        },
+        data: [
+          {
+            title: "title1",
+            content: "content1",
+            time: new Date().toLocaleDateString()
+          },
+          {
+            title: "title2",
+            content: "content2",
+            time: new Date().toLocaleDateString()
+          },
+          {
+            title: "title3",
+            content: "content3",
+            time: new Date().toLocaleDateString()
+          }
+        ]
+      };
+    }
+  };
+</script>
+```
+
 ## Props
 
-| 参数		| 说明											| 类型					| 可选值					| 默认值	|
-| ---------	| ----------------------------------------------| ---------------------	| ----------------			| --------	|
-| option	| 列表配置，见下方说明							| object				| -							| -			|
-| data		| 列表数据										| array					| -							| -			|
-| searchKey	| 默认搜索绑定的字段							| string/number/boolean	| -							| -			|
-| status	| 加载状态										| string				| loadmore / loading / nomore	| loadmore	|
-| scrollTop	| 页面的滚动距离，通过 onPageScroll 生命周期获取| string/number			| -							| 0			|
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| option | 列表配置，见下方说明 | object | - | - |
+| data | 列表数据 | array | - | - |
+| searchKey | 默认搜索绑定的字段 | string/number/boolean | - | - |
+| status | 加载状态 | string | loadmore / loading / nomore | loadmore |
+| scrollTop | 页面的滚动距离，通过 onPageScroll 生命周期获取 | string/number | - | 0 |
 
 ## Option
 
-| 参数		| 说明											| 类型		| 可选值	| 默认值|
-| ----------| --------------------------------------------	| -------	| ----------| ------|
-| rowKey	| 每条数据的唯一键								| string	| -			| -		|
-| formPath	| 跳转到表单页的路径，需要先在 pages.json 注册	| string	| -			| -		|
-| addBtn	| 是否显示新增按钮								| boolean	| true/false| true	|
-| addBtnText| 新增按钮文字									| string	| -			| 新增	|
-| search	| 是否显示搜索栏								| boolean	| true/false| true	|
+| 参数       | 说明                                         | 类型    | 可选值     | 默认值 |
+| ---------- | -------------------------------------------- | ------- | ---------- | ------ |
+| rowKey     | 每条数据的唯一键                             | string  | -          | -      |
+| formPath   | 跳转到表单页的路径，需要先在 pages.json 注册 | string  | -          | -      |
+| addBtn     | 是否显示新增按钮                             | boolean | true/false | true   |
+| addBtnText | 新增按钮文字                                 | string  | -          | 新增   |
+| search     | 是否显示搜索栏                               | boolean | true/false | true   |
 
 ## Events
 
@@ -36,8 +85,11 @@
 
 ## Slots
 
-| name    | 说明     | 参数        |
-| ------- | -------- | ----------- |
-| title   | 上方标题 | {row,index} |
-| content | 下方内容 | {row,index} |
-| right   | 右方内容 | {row,index} |
+| name       | 说明       | 参数        |
+| ---------- | ---------- | ----------- |
+| title      | 上方标题   | {row,index} |
+| content    | 下方内容   | {row,index} |
+| right      | 右方内容   | {row,index} |
+| searchTop  | 搜索栏上方 |             |
+| listTop    | 列表上方   |             |
+| listBottom | 列表下方   |             |
