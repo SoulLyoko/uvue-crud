@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: "/uvue-crud/"
+  publicPath: "/uvue-crud/build/h5/"
 };

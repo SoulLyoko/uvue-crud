@@ -10,9 +10,5 @@ module.exports = {
   parserOptions: {
     parser: "babel-eslint"
   },
-  rules: {
-    "no-console": 1,
-    "no-debugger": 1,
-    "no-unused-vars": 1
-  }
+  rules: {}
 };

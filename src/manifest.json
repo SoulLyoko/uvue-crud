@@ -75,7 +75,7 @@
   },
   "h5": {
     "router": {
-      "base": "/uvue-crud/"
+      "base": "/uvue-crud/build/h5/"
     }
   }
 }
