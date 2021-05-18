@@ -1,6 +1,6 @@
-import uvueList from "./components/uvue-list/index.vue";
-import uvueForm from "./components/uvue-form/index.vue";
-import uvueFormItem from "./components/uvue-form-item/index.vue";
+import uvueList from "./components/uvue-list/uvue-list.vue";
+import uvueForm from "./components/uvue-form/uvue-form.vue";
+import uvueFormItem from "./components/uvue-form-item/uvue-form-item.vue";
 
 const components = [uvueList, uvueForm, uvueFormItem];
 

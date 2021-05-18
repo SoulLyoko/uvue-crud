@@ -2,7 +2,7 @@
   "easycom": {
     // 下载安装的方式需要前面的"@/"，npm安装的方式无需"@/"
     "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue",
-    "^uvue-(.*)": "@/../uvue-crud/components/uvue-$1/index.vue"
+    "^uvue-(.*)": "@/../uvue-crud/components/uvue-$1/uvue-$1.vue"
   },
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
