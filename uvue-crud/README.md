@@ -1,8 +1,8 @@
 # uvue-crud
 
-- 基于 uni-app 和 uview 封装的 crud 组件，
+- 基于 uni-app 和 uview 封装的 crud 组件
 - 以配置的方式渲染列表和表单，实现一次配置，多处复用
-- 包含 uvue-list 组件、uvue-form 表单组件 和 uvue-form-item 表单项组件
+- 包含 uvue-list 列表组件、uvue-form 表单组件 和 uvue-form-item 表单项组件
 
 - [示例](https://soullyoko.github.io/uvue-crud/build/h5)
 - [uvue-list 文档](https://github.com/SoulLyoko/uvue-crud/blob/master/uvue-crud/components/uvue-list/README.md)
@@ -13,20 +13,20 @@
 ## npm/yarn 安装方式
 
 ```
-npm i uvue uvue-crud
+npm i uvue-crud
 or
-yarn add uvue uvue-crud
+yarn add uvue-crud
 ```
 
 ## 下载安装方式
 
-[https://ext.dcloud.net.cn/plugin?id=1593](https://ext.dcloud.net.cn/plugin?id=1593)
+[https://ext.dcloud.net.cn/plugin?id=5071](https://ext.dcloud.net.cn/plugin?id=5071)
 
 # 快速上手
 
 ## 引入 uview
 
-由于组件库依赖于 uview，所以需要先引入 uview，[uview 安装方式](https://www.uviewui.com/components/setting.html)
+由于组件库依赖于 uview，所以需要先引入 uview，[安装 uview](https://www.uviewui.com/components/setting.html)
 
 ## 注册组件
 
