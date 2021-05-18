@@ -1,13 +1,13 @@
 {
-	"name": "uvue-crud",
-	"version": "1.0.0",
-	"description": "uvue-crud",
-	"author": "Lyoko",
-	"license": "MIT",
-	"main": "index.js",
-	"keywords": [
-		"vue",
-		"uni-app",
-		"uvue"
-	]
+  "name": "uvue-crud",
+  "version": "1.0.1",
+  "description": "uvue-crud",
+  "author": "Lyoko",
+  "license": "MIT",
+  "main": "index.js",
+  "keywords": [
+    "vue",
+    "uni-app",
+    "uvue"
+  ]
 }

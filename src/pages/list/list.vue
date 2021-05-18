@@ -48,9 +48,7 @@ export default {
         }
       ]
     };
-  },
-  onLoad() {},
-  methods: {}
+  }
 };
 </script>
 
