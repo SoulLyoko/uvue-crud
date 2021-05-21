@@ -12,7 +12,7 @@
       <template #body="{ row }">
         <u-row gutter="20" align="top">
           <u-col span="4">
-            <img src="/img/waimai.png" width="100%" />
+            <img :src="row.img" width="100%" />
           </u-col>
           <u-col span="8">
             <view>

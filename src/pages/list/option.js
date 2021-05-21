@@ -92,7 +92,7 @@ export const listData = [
   {
     id: 1,
     title: "XXX过桥米线",
-    img: "/uvue-crud/build/h5/img/waimai.png",
+    img: "/uvue-crud/build/h5/static/waimai.png",
     category: "米粉面馆",
     send: 20,
     fee: 1,
@@ -106,7 +106,7 @@ export const listData = [
   {
     id: 2,
     title: "XXX柠檬茶",
-    img: "/uvue-crud/build/h5/img/waimai.png",
+    img: "/uvue-crud/build/h5/static/waimai.png",
     category: "奶茶果汁",
     send: 25,
     fee: 0,
@@ -120,7 +120,7 @@ export const listData = [
   {
     id: 3,
     title: "XX酸菜鱼",
-    img: "/uvue-crud/build/h5/img/waimai.png",
+    img: "/uvue-crud/build/h5/static/waimai.png",
     category: "快餐便当",
     send: 15,
     fee: 0.5,
