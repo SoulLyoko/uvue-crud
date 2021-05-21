@@ -5,15 +5,12 @@
 ```html
 <template>
   <view>
-    <uvue-list :option="option" :data="data">
-      <template #title="{ row }">
-        <view>{{ row.title }}</view>
-      </template>
-      <template #content="{ row }">
+    <uvue-list :option="option" :data="listData">
+      <template #body="{ row }">
         <view>{{ row.content }}</view>
       </template>
-      <template #right="{ row }">
-        <view>{{ row.time }}</view>
+      <template #foot="{ row }">
+        <view>{{ row.footer }}</view>
       </template>
     </uvue-list>
   </view>
@@ -29,18 +26,15 @@
         data: [
           {
             title: "title1",
+            subTitle: new Date().toLocaleDateString(),
             content: "content1",
-            time: new Date().toLocaleDateString()
+            footer: "footer1"
           },
           {
             title: "title2",
+            subTitle: new Date().toLocaleDateString(),
             content: "content2",
-            time: new Date().toLocaleDateString()
-          },
-          {
-            title: "title3",
-            content: "content3",
-            time: new Date().toLocaleDateString()
+            footer: "footer2"
           }
         ]
       };
@@ -53,48 +47,115 @@
 
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | --- | --- | --- | --- | --- |
-| option | 列表配置，见下方说明 | object | - | - |
-| data | 列表数据 | array | - | - |
-| searchKey | 默认搜索绑定的字段 | string/number/boolean | - | - |
-| status | 加载状态 | string | loadmore / loading / nomore | loadmore |
-| scrollTop | 页面的滚动距离，通过 onPageScroll 生命周期获取，传入该值则表示显示“回到顶部”按钮 | string/number | - | 0 |
+| option | 列表配置，见下方说明 | Object | - | - |
+| search | 搜索栏配置，见下方说明，传入 false 则不显示 | Object/Boolean | - | {} |
+| filter | 筛选栏配置，见下方说明，传入 false 则不显示 | Object/Boolean | - | {} |
+| loadmore | 加载更多配置，见下方说明，传入 false 则不显示 | Object/Boolean | - | {} |
+| data | 列表数据，见下方说明 | Array | - | - |
+| searchValue.sync | 搜索栏绑定值 | String/Number/Boolean | - | - |
+| filterForm.sync | 筛选栏绑定值 | Object | - | - |
+| status | 加载状态 | String | loadmore / loading / nomore | loadmore |
+| scrollTop | 页面的滚动距离，通过 onPageScroll 生命周期获取，传入该值则表示显示“回到顶部”按钮 | String/Number | - | 0 |
 
 ## Option
 
-| 参数          | 说明                                         | 类型    | 可选值     | 默认值 |
-| ------------- | -------------------------------------------- | ------- | ---------- | ------ |
-| rowKey        | 每条数据的唯一键                             | string  | -          | -      |
-| formPath      | 跳转到表单页的路径，需要先在 pages.json 注册 | string  | -          | -      |
-| addForm       | 是否点击操作按钮时跳转到 form 页面           | boolean | true/false | true   |
-| editForm      | 是否点击列表项时跳转到 form 页面             | boolean | true/false | true   |
-| actionBtn     | 是否显示操作按钮                             | boolean | true/false | true   |
-| actionBtnText | 操作按钮文字                                 | string  | -          | 新增   |
-| search        | 是否显示搜索栏                               | boolean | true/false | true   |
-| loadmore      | 是否显示加载更多                             | boolean | true/false | true   |
+| 参数                | 说明                                                       | 类型    | 可选值     | 默认值 |
+| ------------------- | ---------------------------------------------------------- | ------- | ---------- | ------ |
+| `u-card` 的所有属性 | [官方文档](https://uviewui.com/components/card.html#props) | -       | -          | -      |
+| rowKey              | 每条数据的唯一键                                           | String  | -          | -      |
+| formPath            | 跳转到表单页的路径，需要先在 pages.json 注册               | String  | -          | -      |
+| formKeys            | 跳转到表单携带的参数，以避免 url 过长，默认是整条数据      | Array   | -          | []     |
+| actionBtn           | 是否显示操作按钮                                           | Boolean | true/false | true   |
+| actionBtnText       | 操作按钮文字                                               | String  | -          | 新增   |
+| sticky              | 搜索栏和过滤栏是否吸顶                                     | Boolean | true/false | true   |
+
+## Search
+
+| 参数                  | 说明                                                         | 类型 | 可选值 | 默认值 |
+| --------------------- | ------------------------------------------------------------ | ---- | ------ | ------ |
+| `u-search` 的所有属性 | [官方文档](https://uviewui.com/components/search.html#props) | -    | -      | -      |
+
+## Filter
+
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| `u-dropdown` 的所有属性 | [官方文档](https://uviewui.com/components/dropdown.html#dropdown-props) | - | - | - |
+| title | 过滤项标题 | String | - | - |
+| prop | 过滤项的属性名 | String | - | - |
+| items | 下拉菜单项，即`u-dropdown-item`数组，见下方说明 | Array | - | - |
+
+## Filter-items
+
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| `u-dropdown-item` 的所有属性 | [官方文档](https://uviewui.com/components/dropdown.html#dropdown-item-props) | - | - | - |
+| multiple | 是否多选选项 | Boolean | true/false | - |
+| transform | 多选时是否将数组转为逗号分隔的字符串 | Boolean | true/false | - |
+| cascader | 是否级联选项（仅支持二级） | Boolean | true/false | - |
+
+- 当 cascader:true 时，options 的结构应该如下：
+
+```js
+[
+  {
+    label: "1",
+    value: "1",
+    children: [
+      { label: "1-1", value: "1-1" },
+      { label: "1-2", value: "1-2" }
+    ]
+  },
+  {
+    label: "2",
+    value: "2",
+    children: [
+      { label: "2-1", value: "2-1" },
+      { label: "2-2", value: "2-2" }
+    ]
+  }
+];
+```
+
+## Loadmore
+
+| 参数                    | 说明                                                         | 类型 | 可选值 | 默认值 |
+| ----------------------- | ------------------------------------------------------------ | ---- | ------ | ------ |
+| `u-loadmore` 的所有属性 | [官方文档](https://uviewui.com/components/search.html#props) | -    | -      | -      |
+
+## Data
+
+| 参数                     | 说明                                                    | 类型 | 可选值 | 默认值 |
+| ------------------------ | ------------------------------------------------------- | ---- | ------ | ------ |
+| 支持 `u-card` 的所有属性 | 与`u-card` props 属性相同的字段会覆盖为`u-card`上的属性 | -    | -      | -      |
 
 ## Events
 
-| 事件名       | 说明                                                                 | 参数             |
-| ------------ | -------------------------------------------------------------------- | ---------------- |
-| search       | 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发 | value:输入框的值 |
-| loadmore     | 加载状态 status 为 loadmore 时，点击组件会发出此事件                 |                  |
-| action-click | 操作按钮点击事件                                                     |                  |
-| item-click   | 列表项点击事件                                                       | {row,index}      |
+| 事件名 | 说明 | 参数 |
+| --- | --- | --- |
+| search | 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发 | value:输入框的值 |
+| loadmore | 加载状态 status 为 loadmore 时，点击组件会发出此事件 | - |
+| filter-change | 用户选定筛选栏中的项时触发 | filterForm:筛选栏的值 |
+| action-click | 点击搜索栏的操作按钮时触发，如果 Option 中定义了 formPath 则会调用 rowAdd 方法跳转到表单页 | - |
+| item-click | 列表项卡片任意位置被点击时触发，如果 Option 中定义了 formPath 则会调用 rowEdit 方法跳转到表单页 | {row,index} |
+| head-click | 列表项卡片头部被点击时触发 | {row,index} |
+| body-click | 列表项卡片主体部分被点击时触发 | {row,index} |
+| foot-click | 列表项卡片底部部分被点击时触发 | {row,index} |
 
 ## Methods
 
-| 方法名  | 说明             | 参数       |
-| ------- | ---------------- | ---------- |
-| rowAdd  | 跳转到新增表单页 | -          |
-| rowEdit | 跳转到编辑表单页 | row:行数据 |
+| 方法名 | 说明 | 参数 |
+| --- | --- | --- |
+| rowAdd | 跳转到新增表单页，url：`${formPath}?formType=add` | - |
+| rowEdit | 跳转到编辑表单页，url：`${formPath}?formType=edit&formData=${encodeURIComponent(JSON.Stringify(row))}` | row:行数据 |
 
 ## Slots
 
-| name       | 说明       | 参数        |
-| ---------- | ---------- | ----------- |
-| title      | 上方标题   | {row,index} |
-| content    | 下方内容   | {row,index} |
-| right      | 右方内容   | {row,index} |
-| searchTop  | 搜索栏上方 |             |
-| listTop    | 列表上方   |             |
-| listBottom | 列表下方   |             |
+| name       | 说明                      | 参数        |
+| ---------- | ------------------------- | ----------- |
+| head       | 列表项卡片头部内容        | {row,index} |
+| body       | 列表项卡片主体内容        | {row,index} |
+| foot       | 列表项卡片底部部分内容    | {row,index} |
+| searchTop  | 搜索栏上方                | -           |
+| filterTop  | 筛选栏上方                | -           |
+| listTop    | 列表上方                  | -           |
+| listBottom | 列表下方(loadmore 的下方) | -           |
