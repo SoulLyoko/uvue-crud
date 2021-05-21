@@ -1,53 +1,96 @@
 <template>
   <view>
-    <uvue-list :option="option" :data="listData">
-      <template #searchTop>
-        <view>slot:searchTop</view>
+    <uvue-list
+      :option="option"
+      :data="listData"
+      :searchValue.sync="filterForm.title"
+      @search="handleSearch"
+      :filter="filter"
+      :filterForm.sync="filterForm"
+      @filter-change="filterChange"
+    >
+      <template #body="{ row }">
+        <u-row gutter="20" align="top">
+          <u-col span="4">
+            <img src="/img/waimai.png" width="100%" />
+          </u-col>
+          <u-col span="8">
+            <view>
+              <u-icon name="star-fill"></u-icon><text>{{ row.score }}</text>
+              <text class="u-margin-left-20">月售{{ row.sales }}</text>
+            </view>
+            <view>
+              <text>起送￥{{ row.send }}</text>
+              <text class="u-margin-left-20">配送￥{{ row.fee }}</text>
+            </view>
+            <view>
+              <text>{{ row.speed }}分钟</text>
+              <text class="u-margin-left-20">{{ row.distance }}m</text>
+            </view>
+            <view>
+              <u-tag
+                class="u-margin-right-20"
+                :text="tag"
+                type="warning"
+                size="mini"
+                v-for="tag in row.tags"
+                :key="tag"
+              />
+            </view>
+          </u-col>
+        </u-row>
       </template>
-      <template #listTop>
-        <view>slot:listTop</view>
-      </template>
-      <template #listBottom>
-        <view>slot:listBottom</view>
-      </template>
-      <template #title="{ row }">
-        <view>{{ row.title }}</view>
-      </template>
-      <template #content="{ row }">
-        <view>{{ row.content }}</view>
-      </template>
-      <template #right="{ row }">
-        <view>{{ row.time }}</view>
+      <template #foot="{ row }">
+        <u-tag
+          class="u-margin-right-20"
+          :text="disc"
+          type="error"
+          size="mini"
+          v-for="disc in row.discount"
+          :key="disc"
+        />
       </template>
     </uvue-list>
   </view>
 </template>
 
 <script>
+import { option, filter, listData } from "./option";
+
 export default {
   data() {
     return {
-      option: {
-        formPath: "/pages/form/form"
-      },
-      listData: [
-        {
-          title: "title1",
-          content: "content1",
-          time: new Date().toLocaleDateString()
-        },
-        {
-          title: "title2",
-          content: "content2",
-          time: new Date().toLocaleDateString()
-        },
-        {
-          title: "title3",
-          content: "content3",
-          time: new Date().toLocaleDateString()
-        }
-      ]
+      option,
+      filter,
+      listData,
+      filterForm: {}
     };
+  },
+  methods: {
+    /**
+     * 这里模拟后端数据处理，一般来讲携带参数请求后端接口就可以了
+     */
+    filterChange(e) {
+      this.listData = listData
+        .filter(item => {
+          const condition = [];
+          e.title && condition.push(item.title.includes(e.title));
+          e.speed && condition.push(item.speed <= e.speed);
+          e.tags && e.tags.length && condition.push(e.tags.every(t => item.tags.includes(t)));
+          e.category && condition.push(item.category === e.category);
+          return condition.every(bool => bool);
+        })
+        .sort((a, b) => {
+          if (!e.sort) return 0;
+          if (["speed", "distance"].includes(e.sort)) {
+            return a[e.sort] - b[e.sort];
+          }
+          return b[e.sort] - a[e.sort];
+        });
+    },
+    handleSearch() {
+      this.filterChange(this.filterForm);
+    }
   }
 };
 </script>
