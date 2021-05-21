@@ -76,25 +76,26 @@
 
 | 参数    | 说明                 | 类型   | 可选值 | 默认值 |
 | ------- | -------------------- | ------ | ------ | ------ |
-| v-model | 表单数据对象         | object | -      | -      |
-| option  | 列表配置，见下方说明 | object | -      | -      |
+| v-model | 表单数据对象         | Object | -      | -      |
+| option  | 列表配置，见下方说明 | Object | -      | -      |
 
 ## Option
 
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | --- | --- | --- | --- | --- |
-| `u-form` 的所有属性(除了 `model` 和 `rules`) | [官方文档](https://uviewui.com/components/form.html#form-props) | - | - | - |
-| submitBtn | 是否显示提交按钮 | boolean | - | true |
-| submitBtnText | 提交按钮文字 | string | - | "提交" |
-| column | 表单项配置，见下方说明 | array | - | [] |
+| `u-form` 的所有属性,除了 `model` 和 `rules` | [官方文档](https://uviewui.com/components/form.html#form-props) | - | - | - |
+| submitBtn | 是否显示提交按钮 | Boolean | - | true |
+| submitBtnText | 提交按钮文字 | String | - | "提交" |
+| submitBtnWidth | 提交按钮宽度 | String | - | "100%" |
+| column | 表单项配置，见下方说明 | Array | - | [] |
 
 ## Column
 
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | --- | --- | --- | --- | --- |
-| `u-form-item`所有属性 | [官方文档](https://uviewui.com/components/form.html#form-item-props) | - | - | - |
-| attrs | 默认组件的属性，包含组件：input/select/picker/rate/numberbox /checkbox/radio/switch/slider/action-sheet | Object | 自行查看各组件文档：[官方文档](https://uviewui.com/components/input.html) | - |
-| type | 表单类型 | String | text/password/textarea/number/select/date/time/datetime /rate/numberbox/chekcbox/radio/switch/slider/action | text |
+| `u-form-item` 所有属性 | [官方文档](https://uviewui.com/components/form.html#form-item-props) | - | - | - |
+| attrs | 默认组件的属性，包含组件：input/select/picker/rate/Numberbox /checkbox/radio/switch/slider/action-sheet | Object | 自行查看各组件文档：[官方文档](https://uviewui.com/components/input.html) | - |
+| type | 表单类型 | String | text/password/textarea/Number/select/date/time/datetime /rate/Numberbox/chekcbox/radio/switch/slider/action | text |
 | rules | 表单验证规则 | Array | - | - |
 | dictData | 字典数据 | Array/Function/Promise | - | - |
 | dictOption | 字典配置，见下方说明 | Object | - | - |
@@ -103,10 +104,10 @@
 
 | 参数     | 说明                                 | 类型   | 可选值 | 默认值   |
 | -------- | ------------------------------------ | ------ | ------ | -------- |
-| label    | 字典名称属性值                       | string | -      | label    |
-| value    | 字典值属性值                         | string | -      | value    |
-| children | 子字典属性值                         | string | -      | children |
-| res      | dictData 为 Promise 时返回的数据格式 | string | -      | res.data |
+| label    | 字典名称属性值                       | String | -      | label    |
+| value    | 字典值属性值                         | String | -      | value    |
+| children | 子字典属性值                         | String | -      | children |
+| res      | dictData 为 Promise 时返回的数据格式 | String | -      | res.data |
 
 ## Events
 
@@ -120,14 +121,12 @@
 | ----------- | -------- | ------------------------------------- |
 | formSubmit  | 提交表单 | -                                     |
 | resetFields | 清空表单 | -                                     |
-| validate    | 校验表单 | Function(callback: Function(boolean)) |
+| validate    | 校验表单 | Function(callback: Function(Boolean)) |
 
 ## Slots
 
-- 列名称:即 column 中的 prop
-
 | name         | 说明                       | 参数                                   |
 | ------------ | -------------------------- | -------------------------------------- |
-| 列名称       | 表单项自定义内容           | {row,column,index,label,prop,dictData} |
-| 列名称+Right | 表单项右方自定义内容       | {row,column,index,label,prop,dictData} |
+| 属性名       | 表单项自定义内容           | {row,column,index,label,prop,dictData} |
+| 属性名+Right | 表单项右方自定义内容       | {row,column,index,label,prop,dictData} |
 | formItem     | app 需要自定义表单项时使用 | {row,column,index,label,prop,dictData} |

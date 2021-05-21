@@ -1,8 +1,10 @@
 import uvueList from "./components/uvue-list/uvue-list.vue";
 import uvueForm from "./components/uvue-form/uvue-form.vue";
 import uvueFormItem from "./components/uvue-form-item/uvue-form-item.vue";
+import uvueCascader from "./components/uvue-cascader/uvue-cascader.vue";
+import uvueFilter from "./components/uvue-filter/uvue-filter.vue";
 
-const components = [uvueList, uvueForm, uvueFormItem];
+const components = [uvueList, uvueForm, uvueFormItem, uvueCascader, uvueFilter];
 
 const install = function (Vue) {
   if (install.installed) return;

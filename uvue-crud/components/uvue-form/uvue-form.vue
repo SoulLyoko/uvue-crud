@@ -48,7 +48,14 @@
       </u-form-item>
     </u-form>
 
-    <u-button type="primary" @click="formSubmit" :loading="submitLoading" v-if="formOption.submitBtn">
+    <u-button
+      class="uvue-form-submit"
+      type="primary"
+      @click="formSubmit"
+      :loading="submitLoading"
+      v-if="formOption.submitBtn"
+      :style="{ width: formOption.submitBtnWidth }"
+    >
       {{ formOption.submitBtnText }}
     </u-button>
   </view>
