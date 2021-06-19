@@ -61,15 +61,12 @@ Vue.use(uvueCrud);
 ```html
 <template>
   <view>
-    <uvue-list :option="option" :data="data">
-      <template #title="{ row }">
-        <view>{{ row.title }}</view>
-      </template>
-      <template #content="{ row }">
+    <uvue-list :option="option" :data="listData">
+      <template #body="{ row }">
         <view>{{ row.content }}</view>
       </template>
-      <template #right="{ row }">
-        <view>{{ row.time }}</view>
+      <template #foot="{ row }">
+        <view>{{ row.footer }}</view>
       </template>
     </uvue-list>
   </view>
@@ -85,18 +82,15 @@ Vue.use(uvueCrud);
         data: [
           {
             title: "title1",
+            subTitle: new Date().toLocaleDateString(),
             content: "content1",
-            time: new Date().toLocaleDateString()
+            footer: "footer1"
           },
           {
             title: "title2",
+            subTitle: new Date().toLocaleDateString(),
             content: "content2",
-            time: new Date().toLocaleDateString()
-          },
-          {
-            title: "title3",
-            content: "content3",
-            time: new Date().toLocaleDateString()
+            footer: "footer2"
           }
         ]
       };
