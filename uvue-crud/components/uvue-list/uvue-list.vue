@@ -1,8 +1,8 @@
 <template>
   <view class="uvue-list">
-    <slot name="searchTop"></slot>
-
     <u-sticky offset-top="0" :enable="!!listOption.sticky">
+      <slot name="searchTop"></slot>
+
       <u-search
         class="uvue-search"
         :action-text="listOption.actionBtnText"
@@ -17,7 +17,7 @@
 
       <slot name="filterTop"></slot>
 
-      <uvue-filter ref="uvueFilter" :filter="filter" :filterForm.sync="filterFormData"> </uvue-filter>
+      <uvue-filter ref="uvueFilter" :option="filter" :filterForm.sync="filterFormData"> </uvue-filter>
     </u-sticky>
 
     <slot name="listTop"></slot>
@@ -71,7 +71,7 @@ export default {
     searchValue: { type: String, default: "" },
     filterForm: { type: Object, default: () => ({}) },
     search: { type: [Object, Boolean], default: () => ({}) },
-    filter: { type: [Object, Boolean], default: () => ({ items: [] }) },
+    filter: { type: [Object, Boolean], default: () => ({}) },
     loadmore: { type: [Object, Boolean], default: () => ({}) },
     status: { type: String, default: "nomore" },
     scrollTop: { type: Number, default: 0 }
@@ -103,24 +103,33 @@ export default {
   },
   methods: {
     rowAdd() {
-      const { formPath } = this.listOption;
-      formPath &&
-        uni.navigateTo({
-          url: formPath + "?formType=add"
-        });
+      this.navigateToForm({}, "add");
     },
     rowEdit(row) {
+      this.navigateToForm(row, "edit");
+    },
+    rowView(row) {
+      this.navigateToForm(row, "view");
+    },
+    navigateToForm(row, formType) {
       const { formPath, formKeys } = this.listOption;
-      let formData = {};
-      if (formKeys && formKeys.length) {
-        formKeys.forEach(key => (formData[key] = row[key]));
+      if (formType === "add") {
+        formPath &&
+          uni.navigateTo({
+            url: formPath + "?formType=add"
+          });
       } else {
-        formData = row;
+        let formData = {};
+        if (Array.isArray(formKeys) && formKeys.length) {
+          formKeys.forEach(key => (formData[key] = row[key]));
+        } else {
+          formData = row;
+        }
+        formPath &&
+          uni.navigateTo({
+            url: `${formPath}?formType=${formType}&formData=${encodeURIComponent(JSON.stringify(formData))}`
+          });
       }
-      formPath &&
-        uni.navigateTo({
-          url: `${formPath}?formType=edit&formData=${encodeURIComponent(JSON.stringify(formData))}`
-        });
     },
     actionBtnClick() {
       this.$emit("action-click");

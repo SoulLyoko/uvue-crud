@@ -64,7 +64,7 @@
 ```html
 <uvue-form v-model="formData" :option="formOption" @submit="handleSubmit">
   <template #formItem="{ row, column, prop, dictData }">
-    <uvue-form-item v-bind="column.attrs" v-model="row[prop]" :dictData="dictData">
+    <uvue-form-item v-bind="column" v-model="row[prop]" :dictData="dictData">
       <!-- 自定义的表单项 -->
       <view v-if="prop === 'username'">{{row.username}}</view>
     </uvue-form-item>
@@ -74,10 +74,11 @@
 
 ## Props
 
-| 参数    | 说明                 | 类型   | 可选值 | 默认值 |
-| ------- | -------------------- | ------ | ------ | ------ |
-| v-model | 表单数据对象         | Object | -      | -      |
-| option  | 列表配置，见下方说明 | Object | -      | -      |
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| v-model | 表单数据对象 | Object | - | - |
+| option | 列表配置，见下方说明 | Object | - | - |
+| formType | 表单类型,用于 addDisaplay,editDisplay,viewDisplay,addDisabled,editDisabled 属性的判断 | String | add/edit/view | add |
 
 ## Option
 
@@ -94,11 +95,18 @@
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | --- | --- | --- | --- | --- |
 | `u-form-item` 所有属性 | [官方文档](https://uviewui.com/components/form.html#form-item-props) | - | - | - |
-| attrs | 默认组件的属性，包含组件：input/select/picker/rate/Numberbox /checkbox/radio/switch/slider/action-sheet | Object | 自行查看各组件文档：[官方文档](https://uviewui.com/components/input.html) | - |
+| 默认组件的所有属性 | 自行查看各组件文档：[官方文档](https://uviewui.com/components/input.html) | - | input/select/picker/rate/Numberbox /checkbox/radio/switch/slider/action-sheet | - |
 | type | 表单类型 | String | text/password/textarea/Number/select/date/time/datetime /rate/Numberbox/chekcbox/radio/switch/slider/action | text |
 | rules | 表单验证规则 | Array | - | - |
 | dictData | 字典数据 | Array/Function/Promise | - | - |
 | dictOption | 字典配置，见下方说明 | Object | - | - |
+| display | 显示状态 | Boolean | - | true |
+| addDisplay | 新增模式显示状态 | Boolean | - | true |
+| editDisplay | 编辑模式显示状态 | Boolean | - | true |
+| viewDisplay | 查看模式模式显示状态 | Boolean | - | true |
+| disabled | 禁用状态 | Boolean | - | false |
+| addDisabled | 新增模式禁用状态 | Boolean | - | false |
+| editDisabled | 查看模式禁用状态 | Boolean | - | false |
 
 ## DictOption
 

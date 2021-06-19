@@ -1,6 +1,6 @@
 <template>
   <view style="padding: 20rpx">
-    <uvue-form v-model="formData" :option="option" @submit="handleSubmit"></uvue-form>
+    <uvue-form v-model="formData" :option="option" :formType="formType" @submit="handleSubmit"></uvue-form>
   </view>
 </template>
 
@@ -34,10 +34,12 @@ export default {
           { label: "优惠", prop: "discount" }
         ]
       },
-      formData: {}
+      formData: {},
+      formType: ""
     };
   },
   onLoad(options) {
+    this.formType = options.formType;
     if (options.formType === "edit") {
       const formData = options.formData ? JSON.parse(decodeURIComponent(options.formData)) : {};
       formData.discount = formData.discount?.join(",") ?? "";

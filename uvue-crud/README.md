@@ -2,11 +2,12 @@
 
 - 基于 uni-app 和 uview 封装的 crud 组件
 - 以配置的方式渲染列表和表单，实现一次配置，多处复用
-- 包含 uvue-list 列表组件、uvue-form 表单组件 和 uvue-form-item 表单项组件
-
+- 包含 uvue-list 列表组件、uvue-form 表单组件、uvue-form-item 表单项组件、uvue-filter 过滤器组件、uvue-cascader 级联组件
 - [示例](https://soullyoko.github.io/uvue-crud/build/h5)
 - [uvue-list 文档](https://github.com/SoulLyoko/uvue-crud/blob/master/uvue-crud/components/uvue-list/README.md)
 - [uvue-form 文档](https://github.com/SoulLyoko/uvue-crud/blob/master/uvue-crud/components/uvue-form/README.md)
+- [uvue-filter 文档](https://github.com/SoulLyoko/uvue-crud/blob/master/uvue-crud/components/uvue-filter/README.md)
+- [uvue-cascader 文档](https://github.com/SoulLyoko/uvue-crud/blob/master/uvue-crud/components/uvue-cascader/README.md)
 
 # 安装
 

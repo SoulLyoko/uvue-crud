@@ -15,6 +15,7 @@
         ></slot>
         <!-- 兼容app -->
 
+        <!-- 自定义的表单项 -->
         <slot
           :name="item.prop"
           :row="value"
@@ -26,6 +27,7 @@
           v-else-if="$scopedSlots[item.prop]"
         ></slot>
 
+        <!-- 默认的表单项 -->
         <uvue-form-item
           v-bind="item"
           :value="getFormItemValue(item)"
@@ -34,6 +36,7 @@
           v-else
         ></uvue-form-item>
 
+        <!-- 表单项的右插槽，app暂不能使用 -->
         <template slot="right">
           <slot
             :name="item.prop + 'Right'"
@@ -53,7 +56,7 @@
       type="primary"
       @click="formSubmit"
       :loading="submitLoading"
-      v-if="formOption.submitBtn"
+      v-if="formOption.submitBtn && formType !== 'view'"
       :style="{ width: formOption.submitBtnWidth }"
     >
       {{ formOption.submitBtnText }}
@@ -62,13 +65,14 @@
 </template>
 
 <script>
-import { defaultOption, defaultDictOption } from "./option";
+import { defaultFormOption, defaultDictOption, defaultColumnOption } from "./option";
 
 export default {
   name: "uvue-form",
   props: {
     value: { type: Object, default: () => ({}) },
-    option: { type: Object, default: () => ({}) }
+    option: { type: Object, default: () => ({}) },
+    formType: { type: String, default: "add" }
   },
   data() {
     return {
@@ -82,44 +86,58 @@ export default {
     option: {
       handler(val) {
         this.formOption = {
-          ...defaultOption,
+          ...defaultFormOption,
           ...(val || {}),
-          column: val?.column?.map(col => {
-            // 处理rules
-            if (col.rules) {
-              this.rules[col.prop] = col.rules;
-            }
-            //处理dictData
-            if (col.dictData) {
-              this.formDict[col.prop] = [];
-              const dictOption = {
-                ...defaultDictOption,
-                ...(col.dictOption || {})
-              };
-              const dictDataType = Object.prototype.toString.call(col.dictData);
-              if (dictDataType.includes("Function")) {
-                this.setFormDict(col.prop, col.dictData(), dictOption);
-              } else if (dictDataType.includes("Promise")) {
-                col.dictData
-                  // eslint-disable-next-line no-unused-vars
-                  .then?.(res => {
-                    const data = eval(dictOption.res);
-                    this.setFormDict(col.prop, data, dictOption);
-                  })
-                  .catch(err => {
-                    console.error("请求字典错误:" + err);
-                  });
-              } else if (dictDataType.includes("Array")) {
-                this.setFormDict(col.prop, col.dictData, dictOption);
+          column: val?.column
+            ?.map(col => {
+              // 处理rules
+              if (col.rules) {
+                this.rules[col.prop] = col.rules;
               }
-            }
-            const operation = ["select", "action", "date", "time", "datetime"].includes(col.type) ? "选择" : "输入";
-            return {
-              type: "text",
-              placeholder: "请" + operation + col.label,
-              ...col
-            };
-          })
+              //处理dictData
+              if (col.dictData) {
+                this.formDict[col.prop] = [];
+                const dictOption = {
+                  ...defaultDictOption,
+                  ...(col.dictOption || {})
+                };
+                const dictDataType = Object.prototype.toString.call(col.dictData);
+                if (dictDataType.includes("Function")) {
+                  this.setFormDict(col.prop, col.dictData(), dictOption);
+                } else if (dictDataType.includes("Promise")) {
+                  col.dictData
+                    // eslint-disable-next-line no-unused-vars
+                    .then?.(res => {
+                      const data = eval(dictOption.res);
+                      this.setFormDict(col.prop, data, dictOption);
+                    })
+                    .catch(err => {
+                      console.error("请求字典错误:" + err);
+                    });
+                } else if (dictDataType.includes("Array")) {
+                  this.setFormDict(col.prop, col.dictData, dictOption);
+                }
+              }
+              const operation = ["select", "action", "date", "time", "datetime"].includes(col.type) ? "选择" : "输入";
+              const disabledFlags = [!!col.disabled];
+              this.formType === "add" && disabledFlags.push(!!col.addDisabled);
+              this.formType === "edit" && disabledFlags.push(!!col.editDisabled);
+              this.formType === "view" && disabledFlags.push(false);
+              return {
+                ...defaultColumnOption,
+                placeholder: `请${operation} ${col.label}`,
+                disabled: disabledFlags.some(bool => bool),
+                ...col
+              };
+            })
+            //过滤掉需要隐藏的项
+            ?.filter(col => {
+              const displayFlags = [!!col.display];
+              this.formType === "add" && displayFlags.push(!!col.addDisplay);
+              this.formType === "edit" && displayFlags.push(!!col.editDisplay);
+              this.formType === "view" && displayFlags.push(!!col.viewDisplay);
+              return displayFlags.every(bool => bool);
+            })
         };
         this.setRules(this.rules);
       },

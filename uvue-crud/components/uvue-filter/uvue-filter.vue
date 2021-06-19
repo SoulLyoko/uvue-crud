@@ -3,8 +3,8 @@
     class="uvue-filter"
     :class="{ 'is-open': isOpen }"
     ref="uDropdown"
-    v-bind="filter"
-    v-show="filter && filter.items && filter.items.length"
+    v-bind="option"
+    v-show="option && option.items && option.items.length"
     @open="dropdownOpen"
     @close="dropdownClose"
     @hook:mounted="dropdownMounted"
@@ -12,7 +12,7 @@
     <u-dropdown-item
       v-model="filterFormData[filterItem.prop]"
       v-bind="filterItem"
-      v-for="filterItem in filter.items"
+      v-for="filterItem in option.items || []"
       :key="filterItem.prop"
     >
       <template v-if="filterItem.multiple">
@@ -53,7 +53,7 @@
 export default {
   name: "uvue-filter",
   props: {
-    filter: { type: Object, default: () => ({}) },
+    option: { type: Object, default: () => ({}) },
     filterForm: { type: Object, default: () => ({}) }
   },
   data() {

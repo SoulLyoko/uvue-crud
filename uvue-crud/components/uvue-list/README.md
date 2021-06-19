@@ -49,11 +49,11 @@
 | --- | --- | --- | --- | --- |
 | option | 列表配置，见下方说明 | Object | - | - |
 | search | 搜索栏配置，见下方说明，传入 false 则不显示 | Object/Boolean | - | {} |
-| filter | 筛选栏配置，见下方说明，传入 false 则不显示 | Object/Boolean | - | {} |
+| filter | 过滤器配置，见下方说明，传入 false 则不显示 | Object/Boolean | - | {} |
 | loadmore | 加载更多配置，见下方说明，传入 false 则不显示 | Object/Boolean | - | {} |
 | data | 列表数据，见下方说明 | Array | - | - |
 | searchValue.sync | 搜索栏绑定值 | String/Number/Boolean | - | - |
-| filterForm.sync | 筛选栏绑定值 | Object | - | - |
+| filterForm.sync | 过滤器绑定值 | Object | - | - |
 | status | 加载状态 | String | loadmore / loading / nomore | loadmore |
 | scrollTop | 页面的滚动距离，通过 onPageScroll 生命周期获取，传入该值则表示显示“回到顶部”按钮 | String/Number | - | 0 |
 
@@ -77,44 +77,7 @@
 
 ## Filter
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-| --- | --- | --- | --- | --- |
-| `u-dropdown` 的所有属性 | [官方文档](https://uviewui.com/components/dropdown.html#dropdown-props) | - | - | - |
-| title | 过滤项标题 | String | - | - |
-| prop | 过滤项的属性名 | String | - | - |
-| items | 下拉菜单项，即`u-dropdown-item`数组，见下方说明 | Array | - | - |
-
-## Filter-items
-
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-| --- | --- | --- | --- | --- |
-| `u-dropdown-item` 的所有属性 | [官方文档](https://uviewui.com/components/dropdown.html#dropdown-item-props) | - | - | - |
-| multiple | 是否多选选项 | Boolean | true/false | - |
-| transform | 多选时是否将数组转为逗号分隔的字符串 | Boolean | true/false | - |
-| cascader | 是否级联选项（仅支持二级） | Boolean | true/false | - |
-
-- 当 cascader:true 时，options 的结构应该如下：
-
-```js
-[
-  {
-    label: "1",
-    value: "1",
-    children: [
-      { label: "1-1", value: "1-1" },
-      { label: "1-2", value: "1-2" }
-    ]
-  },
-  {
-    label: "2",
-    value: "2",
-    children: [
-      { label: "2-1", value: "2-1" },
-      { label: "2-2", value: "2-2" }
-    ]
-  }
-];
-```
+查看[uvue-filter 文档](https://github.com/SoulLyoko/uvue-crud/blob/master/uvue-crud/components/uvue-filter/README.md)
 
 ## Loadmore
 
@@ -134,7 +97,7 @@
 | --- | --- | --- |
 | search | 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发 | value:输入框的值 |
 | loadmore | 加载状态 status 为 loadmore 时，点击组件会发出此事件 | - |
-| filter-change | 用户选定筛选栏中的项时触发 | filterForm:筛选栏的值 |
+| filter-change | 用户选定过滤器中的项时触发 | filterForm:过滤器的值 |
 | action-click | 点击搜索栏的操作按钮时触发，如果 Option 中定义了 formPath 则会调用 rowAdd 方法跳转到表单页 | - |
 | item-click | 列表项卡片任意位置被点击时触发，如果 Option 中定义了 formPath 则会调用 rowEdit 方法跳转到表单页 | {row,index} |
 | head-click | 列表项卡片头部被点击时触发 | {row,index} |
@@ -147,6 +110,7 @@
 | --- | --- | --- |
 | rowAdd | 跳转到新增表单页，url：`${formPath}?formType=add` | - |
 | rowEdit | 跳转到编辑表单页，url：`${formPath}?formType=edit&formData=${encodeURIComponent(JSON.Stringify(row))}` | row:行数据 |
+| rowView | 跳转到查看表单页，url：`${formPath}?formType=view&formData=${encodeURIComponent(JSON.Stringify(row))}` | row:行数据 |
 
 ## Slots
 
@@ -156,6 +120,6 @@
 | body       | 列表项卡片主体内容        | {row,index} |
 | foot       | 列表项卡片底部部分内容    | {row,index} |
 | searchTop  | 搜索栏上方                | -           |
-| filterTop  | 筛选栏上方                | -           |
+| filterTop  | 过滤器上方                | -           |
 | listTop    | 列表上方                  | -           |
 | listBottom | 列表下方(loadmore 的下方) | -           |
