@@ -68,10 +68,21 @@
 | `u-dropdown-item` 的所有属性 | [官方文档](https://uviewui.com/components/dropdown.html#dropdown-item-props) | - | - | - |
 | title | 过滤项标题 | String | - | - |
 | prop | 过滤项的属性名 | String | - | - |
-| options | 选项数据 | Array | - | - |
+| dictData | 选项字典数据 | Array | - | - |
+| options | 选项字典数据,同 dictData,两者选其一即可 | Array | - | - |
+| dictOption | 字典配置，见下方说明 | Object | - | - |
 | multiple | 是否多选选项 | Boolean | true/false | - |
 | transform | 多选时是否将数组转为逗号分隔的字符串 | Boolean | true/false | - |
 | cascader | 是否级联选项（仅支持二级） | Boolean | true/false | - |
+
+## DictOption
+
+| 参数     | 说明                                 | 类型   | 可选值 | 默认值   |
+| -------- | ------------------------------------ | ------ | ------ | -------- |
+| label    | 字典名称属性值                       | String | -      | label    |
+| value    | 字典值属性值                         | String | -      | value    |
+| children | 子字典属性值                         | String | -      | children |
+| res      | dictData 为 Promise 时返回的数据格式 | String | -      | res.data |
 
 - 当 cascader:true 时，options 的结构应该如下：
 

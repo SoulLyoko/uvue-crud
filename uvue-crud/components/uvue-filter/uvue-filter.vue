@@ -1,27 +1,28 @@
 <template>
   <u-dropdown
+    v-bind="filterOption"
     class="uvue-filter"
     :class="{ 'is-open': isOpen }"
     ref="uDropdown"
-    v-bind="option"
-    v-show="option && option.items && option.items.length"
+    v-show="filterOption && filterOption.items && filterOption.items.length"
     @open="dropdownOpen"
     @close="dropdownClose"
     @hook:mounted="dropdownMounted"
   >
     <u-dropdown-item
-      v-model="filterFormData[filterItem.prop]"
-      v-bind="filterItem"
-      v-for="filterItem in option.items || []"
+      v-for="filterItem in filterOption.items || []"
       :key="filterItem.prop"
+      v-bind="filterItem"
+      v-model="filterFormData[filterItem.prop]"
+      :options="filterDict.dictStorage[filterItem.prop]"
     >
       <template v-if="filterItem.multiple">
         <view class="uvue-filter-multiple">
           <u-checkbox-group @change="checkboxChange">
             <u-checkbox
-              v-model="option.checked"
-              v-for="option in filterItem.options"
+              v-for="option in filterDict.dictStorage[filterItem.prop]"
               :key="option.value"
+              v-model="option.checked"
               :name="option.value"
             >
               {{ option.label }}
@@ -41,7 +42,7 @@
       <template v-else-if="filterItem.cascader">
         <uvue-cascader
           v-model="filterFormData[filterItem.prop]"
-          :options="filterItem.options"
+          :options="filterDict.dictStorage[filterItem.prop]"
           @input="cascaderChange"
         ></uvue-cascader>
       </template>
@@ -50,6 +51,8 @@
 </template>
 
 <script>
+import useDict from "../uvue-dict/index.js";
+
 export default {
   name: "uvue-filter",
   props: {
@@ -60,9 +63,24 @@ export default {
     return {
       filterFormData: {},
       checked: [],
-      isOpen: false,
-      dropdownContentHeight: 0
+      isOpen: false
     };
+  },
+  computed: {
+    filterDict() {
+      return useDict(this);
+    },
+    filterOption() {
+      return {
+        ...(this.option || {}),
+        items: this.option?.items?.map(item => {
+          if (item.options || item.dictData) {
+            this.filterDict.handleDictData(item.prop, item.options || item.dictData, item.dictOption);
+          }
+          return item;
+        })
+      };
+    }
   },
   watch: {
     filterFormData: {

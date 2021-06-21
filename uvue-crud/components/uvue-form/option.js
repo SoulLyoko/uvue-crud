@@ -1,7 +1,8 @@
 export const defaultFormOption = {
   submitBtn: true, // 是否显示提交按钮
   submitBtnText: "提交", // 提交按钮文字
-  submitBtnWidth: "100%" // 提交按钮的宽度
+  submitBtnWidth: "100%", // 提交按钮的宽度
+  submitBack: true //提交后是否返回上一级页面
 };
 
 export const defaultColumnOption = {

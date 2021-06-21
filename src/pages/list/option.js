@@ -3,6 +3,7 @@ export const option = {
   formPath: "/pages/form/form",
   margin: "20rpx",
   padding: "20",
+  navigateFormType: "view",
   formKeys: []
 };
 

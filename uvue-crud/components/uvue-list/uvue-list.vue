@@ -24,14 +24,14 @@
 
     <scroll-view scroll-y>
       <u-card
+        v-for="(row, index) in data"
+        :key="listOption.rowKey ? row[listOption.rowKey] : index"
         class="uvue-list-card"
         v-bind="{ ...listOption, ...row }"
         @click="cardClick('item', row, index)"
         @head-click="cardClick('head', row, index)"
         @body-click="cardClick('body', row, index)"
         @foot-click="cardClick('foot', row, index)"
-        v-for="(row, index) in data"
-        :key="listOption.rowKey ? row[listOption.rowKey] : index"
       >
         <template #body>
           <slot name="body" :row="row" :index="index"></slot>
@@ -112,6 +112,7 @@ export default {
       this.navigateToForm(row, "view");
     },
     navigateToForm(row, formType) {
+      this.listOption.sticky = false;
       const { formPath, formKeys } = this.listOption;
       if (formType === "add") {
         formPath &&
@@ -140,7 +141,12 @@ export default {
     },
     cardClick(type, row, index) {
       this.$emit(`${type}-click`, row, index);
-      type === "item" && this.rowEdit(row);
+      if (type === "item" && this.listOption.navigateFormType === "edit") {
+        this.rowEdit(row);
+      }
+      if (type === "item" && this.listOption.navigateFormType === "view") {
+        this.rowView(row);
+      }
     }
   }
 };

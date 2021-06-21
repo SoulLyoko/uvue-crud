@@ -40,7 +40,7 @@ export default {
   },
   onLoad(options) {
     this.formType = options.formType;
-    if (options.formType === "edit") {
+    if (options.formType !== "add") {
       const formData = options.formData ? JSON.parse(decodeURIComponent(options.formData)) : {};
       formData.discount = formData.discount?.join(",") ?? "";
       this.formData = formData;

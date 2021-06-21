@@ -1,7 +1,7 @@
 <template>
   <view class="uvue-form">
-    <u-form ref="uForm" :model="value" :rules="rules" v-bind="formOption">
-      <u-form-item v-bind="item" v-for="(item, index) in formOption.column" :key="item.prop || index">
+    <u-form v-bind="formOption" ref="uForm" :model="value" :rules="rules">
+      <u-form-item v-for="(item, index) in formOption.column" :key="item.prop || index" v-bind="item">
         <!-- 兼容app -->
         <slot
           name="formItem"
@@ -10,10 +10,9 @@
           :index="index"
           :label="item.label"
           :prop="item.prop"
-          :dictData="formDict[item.prop]"
+          :dictData="formDict.dictStorage[item.prop]"
           v-if="$scopedSlots.formItem"
         ></slot>
-        <!-- 兼容app -->
 
         <!-- 自定义的表单项 -->
         <slot
@@ -23,7 +22,7 @@
           :index="index"
           :label="item.label"
           :prop="item.prop"
-          :dictData="formDict[item.prop]"
+          :dictData="formDict.dictStorage[item.prop]"
           v-else-if="$scopedSlots[item.prop]"
         ></slot>
 
@@ -31,7 +30,7 @@
         <uvue-form-item
           v-bind="item"
           :value="getFormItemValue(item)"
-          :dictData="formDict[item.prop]"
+          :dictData="formDict.dictStorage[item.prop]"
           @input="updateProp(item.prop, $event)"
           v-else
         ></uvue-form-item>
@@ -45,7 +44,7 @@
             :index="index"
             :label="item.label"
             :prop="item.prop"
-            :dictData="formDict[item.prop]"
+            :dictData="formDict.dictStorage[item.prop]"
           ></slot>
         </template>
       </u-form-item>
@@ -65,7 +64,8 @@
 </template>
 
 <script>
-import { defaultFormOption, defaultDictOption, defaultColumnOption } from "./option";
+import { defaultFormOption, defaultColumnOption } from "./option";
+import useDict from "../uvue-dict/index.js";
 
 export default {
   name: "uvue-form",
@@ -76,73 +76,52 @@ export default {
   },
   data() {
     return {
-      formOption: {},
       rules: {},
-      formDict: {},
       submitLoading: false
     };
   },
-  watch: {
-    option: {
-      handler(val) {
-        this.formOption = {
-          ...defaultFormOption,
-          ...(val || {}),
-          column: val?.column
-            ?.map(col => {
-              // 处理rules
-              if (col.rules) {
-                this.rules[col.prop] = col.rules;
-              }
-              //处理dictData
-              if (col.dictData) {
-                this.formDict[col.prop] = [];
-                const dictOption = {
-                  ...defaultDictOption,
-                  ...(col.dictOption || {})
-                };
-                const dictDataType = Object.prototype.toString.call(col.dictData);
-                if (dictDataType.includes("Function")) {
-                  this.setFormDict(col.prop, col.dictData(), dictOption);
-                } else if (dictDataType.includes("Promise")) {
-                  col.dictData
-                    // eslint-disable-next-line no-unused-vars
-                    .then?.(res => {
-                      const data = eval(dictOption.res);
-                      this.setFormDict(col.prop, data, dictOption);
-                    })
-                    .catch(err => {
-                      console.error("请求字典错误:" + err);
-                    });
-                } else if (dictDataType.includes("Array")) {
-                  this.setFormDict(col.prop, col.dictData, dictOption);
-                }
-              }
-              const operation = ["select", "action", "date", "time", "datetime"].includes(col.type) ? "选择" : "输入";
-              const disabledFlags = [!!col.disabled];
-              this.formType === "add" && disabledFlags.push(!!col.addDisabled);
-              this.formType === "edit" && disabledFlags.push(!!col.editDisabled);
-              this.formType === "view" && disabledFlags.push(false);
-              return {
-                ...defaultColumnOption,
-                placeholder: `请${operation} ${col.label}`,
-                disabled: disabledFlags.some(bool => bool),
-                ...col
-              };
-            })
-            //过滤掉需要隐藏的项
-            ?.filter(col => {
-              const displayFlags = [!!col.display];
-              this.formType === "add" && displayFlags.push(!!col.addDisplay);
-              this.formType === "edit" && displayFlags.push(!!col.editDisplay);
-              this.formType === "view" && displayFlags.push(!!col.viewDisplay);
-              return displayFlags.every(bool => bool);
-            })
-        };
-        this.setRules(this.rules);
-      },
-      immediate: true,
-      deep: true
+  computed: {
+    formDict() {
+      return useDict(this);
+    },
+    formOption() {
+      const result = {
+        ...defaultFormOption,
+        ...(this.option || {}),
+        column: this.option?.column
+          ?.map(col => {
+            // 处理rules
+            if (col.rules) {
+              this.rules[col.prop] = col.rules;
+            }
+            //处理dictData
+            if (col.dictData) {
+              this.formDict.handleDictData(col.prop, col.dictData, col.dictOption);
+            }
+            const operation = ["select", "action", "date", "time", "datetime"].includes(col.type) ? "选择" : "输入";
+            const disabledFlags = [!!col.disabled];
+            this.formType === "add" && disabledFlags.push(!!col.addDisabled);
+            this.formType === "edit" && disabledFlags.push(!!col.editDisabled);
+            this.formType === "view" && disabledFlags.push(true);
+            return {
+              ...defaultColumnOption,
+              placeholder: `请${operation} ${col.label}`,
+              disabled: disabledFlags.some(bool => bool),
+              ...col
+            };
+          })
+          //过滤掉需要隐藏的项
+          ?.filter(col => {
+            const displayFlags = [!!col.display];
+            this.formType === "add" && displayFlags.push(!!col.addDisplay);
+            this.formType === "edit" && displayFlags.push(!!col.editDisplay);
+            this.formType === "view" && displayFlags.push(!!col.viewDisplay);
+            return displayFlags.every(bool => bool);
+          })
+      };
+      this.setRules(this.rules);
+      console.log(result);
+      return result;
     }
   },
   mounted() {
@@ -171,26 +150,13 @@ export default {
           this.submitLoading = true;
           this.$emit("submit", this.value, () => {
             this.submitLoading = false;
-            uni.navigateBack();
+            this.formOption.submitBack && uni.navigateBack();
           });
         }
       });
     },
     getFormItemValue(item) {
       return this.value[item.prop] ?? item.value ?? "";
-    },
-    setFormDict(prop, dictData, dictOption) {
-      this.formDict = {
-        ...this.formDict,
-        [prop]: dictData.map(dict => {
-          return {
-            label: dict[dictOption.label],
-            value: dict[dictOption.value],
-            text: dict[dictOption.label],
-            children: dict[dictOption.children]
-          };
-        })
-      };
     }
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <u-row class="uvue-cascader">
-    <u-col span="2" class="uvue-cascader-left" :style="{ height: elHeight }">
+    <u-col span="4" class="uvue-cascader-left" :style="{ height: elHeight }">
       <view
         class="uvue-cascader-tab"
         :class="currentTab == option.value ? 'active' : ''"
@@ -11,7 +11,7 @@
         <text class="uvue-cascader-tab__text">{{ option.label }}</text>
       </view>
     </u-col>
-    <u-col span="10" class="uvue-cascader-right" :style="{ height: elHeight }">
+    <u-col span="8" class="uvue-cascader-right" :style="{ height: elHeight }">
       <scroll-view scroll-y>
         <view
           class="uvue-cascader-item u-flex"

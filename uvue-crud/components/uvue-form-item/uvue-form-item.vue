@@ -7,7 +7,12 @@
 
       <template v-if="$attrs.type === 'select'">
         <!-- 作为select组件的label显示 -->
-        <u-input v-bind="$attrs" type="select" :value="selectLabel" @click="selectShow = true"></u-input>
+        <u-input
+          v-bind="$attrs"
+          type="select"
+          :value="selectLabel"
+          @click="!$attrs.disabled && (selectShow = true)"
+        ></u-input>
         <u-select
           v-bind="$attrs"
           v-model="selectShow"
@@ -19,7 +24,7 @@
 
       <template v-if="pickerTypes.includes($attrs.type)">
         <!-- 作为picker组件的value显示 -->
-        <u-input v-bind="$attrs" type="select" @click="pickerShow = true"></u-input>
+        <u-input v-bind="$attrs" type="select" @click="!$attrs.disabled && (pickerShow = true)"></u-input>
         <u-picker
           v-bind="$attrs"
           v-model="pickerShow"
@@ -32,24 +37,24 @@
 
       <u-checkbox-group v-bind="$attrs" v-if="$attrs.type === 'checkbox'">
         <u-checkbox
+          v-for="dict in $attrs.dictData"
+          :key="dict.value"
           v-bind="dict"
           :value="$attrs.value.includes(dict.value)"
           :name="dict.value"
-          v-for="dict in $attrs.dictData"
-          :key="dict.value"
           @change="checkboxChange"
         >
           {{ dict.label }}
         </u-checkbox>
       </u-checkbox-group>
 
-      <u-radio-group v-bind="$attrs" v-if="$attrs.type === 'radio'" @change="updateValue">
+      <u-radio-group v-bind="$attrs" @change="updateValue" v-if="$attrs.type === 'radio'">
         <u-radio
+          v-for="dict in $attrs.dictData"
+          :key="dict.value"
           v-bind="dict"
           :value="$attrs.value"
           :name="dict.value"
-          v-for="dict in $attrs.dictData"
-          :key="dict.value"
         >
           {{ dict.label }}
         </u-radio>
@@ -61,7 +66,12 @@
 
       <template v-if="$attrs.type === 'action'">
         <!-- 作为action组件的label显示 -->
-        <u-input v-bind="$attrs" type="select" :value="actionLabel" @click="actionShow = true"></u-input>
+        <u-input
+          v-bind="$attrs"
+          type="select"
+          :value="actionLabel"
+          @click="!$attrs.disabled && (actionShow = true)"
+        ></u-input>
         <u-action-sheet
           v-bind="$attrs"
           v-model="actionShow"

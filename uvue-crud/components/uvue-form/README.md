@@ -88,6 +88,7 @@
 | submitBtn | 是否显示提交按钮 | Boolean | - | true |
 | submitBtnText | 提交按钮文字 | String | - | "提交" |
 | submitBtnWidth | 提交按钮宽度 | String | - | "100%" |
+| submitBack | 提交后是否返回上一级页面 | Boolean | - | true |
 | column | 表单项配置，见下方说明 | Array | - | [] |
 
 ## Column
