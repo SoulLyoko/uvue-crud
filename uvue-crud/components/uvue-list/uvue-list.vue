@@ -1,16 +1,14 @@
 <template>
   <view class="uvue-list">
-    <u-sticky offset-top="0" :enable="!!listOption.sticky">
+    <u-sticky offset-top="0" :enable="!!listOption.sticky && stickySafe">
       <slot name="searchTop"></slot>
 
       <u-search
         class="uvue-search"
-        :action-text="listOption.actionBtnText"
-        :show-action="listOption.actionBtn"
         v-bind="search"
         :value="searchValue"
         @search="$emit('search', $event)"
-        @custom="actionBtnClick"
+        @custom="actionClick"
         @input="$emit('update:searchValue', $event)"
         v-show="search"
       ></u-search>
@@ -79,7 +77,8 @@ export default {
   data() {
     return {
       listOption: {},
-      filterFormData: {}
+      filterFormData: {},
+      stickySafe: true
     };
   },
   watch: {
@@ -112,7 +111,7 @@ export default {
       this.navigateToForm(row, "view");
     },
     navigateToForm(row, formType) {
-      this.listOption.sticky = false;
+      this.stickySafe = false;
       const { formPath, formKeys } = this.listOption;
       if (formType === "add") {
         formPath &&
@@ -132,21 +131,14 @@ export default {
           });
       }
     },
-    actionBtnClick() {
+    actionClick() {
       this.$emit("action-click");
-      this.rowAdd();
     },
     closeFilter() {
       this.$refs.uvueFilter.closeFilter();
     },
     cardClick(type, row, index) {
       this.$emit(`${type}-click`, row, index);
-      if (type === "item" && this.listOption.navigateFormType === "edit") {
-        this.rowEdit(row);
-      }
-      if (type === "item" && this.listOption.navigateFormType === "view") {
-        this.rowView(row);
-      }
     }
   }
 };

@@ -65,9 +65,6 @@
 | rowKey              | 每条数据的唯一键                                           | String  | -          | -      |
 | formPath            | 跳转到表单页的路径，需要先在 pages.json 注册               | String  | -          | -      |
 | formKeys            | 跳转到表单携带的参数，以避免 url 过长，默认是整条数据      | Array   | -          | []     |
-| navigateFormType    | 跳转到表单时是编辑还是查看                                 | String  | edit/view  | edit   |
-| actionBtn           | 是否显示操作按钮                                           | Boolean | true/false | true   |
-| actionBtnText       | 操作按钮文字                                               | String  | -          | 新增   |
 | sticky              | 搜索栏和过滤栏是否吸顶                                     | Boolean | true/false | true   |
 
 ## Search
@@ -94,16 +91,16 @@
 
 ## Events
 
-| 事件名 | 说明 | 参数 |
-| --- | --- | --- |
-| search | 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发 | value:输入框的值 |
-| loadmore | 加载状态 status 为 loadmore 时，点击组件会发出此事件 | - |
-| filter-change | 用户选定过滤器中的项时触发 | filterForm:过滤器的值 |
-| action-click | 点击搜索栏的操作按钮时触发，如果 Option 中定义了 formPath 则会调用 rowAdd 方法跳转到表单页 | - |
-| item-click | 列表项卡片任意位置被点击时触发，如果 Option 中定义了 formPath 则会根据 navigateFormType 调用 rowEdit 或 rowView 方法跳转到表单页 | {row,index} |
-| head-click | 列表项卡片头部被点击时触发 | {row,index} |
-| body-click | 列表项卡片主体部分被点击时触发 | {row,index} |
-| foot-click | 列表项卡片底部部分被点击时触发 | {row,index} |
+| 事件名        | 说明                                                                 | 参数                  |
+| ------------- | -------------------------------------------------------------------- | --------------------- |
+| search        | 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发 | value:输入框的值      |
+| loadmore      | 加载状态 status 为 loadmore 时，点击组件会发出此事件                 | -                     |
+| filter-change | 用户选定过滤器中的项时触发                                           | filterForm:过滤器的值 |
+| action-click  | 点击搜索栏的操作按钮时触发                                           | -                     |
+| item-click    | 列表项卡片任意位置被点击时触发                                       | {row,index}           |
+| head-click    | 列表项卡片头部被点击时触发                                           | {row,index}           |
+| body-click    | 列表项卡片主体部分被点击时触发                                       | {row,index}           |
+| foot-click    | 列表项卡片底部部分被点击时触发                                       | {row,index}           |
 
 ## Methods
 
