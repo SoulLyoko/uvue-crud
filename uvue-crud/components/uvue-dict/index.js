@@ -16,7 +16,7 @@ function useDict(vm) {
       const dictDataPromise = data;
       dictDataPromise
         // eslint-disable-next-line no-unused-vars
-        .then?.(res => {
+        .then(res => {
           const data = eval(dictOption.res);
           setDictStorage(prop, data, dictOption);
         })

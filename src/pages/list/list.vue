@@ -1,6 +1,7 @@
 <template>
   <view>
     <uvue-list
+      ref="list"
       :option="option"
       :data="listData"
       :searchValue.sync="filterForm.title"
@@ -14,7 +15,7 @@
           <u-col span="4">
             <img :src="row.img" width="100%" />
           </u-col>
-          <u-col span="8">
+          <u-col span="6">
             <view>
               <u-icon name="star-fill"></u-icon><text>{{ row.score }}</text>
               <text class="u-margin-left-20">月售{{ row.sales }}</text>
@@ -37,6 +38,10 @@
                 :key="tag"
               />
             </view>
+          </u-col>
+          <u-col span="2">
+            <u-button size="mini" @click="$refs.list.rowView(row)">查看</u-button>
+            <u-button type="primary" size="mini" @click="$refs.list.rowEdit(row)">编辑</u-button>
           </u-col>
         </u-row>
       </template>
