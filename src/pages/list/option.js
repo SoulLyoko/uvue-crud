@@ -7,18 +7,28 @@ export const option = {
   formKeys: []
 };
 
+const pro = () => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        data: [
+          { label: "综合排序", value: "" },
+          { label: "销量优先", value: "sales" },
+          { label: "距离优先", value: "distance" },
+          { label: "速度优先", value: "speed" },
+          { label: "评分优先", value: "score" }
+        ]
+      });
+    }, 1000);
+  });
+};
+
 export const filter = {
   items: [
     {
       title: "排序",
       prop: "sort",
-      options: [
-        { label: "综合排序", value: "" },
-        { label: "销量优先", value: "sales" },
-        { label: "距离优先", value: "distance" },
-        { label: "速度优先", value: "speed" },
-        { label: "评分优先", value: "score" }
-      ]
+      options: pro()
     },
     {
       title: "品类",

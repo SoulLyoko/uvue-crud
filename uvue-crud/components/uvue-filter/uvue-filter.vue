@@ -1,58 +1,59 @@
 <template>
-  <u-dropdown
-    v-bind="filterOption"
-    class="uvue-filter"
-    :class="{ 'is-open': isOpen }"
-    ref="uDropdown"
-    v-show="filterOption && filterOption.items && filterOption.items.length"
-    @open="dropdownOpen"
-    @close="dropdownClose"
-    @hook:mounted="dropdownMounted"
-  >
-    <u-dropdown-item
-      v-for="filterItem in filterOption.items || []"
-      :key="filterItem.prop"
-      v-bind="filterItem"
-      v-model="filterFormData[filterItem.prop]"
-      :options="filterDict.dictStorage[filterItem.prop]"
+  <view>
+    <uvue-dict ref="dict" v-model="dictStorage"></uvue-dict>
+    <u-dropdown
+      v-bind="filterOption"
+      class="uvue-filter"
+      :class="{ 'is-open': isOpen }"
+      ref="uDropdown"
+      v-show="filterOption && filterOption.items && filterOption.items.length"
+      @open="dropdownOpen"
+      @close="dropdownClose"
+      @hook:mounted="dropdownMounted"
     >
-      <template v-if="filterItem.multiple">
-        <view class="uvue-filter-multiple">
-          <u-checkbox-group @change="checkboxChange">
-            <u-checkbox
-              v-for="option in filterDict.dictStorage[filterItem.prop]"
-              :key="option.value"
-              v-model="option.checked"
-              :name="option.value"
-            >
-              {{ option.label }}
-            </u-checkbox>
-          </u-checkbox-group>
-          <u-row gutter="20" style="margin-top: 30rpx">
-            <u-col span="6" style="text-align: center">
-              <u-button type="primary" @click="confirmCheck(filterItem)">确定</u-button>
-            </u-col>
-            <u-col span="6" style="text-align: center">
-              <u-button @click="clearCheck(filterItem.options)">清空</u-button>
-            </u-col>
-          </u-row>
-        </view>
-      </template>
+      <u-dropdown-item
+        v-for="filterItem in filterOption.items || []"
+        :key="filterItem.prop"
+        v-bind="filterItem"
+        v-model="filterFormData[filterItem.prop]"
+        :options="dictStorage[filterItem.prop]"
+      >
+        <template v-if="filterItem.multiple">
+          <view class="uvue-filter-multiple">
+            <u-checkbox-group @change="checkboxChange">
+              <u-checkbox
+                v-for="option in dictStorage[filterItem.prop]"
+                :key="option.value"
+                v-model="option.checked"
+                :name="option.value"
+              >
+                {{ option.label }}
+              </u-checkbox>
+            </u-checkbox-group>
+            <u-row gutter="20" style="margin-top: 30rpx">
+              <u-col span="6" style="text-align: center">
+                <u-button type="primary" @click="confirmCheck(filterItem)">确定</u-button>
+              </u-col>
+              <u-col span="6" style="text-align: center">
+                <u-button @click="clearCheck(filterItem.options)">清空</u-button>
+              </u-col>
+            </u-row>
+          </view>
+        </template>
 
-      <template v-else-if="filterItem.cascader">
-        <uvue-cascader
-          v-model="filterFormData[filterItem.prop]"
-          :options="filterDict.dictStorage[filterItem.prop]"
-          @input="cascaderChange"
-        ></uvue-cascader>
-      </template>
-    </u-dropdown-item>
-  </u-dropdown>
+        <template v-else-if="filterItem.cascader">
+          <uvue-cascader
+            v-model="filterFormData[filterItem.prop]"
+            :options="dictStorage[filterItem.prop]"
+            @input="cascaderChange"
+          ></uvue-cascader>
+        </template>
+      </u-dropdown-item>
+    </u-dropdown>
+  </view>
 </template>
 
 <script>
-import useDict from "../uvue-dict/index.js";
-
 export default {
   name: "uvue-filter",
   props: {
@@ -63,19 +64,20 @@ export default {
     return {
       filterFormData: {},
       checked: [],
-      isOpen: false
+      isOpen: false,
+      dictStorage: {}
     };
   },
   computed: {
-    filterDict() {
-      return useDict(this);
-    },
     filterOption() {
       return {
         ...(this.option || {}),
         items: this.option?.items?.map(item => {
           if (item.options || item.dictData) {
-            this.filterDict.handleDictData(item.prop, item.options || item.dictData, item.dictOption);
+            this.$set(this.dictStorage, item.prop, []);
+            setTimeout(() => {
+              this.$refs.dict.handleDictData(item.prop, item.options || item.dictData, item.dictOption);
+            });
           }
           return item;
         })

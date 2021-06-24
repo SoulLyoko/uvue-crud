@@ -1,5 +1,6 @@
 <template>
   <view class="uvue-form">
+    <uvue-dict ref="dict" v-model="dictStorage"></uvue-dict>
     <u-form v-bind="formOption" ref="uForm" :model="value" :rules="rules">
       <u-form-item v-for="(item, index) in formOption.column" :key="item.prop || index" v-bind="item">
         <!-- 兼容app -->
@@ -10,7 +11,7 @@
           :index="index"
           :label="item.label"
           :prop="item.prop"
-          :dictData="formDict.dictStorage[item.prop]"
+          :dictData="dictStorage[item.prop]"
           v-if="$scopedSlots.formItem"
         ></slot>
 
@@ -22,7 +23,7 @@
           :index="index"
           :label="item.label"
           :prop="item.prop"
-          :dictData="formDict.dictStorage[item.prop]"
+          :dictData="dictStorage[item.prop]"
           v-else-if="$scopedSlots[item.prop]"
         ></slot>
 
@@ -30,7 +31,7 @@
         <uvue-form-item
           v-bind="item"
           :value="getFormItemValue(item)"
-          :dictData="formDict.dictStorage[item.prop]"
+          :dictData="dictStorage[item.prop]"
           @input="updateProp(item.prop, $event)"
           v-else
         ></uvue-form-item>
@@ -44,7 +45,7 @@
             :index="index"
             :label="item.label"
             :prop="item.prop"
-            :dictData="formDict.dictStorage[item.prop]"
+            :dictData="dictStorage[item.prop]"
           ></slot>
         </template>
       </u-form-item>
@@ -65,7 +66,6 @@
 
 <script>
 import { defaultFormOption, defaultColumnOption } from "./option";
-import useDict from "../uvue-dict/index.js";
 
 export default {
   name: "uvue-form",
@@ -77,13 +77,11 @@ export default {
   data() {
     return {
       rules: {},
-      submitLoading: false
+      submitLoading: false,
+      dictStorage: {}
     };
   },
   computed: {
-    formDict() {
-      return useDict(this);
-    },
     formOption() {
       const result = {
         ...defaultFormOption,
@@ -96,7 +94,10 @@ export default {
             }
             //处理dictData
             if (col.dictData) {
-              this.formDict.handleDictData(col.prop, col.dictData, col.dictOption);
+              this.$set(this.dictStorage, col.prop, []);
+              setTimeout(() => {
+                this.$refs.dict.handleDictData(col.prop, col.dictData, col.dictOption);
+              });
             }
             const operation = ["select", "action", "date", "time", "datetime"].includes(col.type) ? "选择" : "输入";
             const disabledFlags = [!!col.disabled];
@@ -120,7 +121,6 @@ export default {
           })
       };
       this.setRules(this.rules);
-      console.log(result);
       return result;
     }
   },
