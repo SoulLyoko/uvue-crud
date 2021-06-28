@@ -10,6 +10,9 @@
       :filterForm.sync="filterForm"
       @filter-change="filterChange"
     >
+      <template #head="{ row }">
+        <text>{{ row.title }}</text>
+      </template>
       <template #body="{ row }">
         <u-row gutter="20" align="top">
           <u-col span="4">
@@ -46,14 +49,16 @@
         </u-row>
       </template>
       <template #foot="{ row }">
-        <u-tag
-          class="u-margin-right-20"
-          :text="disc"
-          type="error"
-          size="mini"
-          v-for="disc in row.discount"
-          :key="disc"
-        />
+        <view>
+          <u-tag
+            class="u-margin-right-20"
+            :text="disc"
+            type="error"
+            size="mini"
+            v-for="disc in row.discount"
+            :key="disc"
+          />
+        </view>
       </template>
     </uvue-list>
   </view>

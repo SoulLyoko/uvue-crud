@@ -31,13 +31,13 @@
         @body-click="cardClick('body', row, index)"
         @foot-click="cardClick('foot', row, index)"
       >
-        <template #body>
-          <slot name="body" :row="row" :index="index"></slot>
-        </template>
-        <template #head>
+        <template slot="head">
           <slot name="head" :row="row" :index="index"></slot>
         </template>
-        <template #foot>
+        <template slot="body">
+          <slot name="body" :row="row" :index="index"></slot>
+        </template>
+        <template slot="foot">
           <slot name="foot" :row="row" :index="index"></slot>
         </template>
       </u-card>
@@ -144,7 +144,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .uvue-search,
 .uvue-filter {
   background: #fff;
