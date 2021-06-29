@@ -1,21 +1,23 @@
 <template>
   <view class="uvue-list">
     <u-sticky offset-top="0" :enable="!!listOption.sticky && stickySafe">
-      <slot name="searchTop"></slot>
+      <view class="uvue-list-sticky__wrapper">
+        <slot name="searchTop"></slot>
 
-      <u-search
-        class="uvue-search"
-        v-bind="search"
-        :value="searchValue"
-        @search="$emit('search', $event)"
-        @custom="actionClick"
-        @input="$emit('update:searchValue', $event)"
-        v-show="search"
-      ></u-search>
+        <u-search
+          class="uvue-search"
+          v-bind="search"
+          :value="searchValue"
+          @search="$emit('search', $event)"
+          @custom="actionClick"
+          @input="$emit('update:searchValue', $event)"
+          v-show="search"
+        ></u-search>
 
-      <slot name="filterTop"></slot>
+        <slot name="filterTop"></slot>
 
-      <uvue-filter ref="uvueFilter" :option="filter" :filterForm.sync="filterFormData"> </uvue-filter>
+        <uvue-filter ref="uvueFilter" :option="filter" :filterForm.sync="filterFormData"></uvue-filter>
+      </view>
     </u-sticky>
 
     <slot name="listTop"></slot>
@@ -145,8 +147,9 @@ export default {
 </script>
 
 <style lang="scss">
-.uvue-search,
-.uvue-filter {
-  background: #fff;
+.uvue-list {
+  .uvue-list-sticky__wrapper {
+    background-color: #fff;
+  }
 }
 </style>

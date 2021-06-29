@@ -136,7 +136,7 @@ export default {
 .uvue-filter {
   .uvue-filter-multiple {
     padding: 30rpx;
-    background: #fff;
+    background-color: #fff;
   }
 }
 </style>
