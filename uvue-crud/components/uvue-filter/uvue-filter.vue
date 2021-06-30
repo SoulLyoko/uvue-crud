@@ -6,7 +6,7 @@
       class="uvue-filter"
       :class="{ 'is-open': isOpen }"
       ref="uDropdown"
-      v-show="filterOption && filterOption.items && filterOption.items.length"
+      v-if="filterOption && filterOption.items && filterOption.items.length"
       @open="dropdownOpen"
       @close="dropdownClose"
       @hook:mounted="dropdownMounted"

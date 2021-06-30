@@ -11,12 +11,12 @@
           @search="$emit('search', $event)"
           @custom="actionClick"
           @input="$emit('update:searchValue', $event)"
-          v-show="search"
+          v-if="search"
         ></u-search>
 
         <slot name="filterTop"></slot>
 
-        <uvue-filter ref="uvueFilter" :option="filter" :filterForm.sync="filterFormData"></uvue-filter>
+        <uvue-filter ref="uvueFilter" :option="filter" :filterForm.sync="filterFormData" v-if="filter"></uvue-filter>
       </view>
     </u-sticky>
 
@@ -45,18 +45,18 @@
       </u-card>
     </scroll-view>
 
-    <u-empty v-show="!data.length"></u-empty>
+    <u-empty v-if="!data.length"></u-empty>
 
     <u-loadmore
       :status="status"
       v-bind="loadmore"
       @loadmore="$emit('loadmore', $event)"
-      v-show="loadmore && data.length"
+      v-if="loadmore && data.length"
     />
 
     <slot name="listBottom"></slot>
 
-    <u-back-top :scroll-top="scrollTop" v-show="scrollTop"></u-back-top>
+    <u-back-top :scroll-top="scrollTop" v-if="scrollTop"></u-back-top>
   </view>
 </template>
 
