@@ -39,14 +39,27 @@ export default {
         ...(option || {})
       };
       let dictStorage = this.value || {};
-      dictStorage[prop] = data.map(dict => {
-        return {
-          label: dict[dictOption.label],
-          value: dict[dictOption.value],
-          text: dict[dictOption.label],
-          children: dict[dictOption.children]
-        };
-      });
+      dictStorage[prop] = dictMap(data);
+
+      function dictMap(dictArr) {
+        return dictArr.map(dict => {
+          // 兼容select的多列模式mutil-column
+          if (Array.isArray(dict)) return dictMap(dict);
+
+          let children = dict[dictOption.children];
+          if (children?.length) {
+            children = dictMap(dict.children);
+          }
+
+          return {
+            label: dict[dictOption.label],
+            value: dict[dictOption.value],
+            text: dict[dictOption.label],
+            children
+          };
+        });
+      }
+
       this.$emit("input", dictStorage);
     },
     getDictStorage(prop) {

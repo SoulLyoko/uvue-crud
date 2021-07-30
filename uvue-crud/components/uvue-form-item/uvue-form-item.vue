@@ -40,7 +40,7 @@
           v-for="dict in $attrs.dictData"
           :key="dict.value"
           v-bind="dict"
-          :value="$attrs.value.includes(dict.value)"
+          :value="checkboxValue(dict)"
           :name="dict.value"
           @change="checkboxChange"
         >
@@ -84,6 +84,8 @@
 </template>
 
 <script>
+import { filterTreeNode } from "../../utils";
+
 export default {
   name: "uvue-form-item",
   data() {
@@ -99,15 +101,47 @@ export default {
   computed: {
     // select组件的默认值
     selectDefaultValue() {
-      const { dictData, value } = this.$attrs;
-      const findIndex = dictData.findIndex(dict => dict.value === value);
-      return [findIndex];
+      const { dictData, value, mode, transform } = this.$attrs;
+      if (mode === "mutil-column") {
+        //多列
+        const valueData = transform ? value.split(",") : value;
+        const filterIndex = dictData
+          .flat()
+          .filter(item => valueData.includes(item.value))
+          .map((item, index) => index);
+        return filterIndex;
+      } else if (mode === "mutil-column-auto") {
+        //多列联动
+        const valueData = transform ? value.split(",") : value;
+        const filterIndex = filterTreeNode(dictData, (item, index) => {
+          item.nodeIndex = index;
+          return valueData.includes(item.value);
+        }).map(item => item.nodeIndex);
+        return filterIndex;
+      } else {
+        //单列
+        const findIndex = dictData.findIndex(item => item.value === value);
+        return [Math.max(0, findIndex)];
+      }
     },
     // 已选择select的label
     selectLabel() {
-      const { dictData, value } = this.$attrs;
-      const find = dictData.find(dict => dict.value === value) || {};
-      return find.label || "";
+      const { dictData, value, mode, transform } = this.$attrs;
+      if (mode === "mutil-column") {
+        //多列
+        const valueData = transform ? value.split(",") : value;
+        const filter = dictData.flat().filter(item => valueData.includes(item.value));
+        return filter.map(item => item.label).join("-");
+      } else if (mode === "mutil-column-auto") {
+        //多列联动
+        const valueData = transform ? value.split(",") : value;
+        const filter = filterTreeNode(dictData, item => valueData.includes(item.value));
+        return filter.map(item => item.label).join("-");
+      } else {
+        //单列
+        const find = dictData.find(item => item.value === value) || {};
+        return find.label || "";
+      }
     },
     // 已选择action的label
     actionLabel() {
@@ -150,8 +184,18 @@ export default {
     updateValue(value) {
       this.$emit("input", value);
     },
-    selectConfirm(value) {
-      this.updateValue(value[0].value);
+    selectConfirm(selected) {
+      const { mode, transform } = this.$attrs;
+      let value = "";
+      if (!mode || mode === "single-column") {
+        //单列
+        value = selected[0].value;
+      } else {
+        //多列和多列联动
+        value = selected.map(item => item.value);
+        value = transform ? value.join(",") : value;
+      }
+      this.updateValue(value);
     },
     pickerConfirm(value) {
       const { format, type } = this.$attrs;
@@ -163,14 +207,22 @@ export default {
       const result = this.$u.timeFormat(value.timestamp, format || defaultFormat[type]);
       this.updateValue(result);
     },
-    checkboxChange({ value, name }) {
+    checkboxChange({ value: check, name }) {
+      const { value, transform } = this.$attrs;
+      const valueData = transform ? value.split(",") : value;
       let result = [];
-      if (value) {
-        result = [...this.$attrs.value, name];
+      if (check) {
+        result = [...valueData, name];
       } else {
-        result = this.$attrs.value.filter(e => e !== name);
+        result = valueData.filter(e => e !== name);
       }
+      result = transform ? result.join(",") : result;
       this.updateValue(result);
+    },
+    checkboxValue(dictItem) {
+      const { value, transform } = this.$attrs;
+      const valueData = transform ? value.split(",") : value;
+      return valueData.includes(dictItem.value);
     },
     actionClick(index) {
       const value = this.$attrs.dictData[index].value;

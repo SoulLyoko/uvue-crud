@@ -108,6 +108,7 @@
 | disabled | 禁用状态 | Boolean | - | false |
 | addDisabled | 新增模式禁用状态 | Boolean | - | false |
 | editDisabled | 查看模式禁用状态 | Boolean | - | false |
+| transform | 多选时(如 select 的多列、联动模式和 checkbox)是否将数组转为逗号分隔的字符串 | Boolean | - | false |
 
 ## DictOption
 
