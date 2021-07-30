@@ -32,7 +32,7 @@ export function buildTree(list, parentId = "0", config = {}) {
 export function flatTree(tree, childrenKey = "children") {
   return tree
     .map(item => {
-      if (item[childrenKey]?.length) {
+      if (item[childrenKey] && item[childrenKey].length) {
         return [item, flatTree(item[childrenKey])];
       } else {
         return item;
