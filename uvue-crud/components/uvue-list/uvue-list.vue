@@ -103,8 +103,8 @@ export default {
     }
   },
   methods: {
-    rowAdd() {
-      this.navigateToForm({}, "add");
+    rowAdd(row) {
+      this.navigateToForm(row || {}, "add");
     },
     rowEdit(row) {
       this.navigateToForm(row, "edit");
@@ -115,23 +115,16 @@ export default {
     navigateToForm(row, formType) {
       this.stickySafe = false;
       const { formPath, formKeys } = this.listOption;
-      if (formType === "add") {
-        formPath &&
-          uni.navigateTo({
-            url: formPath + "?formType=add"
-          });
+      let formData = {};
+      if (formKeys?.length) {
+        formKeys.forEach(key => (formData[key] = row[key]));
       } else {
-        let formData = {};
-        if (Array.isArray(formKeys) && formKeys.length) {
-          formKeys.forEach(key => (formData[key] = row[key]));
-        } else {
-          formData = row;
-        }
-        formPath &&
-          uni.navigateTo({
-            url: `${formPath}?formType=${formType}&formData=${encodeURIComponent(JSON.stringify(formData))}`
-          });
+        formData = row;
       }
+      formPath &&
+        uni.navigateTo({
+          url: `${formPath}?formType=${formType}&formData=${encodeURIComponent(JSON.stringify(formData))}`
+        });
     },
     actionClick() {
       this.$emit("action-click");

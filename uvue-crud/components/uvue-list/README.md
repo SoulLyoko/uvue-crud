@@ -106,7 +106,7 @@
 
 | 方法名 | 说明 | 参数 |
 | --- | --- | --- |
-| rowAdd | 跳转到新增表单页，url：`${formPath}?formType=add` | - |
+| rowAdd | 跳转到新增表单页，url：`${formPath}?formType=add&formData=${encodeURIComponent(JSON.Stringify(row))}` | row:默认表单数据 |
 | rowEdit | 跳转到编辑表单页，url：`${formPath}?formType=edit&formData=${encodeURIComponent(JSON.Stringify(row))}` | row:行数据 |
 | rowView | 跳转到查看表单页，url：`${formPath}?formType=view&formData=${encodeURIComponent(JSON.Stringify(row))}` | row:行数据 |
 

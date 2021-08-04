@@ -148,10 +148,17 @@ export default {
       this.validate(valid => {
         if (valid) {
           this.submitLoading = true;
-          this.$emit("submit", this.value, () => {
-            this.submitLoading = false;
-            this.formOption.submitBack && uni.navigateBack();
-          });
+          //use:handleSubmit(form,loading,back)
+          this.$emit(
+            "submit",
+            this.value,
+            () => {
+              this.submitLoading = false;
+            },
+            () => {
+              uni.navigateBack();
+            }
+          );
         }
       });
     },
