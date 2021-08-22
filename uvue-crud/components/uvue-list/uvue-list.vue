@@ -22,7 +22,7 @@
 
     <slot name="listTop"></slot>
 
-    <scroll-view scroll-y>
+    <div class="uvue-list__wrapper">
       <u-card
         v-for="(row, index) in data"
         :key="listOption.rowKey ? row[listOption.rowKey] : index"
@@ -43,7 +43,7 @@
           <slot name="foot" :row="row" :index="index"></slot>
         </template>
       </u-card>
-    </scroll-view>
+    </div>
 
     <u-empty v-if="!data.length"></u-empty>
 
