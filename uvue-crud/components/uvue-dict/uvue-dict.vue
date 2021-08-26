@@ -40,27 +40,39 @@ export default {
       };
       let dictStorage = this.value || {};
       dictStorage[prop] = dictMap(data);
+      this.$emit("input", dictStorage);
 
       function dictMap(dictArr) {
         return dictArr.map(dict => {
           // 兼容select的多列模式mutil-column
           if (Array.isArray(dict)) return dictMap(dict);
 
+          const label = dict[dictOption.label];
+          let value = dict[dictOption.value];
           let children = dict[dictOption.children];
           if (children?.length) {
             children = dictMap(dict.children);
           }
 
+          switch (option.dataType) {
+            case "string":
+              value = String(value);
+              break;
+            case "number":
+              value = Number(value);
+              break;
+            default:
+              break;
+          }
+
           return {
-            label: dict[dictOption.label],
-            value: dict[dictOption.value],
-            text: dict[dictOption.label],
+            label,
+            value,
+            text: label,
             children
           };
         });
       }
-
-      this.$emit("input", dictStorage);
     },
     getDictStorage(prop) {
       return this.dictStorage[prop];

@@ -112,12 +112,13 @@
 
 ## DictOption
 
-| 参数     | 说明                                 | 类型   | 可选值 | 默认值   |
-| -------- | ------------------------------------ | ------ | ------ | -------- |
-| label    | 字典名称属性值                       | String | -      | label    |
-| value    | 字典值属性值                         | String | -      | value    |
-| children | 子字典属性值                         | String | -      | children |
-| res      | dictData 为 Promise 时返回的数据格式 | String | -      | res.data |
+| 参数     | 说明                                 | 类型   | 可选值           | 默认值   |
+| -------- | ------------------------------------ | ------ | ---------------- | -------- |
+| label    | 字典名称属性值                       | String | -                | label    |
+| value    | 字典值属性值                         | String | -                | value    |
+| children | 子字典属性值                         | String | -                | children |
+| res      | dictData 为 Promise 时返回的数据格式 | String | -                | res.data |
+| dataType | 把字典数据的值转换成字符串或数字     | String | string 或 number | -        |
 
 ## Events
 
