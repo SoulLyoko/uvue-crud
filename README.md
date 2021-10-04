@@ -44,9 +44,9 @@ Vue.use(uvueCrud);
 {
     "easycom": {
 		//下载安装方式
-        //"^uvue(.*)": "@/uvue-crud/components/uvue-$1/uvue-$1.vue",
+        //"^uvue-(.*)": "@/uvue-crud/components/uvue-$1/uvue-$1.vue",
 		//npm安装方式
-        "^uvue(.*)": "uvue-crud/components/uvue-$1/uvue-$1.vue",
+        "^uvue-(.*)": "uvue-crud/components/uvue-$1/uvue-$1.vue",
     },
     "pages": [
         // ......
