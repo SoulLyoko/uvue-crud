@@ -4,6 +4,7 @@
       ref="list"
       :option="option"
       :data="listData"
+      :status="loadStatus"
       :searchValue.sync="filterForm.title"
       @search="handleSearch"
       :filter="filter"
@@ -72,31 +73,39 @@ export default {
     return {
       option,
       filter,
-      listData,
-      filterForm: {}
+      listData: [],
+      filterForm: {},
+      loadStatus: "loadmore"
     };
+  },
+  mounted() {
+    this.filterChange({});
   },
   methods: {
     /**
      * 这里模拟后端数据处理，一般来讲携带参数请求后端接口就可以了
      */
     filterChange(e) {
-      this.listData = listData
-        .filter(item => {
-          const condition = [];
-          e.title && condition.push(item.title.includes(e.title));
-          e.speed && condition.push(item.speed <= e.speed);
-          e.tags && e.tags.length && condition.push(e.tags.every(t => item.tags.includes(t)));
-          e.category && condition.push(item.category === e.category);
-          return condition.every(bool => bool);
-        })
-        .sort((a, b) => {
-          if (!e.sort) return 0;
-          if (["speed", "distance"].includes(e.sort)) {
-            return a[e.sort] - b[e.sort];
-          }
-          return b[e.sort] - a[e.sort];
-        });
+      this.loadStatus = "loading";
+      setTimeout(() => {
+        this.listData = listData
+          .filter(item => {
+            const condition = [];
+            e.title && condition.push(item.title.includes(e.title));
+            e.speed && condition.push(item.speed <= e.speed);
+            e.tags && e.tags.length && condition.push(e.tags.every(t => item.tags.includes(t)));
+            e.category && condition.push(item.category === e.category);
+            return condition.every(bool => bool);
+          })
+          .sort((a, b) => {
+            if (!e.sort) return 0;
+            if (["speed", "distance"].includes(e.sort)) {
+              return a[e.sort] - b[e.sort];
+            }
+            return b[e.sort] - a[e.sort];
+          });
+        this.loadStatus = "nomore";
+      }, 1000);
     },
     handleSearch() {
       this.filterChange(this.filterForm);

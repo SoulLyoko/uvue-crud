@@ -22,7 +22,7 @@
 
     <slot name="listTop"></slot>
 
-    <div class="uvue-list__wrapper">
+    <view class="uvue-list__wrapper">
       <u-card
         v-for="(row, index) in data"
         :key="listOption.rowKey ? row[listOption.rowKey] : index"
@@ -43,16 +43,11 @@
           <slot name="foot" :row="row" :index="index"></slot>
         </template>
       </u-card>
-    </div>
+    </view>
 
-    <u-empty v-if="!data.length"></u-empty>
+    <u-empty v-if="!data.length && status !== 'loading'"></u-empty>
 
-    <u-loadmore
-      :status="status"
-      v-bind="loadmore"
-      @loadmore="$emit('loadmore', $event)"
-      v-if="loadmore && data.length"
-    />
+    <u-loadmore :status="status" v-bind="loadmore" @loadmore="$emit('loadmore', $event)" v-if="loadmore && status" />
 
     <slot name="listBottom"></slot>
 
@@ -73,7 +68,7 @@ export default {
     search: { type: [Object, Boolean], default: () => ({}) },
     filter: { type: [Object, Boolean], default: () => ({}) },
     loadmore: { type: [Object, Boolean], default: () => ({}) },
-    status: { type: String, default: "nomore" },
+    status: { type: String, default: "loadmore" },
     scrollTop: { type: Number, default: 0 }
   },
   data() {
