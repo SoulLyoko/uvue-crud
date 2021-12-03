@@ -19,32 +19,35 @@
         :options="dictStorage[filterItem.prop]"
       >
         <template v-if="filterItem.multiple">
-          <view class="uvue-filter-multiple">
-            <u-checkbox-group @change="checkboxChange">
-              <u-checkbox
-                v-for="option in dictStorage[filterItem.prop]"
-                :key="option.value"
-                v-model="option.checked"
-                :name="option.value"
-              >
-                {{ option.label }}
-              </u-checkbox>
-            </u-checkbox-group>
-            <u-row gutter="20" style="margin-top: 30rpx">
-              <u-col span="6" style="text-align: center">
-                <u-button type="primary" @click="confirmCheck(filterItem)">确定</u-button>
-              </u-col>
-              <u-col span="6" style="text-align: center">
-                <u-button @click="clearCheck(filterItem.options)">清空</u-button>
-              </u-col>
-            </u-row>
-          </view>
+          <scroll-view scroll-y :style="{ height: $u.addUnit(filterItem.height) }">
+            <view class="uvue-filter-multiple">
+              <u-checkbox-group @change="checkboxChange">
+                <u-checkbox
+                  v-for="option in dictStorage[filterItem.prop]"
+                  :key="option.value"
+                  v-model="option.checked"
+                  :name="option.value"
+                >
+                  {{ option.label }}
+                </u-checkbox>
+              </u-checkbox-group>
+              <u-row gutter="20" style="margin-top: 20px">
+                <u-col span="6">
+                  <u-button type="primary" @click="confirmCheck(filterItem)">确定</u-button>
+                </u-col>
+                <u-col span="6">
+                  <u-button @click="clearCheck(filterItem.options)">清空</u-button>
+                </u-col>
+              </u-row>
+            </view>
+          </scroll-view>
         </template>
 
         <template v-else-if="filterItem.cascader">
           <uvue-cascader
             v-model="filterFormData[filterItem.prop]"
             :options="dictStorage[filterItem.prop]"
+            :height="filterItem.height"
             @input="cascaderChange"
           ></uvue-cascader>
         </template>
@@ -120,7 +123,7 @@ export default {
     dropdownMounted() {
       setTimeout(() => {
         this.$refs.uDropdown.contentHeight = 0;
-      });
+      }, 100);
     },
     dropdownOpen() {
       this.$refs.uDropdown.getContentHeight();

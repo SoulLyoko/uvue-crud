@@ -1,18 +1,20 @@
 <template>
   <u-row class="uvue-cascader">
-    <u-col span="4" class="uvue-cascader-left" :style="{ height: elHeight }">
-      <view
-        class="uvue-cascader-tab"
-        :class="currentTab == option.value ? 'active' : ''"
-        v-for="option in options"
-        :key="option.value"
-        @click="tabClick(option)"
-      >
-        <text class="uvue-cascader-tab__text">{{ option.label }}</text>
-      </view>
+    <u-col span="4" class="uvue-cascader-left">
+      <scroll-view scroll-y :style="{ height: elHeight }">
+        <view
+          class="uvue-cascader-tab"
+          :class="currentTab == option.value ? 'active' : ''"
+          v-for="option in options"
+          :key="option.value"
+          @click="tabClick(option)"
+        >
+          <text class="uvue-cascader-tab__text">{{ option.label }}</text>
+        </view>
+      </scroll-view>
     </u-col>
-    <u-col span="8" class="uvue-cascader-right" :style="{ height: elHeight }">
-      <scroll-view scroll-y>
+    <u-col span="8" class="uvue-cascader-right">
+      <scroll-view scroll-y :style="{ height: elHeight }">
         <view
           class="uvue-cascader-item u-flex"
           :class="value == item.value ? 'active' : ''"
@@ -38,7 +40,8 @@
 export default {
   name: "uvue-cascader",
   props: {
-    value: [String, Number],
+    value: { type: [String, Number] },
+    height: { type: [String, Number] },
     options: { type: Array, default: () => [] }
   },
   data() {
@@ -51,8 +54,12 @@ export default {
       return this.options.find(option => option.value === this.currentTab)?.children ?? [];
     },
     elHeight() {
-      const length = this.options.length >= 3 ? this.options.length + 1 : 4;
-      return length * 80 + "rpx";
+      if (this.height) {
+        return this.$u.addUnit(this.height);
+      } else {
+        const length = this.options.length >= 3 ? this.options.length + 1 : 4;
+        return this.$u.addUnit(length * 80);
+      }
     }
   },
   created() {

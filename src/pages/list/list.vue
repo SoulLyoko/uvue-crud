@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view style="height: 100%">
     <uvue-list
       ref="list"
       :option="option"
@@ -10,6 +10,7 @@
       :filter="filter"
       :filterForm.sync="filterForm"
       @filter-change="filterChange"
+      @loadmore="filterChange"
     >
       <template #head="{ row }">
         <text>{{ row.title }}</text>
@@ -79,13 +80,16 @@ export default {
     };
   },
   mounted() {
-    this.filterChange({});
+    this.filterChange();
+  },
+  onReachBottom() {
+    this.filterChange();
   },
   methods: {
     /**
      * 这里模拟后端数据处理，一般来讲携带参数请求后端接口就可以了
      */
-    filterChange(e) {
+    filterChange(e = this.filterChange) {
       this.loadStatus = "loading";
       setTimeout(() => {
         this.listData = listData
@@ -96,6 +100,12 @@ export default {
             e.tags && e.tags.length && condition.push(e.tags.every(t => item.tags.includes(t)));
             e.category && condition.push(item.category === e.category);
             return condition.every(bool => bool);
+          })
+          .map(item => {
+            return {
+              ...item,
+              id: Math.random()
+            };
           })
           .sort((a, b) => {
             if (!e.sort) return 0;
@@ -108,7 +118,7 @@ export default {
       }, 1000);
     },
     handleSearch() {
-      this.filterChange(this.filterForm);
+      this.filterChange();
     }
   }
 };

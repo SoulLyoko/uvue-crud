@@ -76,12 +76,16 @@ export const filter = {
     {
       title: "速度",
       prop: "speed",
+      multiple: true,
       options: [
         { label: "全部", value: "" },
         { label: "30分钟内", value: 30 },
         { label: "40分钟内", value: 40 },
         { label: "50分钟内", value: 50 },
-        { label: "60分钟内", value: 60 }
+        { label: "60分钟内", value: 60 },
+        { label: "70分钟内", value: 70 },
+        { label: "80分钟内", value: 80 },
+        { label: "90分钟内", value: 90 }
       ]
     },
     {
