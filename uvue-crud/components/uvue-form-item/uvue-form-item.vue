@@ -140,14 +140,14 @@ export default {
       } else {
         //单列
         const find = dictData.find(item => item.value === value) || {};
-        return find.label || "";
+        return find.label || value;
       }
     },
     // 已选择action的label
     actionLabel() {
       const { dictData, value } = this.$attrs;
       const find = dictData.find(dict => dict.value === value) || {};
-      return find.label || "";
+      return find.label || value;
     },
     pickerParams() {
       switch (this.$attrs.type) {
