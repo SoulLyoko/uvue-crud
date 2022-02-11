@@ -59,13 +59,13 @@
 
 ## Option
 
-| 参数                | 说明                                                       | 类型    | 可选值     | 默认值 |
-| ------------------- | ---------------------------------------------------------- | ------- | ---------- | ------ |
-| `u-card` 的所有属性 | [官方文档](https://uviewui.com/components/card.html#props) | -       | -          | -      |
-| rowKey              | 每条数据的唯一键                                           | String  | -          | -      |
-| formPath            | 跳转到表单页的路径，需要先在 pages.json 注册               | String  | -          | -      |
-| formKeys            | 跳转到表单携带的参数，以避免 url 过长，默认是整条数据      | Array   | -          | []     |
-| sticky              | 搜索栏和过滤栏是否吸顶                                     | Boolean | true/false | true   |
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| `u-card` 的所有属性 | [官方文档](https://uviewui.com/components/card.html#props) | - | - | - |
+| rowKey | 每条数据的唯一键 | String | - | - |
+| formPath | 跳转到表单页的路径，需要先在 pages.json 注册 | String | - | - |
+| formKeys | 跳转到表单携带的参数，以避免 url 过长，默认是整条数据 | Array | - | [] |
+| sticky | 搜索栏和过滤栏是否吸顶 | Object/Boolean | - | {enable:true } |
 
 ## Search
 

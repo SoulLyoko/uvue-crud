@@ -1,6 +1,9 @@
 <template>
   <view class="uvue-list">
-    <u-sticky offset-top="0" :enable="!!listOption.sticky && stickySafe">
+    <u-sticky
+      v-bind="typeof listOption.sticky === 'object' ? listOption.sticky : {}"
+      :enable="listOption.sticky.enable && stickySafe"
+    >
       <view class="uvue-list-sticky__wrapper">
         <slot name="searchTop"></slot>
 

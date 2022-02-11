@@ -2,5 +2,5 @@ export const defaultOption = {
   rowKey: "", //唯一键
   formPath: "", //form页面的地址
   formKeys: [],
-  sticky: true //搜索栏和过滤栏是否吸顶
+  sticky: { enable: true } //搜索栏和过滤栏是否吸顶
 };
