@@ -11005,10 +11005,10 @@ uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.nlark.com/uuid/download/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4=
 
-uview-ui@^1.8.4:
-  version "1.8.4"
-  resolved "https://registry.npmjs.org/uview-ui/-/uview-ui-1.8.4.tgz#e32bbf2379421d319022e324e1cb7b5387d3bd44"
-  integrity sha512-Zr+D5dFdNy6CdHQLBEXeGq/w0LkjxzBtsgaaDwLl0P58g67H7fBBDvy6AzWK/k0c7dwPYMBiK7I4Tr9p92+0DA==
+uview-ui@^1.8.5:
+  version "1.8.5"
+  resolved "https://registry.npmmirror.com/uview-ui/-/uview-ui-1.8.5.tgz#15bc72b8542285db2d09f99f24c629e3f9832a3e"
+  integrity sha512-dZHtRAH5HW1dLZW5HfO0hDrGpcxnMgbLDLKxbM/jRvgytJBKF7icpuIU607fVF0lGaKp3jUE/IhqoIw4uliYAA==
 
 v8-compile-cache@^2.0.3:
   version "2.3.0"

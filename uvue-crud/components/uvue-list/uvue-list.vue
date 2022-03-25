@@ -28,7 +28,7 @@
     <view class="uvue-list__wrapper">
       <u-card
         v-for="(row, index) in data"
-        :key="listOption.rowKey ? row[listOption.rowKey] : index"
+        :key="(listOption.rowKey && row[listOption.rowKey]) || index"
         class="uvue-list-card"
         v-bind="{ ...listOption, ...row }"
         @click="cardClick('item', row, index)"
