@@ -73,6 +73,13 @@ export const formOption = {
       type: "checkbox",
       dictData: pro()
     },
-    { label: "优惠", prop: "discount" }
+    { label: "优惠", prop: "discount" },
+    {
+      label: "日期",
+      prop: "date",
+      type: "date",
+      valueFormat: "yyyy-mm-dd hh:MM:ss",
+      format: "yyyy-mm-dd"
+    }
   ]
 };

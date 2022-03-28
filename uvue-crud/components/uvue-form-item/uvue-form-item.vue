@@ -24,7 +24,12 @@
 
       <template v-if="pickerTypes.includes($attrs.type)">
         <!-- 作为picker组件的value显示 -->
-        <u-input v-bind="$attrs" type="select" @click="!$attrs.disabled && (pickerShow = true)"></u-input>
+        <u-input
+          v-bind="$attrs"
+          type="select"
+          :value="displayFormat || $attrs.value"
+          @click="!$attrs.disabled && (pickerShow = true)"
+        ></u-input>
         <u-picker
           v-bind="$attrs"
           v-model="pickerShow"
@@ -178,6 +183,15 @@ export default {
         default:
           return undefined;
       }
+    },
+    displayFormat() {
+      const { value, format, type } = this.$attrs;
+      const defaultFormat = {
+        date: "yyyy-mm-dd",
+        time: "hh:MM:ss",
+        datetime: "yyyy-mm-dd hh:MM:ss"
+      };
+      return value ? this.$u.timeFormat(value, format || defaultFormat[type]) : "";
     }
   },
   methods: {
@@ -198,13 +212,13 @@ export default {
       this.updateValue(value);
     },
     pickerConfirm(value) {
-      const { format, type } = this.$attrs;
-      const defaultFormat = {
+      const { valueFormat, type } = this.$attrs;
+      const defaultValueFormat = {
         date: "yyyy-mm-dd",
         time: "hh:MM:ss",
         datetime: "yyyy-mm-dd hh:MM:ss"
       };
-      const result = this.$u.timeFormat(value.timestamp, format || defaultFormat[type]);
+      const result = this.$u.timeFormat(value.timestamp, valueFormat || defaultValueFormat[type]);
       this.updateValue(result);
     },
     checkboxChange({ value: check, name }) {
