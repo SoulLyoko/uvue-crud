@@ -27,7 +27,7 @@
         <u-input
           v-bind="$attrs"
           type="select"
-          :value="displayFormat || $attrs.value"
+          :value="pickerLabel"
           @click="!$attrs.disabled && (pickerShow = true)"
         ></u-input>
         <u-picker
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { filterTreeNode } from "../../utils";
+import { filterTreeNode, toString } from "../../utils";
 
 export default {
   name: "uvue-form-item",
@@ -145,14 +145,14 @@ export default {
       } else {
         //单列
         const find = dictData.find(item => item.value === value) || {};
-        return find.label || value;
+        return find.label || toString(value);
       }
     },
     // 已选择action的label
     actionLabel() {
       const { dictData, value } = this.$attrs;
       const find = dictData.find(dict => dict.value === value) || {};
-      return find.label || value;
+      return find.label || toString(value);
     },
     pickerParams() {
       switch (this.$attrs.type) {
@@ -184,14 +184,14 @@ export default {
           return undefined;
       }
     },
-    displayFormat() {
+    pickerLabel() {
       const { value, format, type } = this.$attrs;
       const defaultFormat = {
         date: "yyyy-mm-dd",
         time: "hh:MM:ss",
         datetime: "yyyy-mm-dd hh:MM:ss"
       };
-      return value ? this.$u.timeFormat(value, format || defaultFormat[type]) : "";
+      return value ? this.$u.timeFormat(value, format || defaultFormat[type]) : toString(value);
     }
   },
   methods: {
