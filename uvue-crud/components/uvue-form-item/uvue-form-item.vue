@@ -191,7 +191,7 @@ export default {
         time: "hh:MM:ss",
         datetime: "yyyy-mm-dd hh:MM:ss"
       };
-      return value ? this.$u.timeFormat(value, format || defaultFormat[type]) : toString(value);
+      return value ? this.$u.timeFormat(new Date(value), format || defaultFormat[type]) : toString(value);
     }
   },
   methods: {
