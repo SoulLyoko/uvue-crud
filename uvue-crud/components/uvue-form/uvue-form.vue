@@ -159,7 +159,7 @@ export default {
     },
     clearValidate(props) {
       const fields = this.$refs.uForm?.fields;
-      const fieldsToClear = props?.length ? fields.filter(e => props.includes(e.prop)) : fields;
+      const fieldsToClear = props?.length ? fields?.filter(e => props.includes(e.prop)) : fields;
       fieldsToClear?.forEach(field => {
         field.validateMessage = "";
         field.validateState = "";
