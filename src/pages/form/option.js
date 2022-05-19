@@ -14,10 +14,10 @@ const pro = () => {
 };
 
 export const formOption = {
-  labelWidth: 100,
+  labelWidth: "auto",
   column: [
-    { label: "标题", prop: "title" },
-    { label: "图片", prop: "img" },
+    { label: "标题", prop: "title", rules: [{ required: true, message: "不能为空" }] },
+    { label: "图片", prop: "img", display: true },
     {
       label: "品类",
       prop: "category",

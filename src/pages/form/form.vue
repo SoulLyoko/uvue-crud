@@ -1,6 +1,13 @@
 <template>
   <view style="padding: 20rpx">
-    <uvue-form v-model="formData" :option="formOption" :formType="formType" @submit="handleSubmit"></uvue-form>
+    <uvue-form
+      ref="uForm"
+      v-model="formData"
+      :option="formOption"
+      :defaults.sync="defaults"
+      :formType="formType"
+      @submit="handleSubmit"
+    ></uvue-form>
   </view>
 </template>
 
@@ -11,6 +18,7 @@ export default {
   data() {
     return {
       formOption,
+      defaults: {},
       formData: {},
       formType: ""
     };
@@ -24,8 +32,8 @@ export default {
     }
   },
   methods: {
-    handleSubmit(form, done) {
-      done();
+    handleSubmit(form, loading) {
+      loading?.();
     }
   }
 };
