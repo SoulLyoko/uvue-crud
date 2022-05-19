@@ -7,7 +7,7 @@
 ```html
 <template>
   <view>
-    <uvue-form v-model="formData" :option="formOption" @submit="handleSubmit"></uvue-form>
+    <uvue-form v-model="formData" :option="formOption" :defaults.sync="defaults" @submit="handleSubmit"></uvue-form>
   </view>
 </template>
 
@@ -15,6 +15,7 @@
   export default {
     data() {
       return {
+        defaults: {},
         formData: {
           username: "admin",
           sex: "1"
@@ -78,7 +79,8 @@
 | --- | --- | --- | --- | --- |
 | v-model | 表单数据对象 | Object | - | - |
 | option | 列表配置，见下方说明 | Object | - | - |
-| formType | 表单类型,用于 addDisaplay,editDisplay,viewDisplay,addDisabled,editDisabled 属性的判断 | String | add/edit/view | add |
+| formType | 表单类型,用于 addDisplay,editDisplay,viewDisplay,addDisabled,editDisabled 属性的判断 | String | add/edit/view | add |
+| defaults | 配置同步对象，用于 column 属性的动态修改 | Object | - | - |
 
 ## Option
 
@@ -107,7 +109,7 @@
 | viewDisplay | 查看模式模式显示状态 | Boolean | - | true |
 | disabled | 禁用状态 | Boolean | - | false |
 | addDisabled | 新增模式禁用状态 | Boolean | - | false |
-| editDisabled | 查看模式禁用状态 | Boolean | - | false |
+| editDisabled | 编辑模式禁用状态 | Boolean | - | false |
 | transform | 多选时(如 select 的多列、联动模式和 checkbox)是否将数组转为逗号分隔的字符串 | Boolean | - | false |
 | format | 日期时间显示格式化 | String | - | - |
 | valueFormat | 日期时间值格式化 | String | - | - |
