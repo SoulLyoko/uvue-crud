@@ -31,6 +31,12 @@ export default {
       this.formData = formData;
     }
   },
+  watch: {
+    "formData.img"() {
+      const rules = this.defaults.title.rules;
+      this.defaults.title.rules = rules.length ? [] : [{ required: true, message: "不能为空" }];
+    }
+  },
   methods: {
     handleSubmit(form, loading) {
       loading?.();

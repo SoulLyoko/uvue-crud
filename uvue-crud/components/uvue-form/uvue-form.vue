@@ -154,10 +154,16 @@ export default {
           this.rules[key] = col.rules;
         }
       });
-      const formData = { ...this.value };
-      this.resetFields();
-      this.$emit("input", formData);
       this.setRules(this.rules);
+      this.clearValidate();
+    },
+    clearValidate(props) {
+      const fields = this.$refs.uForm?.fields;
+      const fieldsToClear = props?.length ? fields.filter(e => props.includes(e.prop)) : fields;
+      fieldsToClear?.forEach(field => {
+        field.validateMessage = "";
+        field.validateState = "";
+      });
     },
     setRules(rules) {
       this.$refs.uForm?.setRules(rules);
