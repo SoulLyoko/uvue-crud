@@ -1,21 +1,34 @@
 <template>
-  <view class="uvue-form-item">
-    <u-input v-if="inputTypes.includes($attrs.type as string)" v-bind="$attrs"></u-input>
+  <u-form-item class="uvue-form-item" v-bind="$attrs">
+    <!-- 自定义的表单项 -->
+    <view class="uvue-form-item__content" v-if="$slots[$attrs.prop as string]">
+      <slot :name="$attrs.prop" v-bind="$attrs" :dic="dic"></slot>
+    </view>
 
-    <uvue-datetime-picker v-if="pickerTypes.includes($attrs.type as string)" v-bind="$attrs"></uvue-datetime-picker>
+    <!-- 默认的表单项 -->
+    <view class="uvue-form-item__content" v-else>
+      <u-input v-if="inputTypes.includes($attrs.type as string)" v-bind="$attrs"></u-input>
 
-    <u-textarea v-if="$attrs.type === 'textarea'" v-bind="$attrs"></u-textarea>
+      <uvue-datetime-picker v-if="pickerTypes.includes($attrs.type as string)" v-bind="$attrs"></uvue-datetime-picker>
 
-    <uvue-select v-if="$attrs.type === 'select'" v-bind="$attrs" :dic="dic"></uvue-select>
+      <u-textarea v-if="$attrs.type === 'textarea'" v-bind="$attrs"></u-textarea>
 
-    <uvue-cascader v-if="$attrs.type === 'cascader'" v-bind="$attrs" :dic="dic"></uvue-cascader>
+      <uvue-select v-if="$attrs.type === 'select'" v-bind="$attrs" :dic="dic"></uvue-select>
 
-    <uvue-checkbox v-if="$attrs.type === 'checkbox'" v-bind="$attrs" :dic="dic"></uvue-checkbox>
+      <uvue-cascader v-if="$attrs.type === 'cascader'" v-bind="$attrs" :dic="dic"></uvue-cascader>
 
-    <uvue-radio v-if="$attrs.type === 'radio'" v-bind="$attrs" :dic="dic"></uvue-radio>
+      <uvue-checkbox v-if="$attrs.type === 'checkbox'" v-bind="$attrs" :dic="dic"></uvue-checkbox>
 
-    <uvue-switch v-if="$attrs.type === 'switch'" v-bind="$attrs" :dic="dic"></uvue-switch>
-  </view>
+      <uvue-radio v-if="$attrs.type === 'radio'" v-bind="$attrs" :dic="dic"></uvue-radio>
+
+      <uvue-switch v-if="$attrs.type === 'switch'" v-bind="$attrs" :dic="dic"></uvue-switch>
+    </view>
+
+    <!-- 表单项的右插槽 -->
+    <template #right>
+      <slot :name="$attrs.prop + '-right'" v-bind="$attrs" :dic="dic"></slot>
+    </template>
+  </u-form-item>
 </template>
 
 <script setup lang="ts">
@@ -31,5 +44,8 @@ const dic = useDict(useAttrs(), useConfig().request);
 <style lang="scss" scoped>
 .uvue-form-item {
   width: 100%;
+  &__content {
+    width: 100%;
+  }
 }
 </style>

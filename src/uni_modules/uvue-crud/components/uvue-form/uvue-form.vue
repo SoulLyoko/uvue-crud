@@ -1,24 +1,46 @@
 <template>
   <u-form class="uvue-form" v-bind="option" ref="formRef" :model="modelValue" :rules="rules">
-    <template v-for="(item, index) in option.column" :key="item.prop || index">
-      <u-form-item v-if="item.display" v-bind="item">
-        <!-- 自定义的表单项 -->
-        <slot v-if="$slots[item.prop]" :name="item.prop" v-bind="item"></slot>
-
-        <!-- 默认的表单项 -->
-        <uvue-form-item
-          v-else
-          v-bind="item"
-          :modelValue="modelValue[item.prop]"
-          @update:modelValue="updateModelValue(item.prop, $event)"
-        ></uvue-form-item>
-
-        <!-- 表单项的右插槽 -->
-        <template #right>
-          <slot :name="item.prop + '-right'" v-bind="item"></slot>
+    <template v-for="(columnItem, columnIndex) in option.column" :key="columnItem.prop || columnIndex">
+      <uvue-form-item v-if="columnItem.display" v-bind="columnItem" v-model="vModel[columnItem.prop]">
+        <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
+          <slot :name="slotName" v-bind="slotProps"></slot>
         </template>
-      </u-form-item>
+      </uvue-form-item>
     </template>
+
+    <template v-if="option.group?.length && option.tabs">
+      <u-tabs :list="option.group" :current="currentTab" keyName="label" @change="currentTab = $event.index"></u-tabs>
+      <template v-for="(groupItem, groupIndex) in option.group" :key="groupItem.prop || groupIndex">
+        <template v-if="groupItem.display">
+          <template v-for="(columnItem, columnIndex) in groupItem.column" :key="columnItem.prop || columnIndex">
+            <uvue-form-item
+              v-if="columnItem.display"
+              v-bind="columnItem"
+              v-model="vModel[columnItem.prop]"
+              :style="groupIndex === currentTab ? '' : 'display:none'"
+            >
+              <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
+                <slot :name="slotName" v-bind="slotProps"></slot>
+              </template>
+            </uvue-form-item>
+          </template>
+        </template>
+      </template>
+    </template>
+
+    <u-collapse v-if="option.group?.length && !option.tabs" :value="defaultCollapse">
+      <template v-for="(groupItem, groupIndex) in option.group" :key="groupItem.prop || groupIndex">
+        <u-collapse-item v-if="groupItem.display" :title="groupItem.label" :name="groupItem.prop">
+          <template v-for="(columnItem, columnIndex) in groupItem.column" :key="columnItem.prop || columnIndex">
+            <uvue-form-item v-if="columnItem.display" v-bind="columnItem" v-model="vModel[columnItem.prop]">
+              <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
+                <slot :name="slotName" v-bind="slotProps"></slot>
+              </template>
+            </uvue-form-item>
+          </template>
+        </u-collapse-item>
+      </template>
+    </u-collapse>
 
     <u-button
       v-if="option.submitBtn && formType !== 'view'"
@@ -44,29 +66,41 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
 
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useOption, useRules, useMethods } from "./composables";
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
   option: { type: Object, default: () => ({}) },
   defaults: { type: Object, default: () => ({}) },
+  permission: { type: Object, default: () => ({}) },
   formType: { type: String as PropType<"add" | "edit" | "view"> }
 });
-const emit = defineEmits(["update:modelValue", "update:defaults", "submit"]);
+const emit = defineEmits(["update:modelValue", "update:defaults", "update:permission", "submit"]);
+
+const vModel = ref<any>({});
+watch(
+  () => props.modelValue,
+  val => {
+    vModel.value = val;
+  },
+  { immediate: true, deep: true }
+);
+watch(
+  vModel,
+  val => {
+    emit("update:modelValue", val);
+  },
+  { deep: true }
+);
 
 const formRef = ref();
 
-const option = useOption(props, emit);
+const { option, defaultCollapse, currentTab, currentGroup } = useOption(props, emit);
 const rules = useRules(option, formRef);
 const methods = useMethods(formRef);
 const { validate, resetFields } = methods;
 defineExpose(methods);
-
-function updateModelValue(prop: string, value: any) {
-  const data = { ...props.modelValue, [prop]: value };
-  emit("update:modelValue", data);
-}
 
 const submitLoading = ref(false);
 async function onSubmit() {

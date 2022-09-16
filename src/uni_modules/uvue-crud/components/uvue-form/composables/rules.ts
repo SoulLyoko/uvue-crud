@@ -1,12 +1,10 @@
 import { computed, watch } from "vue";
 
+import { flatGroupColumn } from "./option";
+
 export function useRules(option: any, formRef: any) {
   const rules = computed(() => {
-    return Object.fromEntries(
-      option.value.column.map((col: any) => {
-        return [col.prop, col.rules || []];
-      })
-    );
+    return Object.fromEntries(flatGroupColumn(option.value).map(col => [col.prop, col.rules || []]));
   });
 
   watch(
@@ -14,7 +12,8 @@ export function useRules(option: any, formRef: any) {
     () => {
       if (!formRef.value) return;
       formRef.value.setRules(rules.value);
-    }
+    },
+    { immediate: true }
   );
 
   return rules;
