@@ -2,9 +2,30 @@ import { computed, watch } from "vue";
 
 import { flatGroupColumn } from "./option";
 
-export function useRules(option: any, formRef: any) {
+export function useRules(option: any, form: any, formRef: any) {
   const rules = computed(() => {
-    return Object.fromEntries(flatGroupColumn(option.value).map(col => [col.prop, col.rules || []]));
+    const allColumn = flatGroupColumn(option.value);
+    const allColumnRules = allColumn.map(col => [col.prop, col.rules || []]);
+
+    const dynamicColumn = allColumn.filter(e => e.type == "dynamic");
+    const dynamicColumnRules = dynamicColumn
+      .map(dcol => {
+        if (!Array.isArray(form.value?.[dcol.prop])) return [];
+        return (
+          form.value?.[dcol.prop]?.map((item: any, index: number) => {
+            return (
+              dcol.children?.column?.map((col: any) => {
+                return [`${dcol.prop}.${index}.${col.prop}`, col.rules || []];
+              }) ?? []
+            );
+          }) ?? []
+        );
+      })
+      .flat(2);
+
+    const allRules = [...allColumnRules, ...dynamicColumnRules];
+
+    return Object.fromEntries(allRules);
   });
 
   watch(

@@ -35,7 +35,6 @@ const dicMap = {
 
 const request = {
   get: (url: keyof typeof dicMap) => {
-    console.log("🚀 ~ file: main.ts ~ line 38 ~ url", url);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve({ data: dicMap[url] });

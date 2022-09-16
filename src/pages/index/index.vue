@@ -1,19 +1,14 @@
 <template>
-  <uvue-form
-    v-model="form"
-    v-model:defaults="defaults"
-    :permission="permission"
-    :option="option"
-    style="padding: 20rpx"
-    @submit="onSubmit"
-  >
-    <template #slot="scoped">
-      <view>{{ scoped }}</view>
-    </template>
-    <template #slot-right>
-      <view>slot-right</view>
-    </template>
-  </uvue-form>
+  <view style="padding: 20rpx">
+    <uvue-form v-model="form" v-model:defaults="defaults" :permission="permission" :option="option" @submit="onSubmit">
+      <template #slot="scoped">
+        <view>{{ scoped }}</view>
+      </template>
+      <template #slot-right>
+        <view>slot-right</view>
+      </template>
+    </uvue-form>
+  </view>
 </template>
 
 <script setup lang="ts">
@@ -21,7 +16,7 @@ import { ref, watch, computed } from "vue";
 
 import { option } from "./option";
 
-const form = ref<any>({ input: "", switch: "" });
+const form = ref<any>({ isTabs: "2", input: "", switch: "" });
 const defaults = ref<any>({});
 
 const permission = computed(() => ({

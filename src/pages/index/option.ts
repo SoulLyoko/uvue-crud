@@ -5,7 +5,7 @@ const group = [
     collapse: false,
     column: [
       { label: "slot", prop: "slot", type: "slot" },
-      { label: "input", prop: "input", type: "input", rules: [{ required: true, message: "请输入" }] },
+      { label: "input", prop: "input", type: "input" },
       { label: "textarea", prop: "textarea", type: "textarea" }
     ]
   },
@@ -26,6 +26,24 @@ const group = [
       { label: "radio", prop: "radio", type: "radio", dicUrl: "datetime" },
       { label: "switch", prop: "switch", type: "switch", dicUrl: "single" }
     ]
+  },
+  {
+    label: "group4",
+    prop: "group4",
+    column: [
+      {
+        label: "dynamic",
+        prop: "dynamic",
+        type: "dynamic",
+        children: {
+          labelWidth: 70,
+          column: [
+            { label: "column1", prop: "column1", rules: [{ required: true, message: "请输入" }] },
+            { label: "column2", prop: "column2" }
+          ]
+        }
+      }
+    ]
   }
 ];
 
@@ -34,7 +52,7 @@ const column = [{ label: "isTabs", prop: "isTabs", type: "switch", dicUrl: "sing
 
 export const option = {
   labelWidth: 70,
-  // tabs: true,
+  tabs: true,
   group,
   column
 };

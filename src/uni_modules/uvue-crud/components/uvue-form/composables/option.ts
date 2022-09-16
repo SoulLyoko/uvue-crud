@@ -31,7 +31,7 @@ export const defaultDictOption = {
   res: "res.data"
 };
 
-function handleGroup(group: any[] = [], formType: string) {
+export function handleGroup(group: any[] = [], formType: string) {
   return group.map(g => {
     return {
       ...defaultGroupOption,
@@ -41,7 +41,7 @@ function handleGroup(group: any[] = [], formType: string) {
   });
 }
 
-function handleColumn(column: any[] = [], formType: string) {
+export function handleColumn(column: any[] = [], formType: string) {
   return column.map(col => {
     const operation = ["select", "cascader", "date", "time", "datetime"].includes(col.type) ? "选择" : "输入";
     const disabledFlags = [!!col.disabled];
@@ -54,14 +54,31 @@ function handleColumn(column: any[] = [], formType: string) {
     formType === "edit" && displayFlags.push(col.editDisplay != false);
     formType === "view" && displayFlags.push(col.viewDisplay != false);
 
-    return {
+    const result = {
       ...defaultColumnOption,
       placeholder: `请${operation} ${col.label}`,
       disabled: disabledFlags.some(bool => bool),
       display: displayFlags.every(bool => bool),
       ...col
     };
+
+    if (col.type === "dynamic") {
+      result.children = handleDynamic(col.children, formType);
+    }
+
+    return result;
   });
+}
+
+export function handleDynamic(dynamic: any, formType: string) {
+  return {
+    ...dynamic,
+    submitBtn: false,
+    emptyBtn: false,
+    addBtn: true,
+    delBtn: true,
+    column: handleColumn(dynamic.column, formType)
+  };
 }
 
 export function flatGroupColumn({ column, group }: { column: any[]; group: any[] }) {
@@ -70,7 +87,6 @@ export function flatGroupColumn({ column, group }: { column: any[]; group: any[]
 
 export function useOption(props: any, emit: any) {
   const option = computed(() => {
-    console.log("🚀 ~ file: option.ts ~ line 77 ~ option ~ props.permission", props.permission);
     return {
       ...defaultFormOption,
       ...props.option,

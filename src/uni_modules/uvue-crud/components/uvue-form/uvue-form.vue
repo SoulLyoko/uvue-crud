@@ -63,6 +63,10 @@
   </u-form>
 </template>
 
+<script lang="ts">
+export default { inheritAttrs: false };
+</script>
+
 <script setup lang="ts">
 import type { PropType } from "vue";
 
@@ -81,23 +85,15 @@ const emit = defineEmits(["update:modelValue", "update:defaults", "update:permis
 const vModel = ref<any>({});
 watch(
   () => props.modelValue,
-  val => {
-    vModel.value = val;
-  },
+  val => (vModel.value = val),
   { immediate: true, deep: true }
 );
-watch(
-  vModel,
-  val => {
-    emit("update:modelValue", val);
-  },
-  { deep: true }
-);
+watch(vModel, val => emit("update:modelValue", val), { deep: true });
 
 const formRef = ref();
 
 const { option, defaultCollapse, currentTab, currentGroup } = useOption(props, emit);
-const rules = useRules(option, formRef);
+const rules = useRules(option, vModel, formRef);
 const methods = useMethods(formRef);
 const { validate, resetFields } = methods;
 defineExpose(methods);

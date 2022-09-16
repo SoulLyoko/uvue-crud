@@ -1,5 +1,10 @@
 <template>
-  <u-form-item class="uvue-form-item" v-bind="$attrs">
+  <u-form-item
+    class="uvue-form-item"
+    v-bind="$attrs"
+    :label="$attrs.type === 'dynamic' ? '' : $attrs.label"
+    :prop="$attrs.dynamicProp || $attrs.prop"
+  >
     <!-- 自定义的表单项 -->
     <view class="uvue-form-item__content" v-if="$slots[$attrs.prop as string]">
       <slot :name="$attrs.prop" v-bind="$attrs" :dic="dic"></slot>
@@ -22,6 +27,8 @@
       <uvue-radio v-if="$attrs.type === 'radio'" v-bind="$attrs" :dic="dic"></uvue-radio>
 
       <uvue-switch v-if="$attrs.type === 'switch'" v-bind="$attrs" :dic="dic"></uvue-switch>
+
+      <uvue-dynamic v-if="$attrs.type === 'dynamic'" v-bind="$attrs"></uvue-dynamic>
     </view>
 
     <!-- 表单项的右插槽 -->
@@ -30,6 +37,10 @@
     </template>
   </u-form-item>
 </template>
+
+<script lang="ts">
+export default { inheritAttrs: false };
+</script>
 
 <script setup lang="ts">
 import { useAttrs } from "vue";
