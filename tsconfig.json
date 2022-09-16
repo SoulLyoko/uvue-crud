@@ -1,0 +1,12 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["esnext", "dom"],
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["@dcloudio/types"]
+  },
+  "include": ["src"]
+}

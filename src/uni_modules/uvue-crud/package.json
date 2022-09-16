@@ -1,0 +1,23 @@
+{
+  "name": "uvue-crud",
+  "version": "2.0.0-beta.1",
+  "description": "uvue-crud",
+  "author": "Lyoko",
+  "license": "MIT",
+  "main": "index.js",
+  "keywords": [
+    "vue",
+    "uni-app",
+    "uvue-crud",
+    "filter",
+    "list",
+    "form",
+    "filter",
+    "cascader"
+  ],
+  "dependencies": {
+    "dayjs": "^1.11.5",
+    "lodash-es": "^4.17.21",
+    "uview-plus": "^3.1.12"
+  }
+}
