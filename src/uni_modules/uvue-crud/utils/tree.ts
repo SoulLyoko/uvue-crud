@@ -1,6 +1,8 @@
 import type { Data, TreeNode } from "../types";
 
-import { cloneDeep } from "lodash-es";
+export function jsonClone<T>(data: T): T {
+  return JSON.parse(JSON.stringify(data));
+}
 
 export interface BuildTreeOptions {
   /**
@@ -69,7 +71,7 @@ export interface FlatTreeOptions {
  */
 export function flatTree<T extends TreeNode>(tree: T[], options: FlatTreeOptions = {}): T[] {
   const { childrenKey = "children", depth = 0, returnDepth = false, returnChildren = false } = options;
-  const list = cloneDeep(tree);
+  const list = jsonClone(tree);
   return list
     .map((node: T & { _depth?: number }) => {
       returnDepth && (node._depth = depth);
@@ -106,7 +108,7 @@ export interface FilterTreeOptions {
  */
 export function filterTree<T extends TreeNode>(tree: T[], fn: (node: T) => boolean, options: FilterTreeOptions = {}) {
   const { childrenKey = "children", flat = true } = options;
-  const list = cloneDeep(tree);
+  const list = jsonClone(tree);
   if (flat) {
     const result = [];
     for (const node of list) {
@@ -143,7 +145,7 @@ export interface FindTreeOptions {
  */
 export function findTree<T extends TreeNode>(tree: T[], fn: (node: T) => boolean, options: FindTreeOptions = {}) {
   const { childrenKey = "children", returnChildren = false } = options;
-  const list = cloneDeep(tree);
+  const list = jsonClone(tree);
   for (const node of list) {
     if (fn(node)) {
       !returnChildren && delete node[childrenKey];
