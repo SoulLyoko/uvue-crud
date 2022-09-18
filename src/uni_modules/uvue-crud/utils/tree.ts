@@ -1,8 +1,6 @@
 import type { Data, TreeNode } from "../types";
 
-export function jsonClone<T>(data: T): T {
-  return JSON.parse(JSON.stringify(data));
-}
+import { jsonClone } from "./object";
 
 export interface BuildTreeOptions {
   /**

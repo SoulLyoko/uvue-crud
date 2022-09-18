@@ -1,6 +1,6 @@
 <template>
   <u-loading-page v-if="option.loading && loading" v-bind="option.loading" :loading="loading"></u-loading-page>
-  <view v-else class="uvue-list">
+  <u-list v-else class="uvue-list" v-bind="{ ...$attrs, ...option }">
     <u-sticky customNavHeight="0" v-bind="option.sticky">
       <slot name="search-top"></slot>
       <u-search
@@ -14,9 +14,9 @@
 
     <slot name="list-top"></slot>
 
-    <template v-for="(row, index) in data" :key="(option.rowKey && row[option.rowKey]) || index">
+    <u-list-item v-for="(row, index) in data" :key="(option.rowKey && row[option.rowKey]) || index">
       <slot name="list-item" :row="row" :index="index"></slot>
-    </template>
+    </u-list-item>
 
     <u-empty v-if="option.empty && !data.length" v-bind="option.empty">
       <template #default v-if="$slots['empty']">
@@ -27,17 +27,12 @@
     <u-loadmore v-if="option.loadmore" :status="status" v-bind="option.loadmore" @loadmore="onLoadmore" />
 
     <slot name="list-bottom"></slot>
-    <u-back-top v-if="option.backtop" :scroll-top="scrollTop" v-bind="option.backtop">
-      <template #default v-if="$slots['back-top']">
-        <slot name="back-top"></slot>
-      </template>
-    </u-back-top>
-  </view>
+  </u-list>
 </template>
 
 <script setup lang="ts">
-import componentProps from "./props";
-import { useOption, useSearch } from "./composables";
+import componentProps from "../uvue-list/props";
+import { useOption, useSearch } from "../uvue-list/composables";
 
 const props = defineProps(componentProps);
 const emit = defineEmits(["update:search", "loadmore"]);

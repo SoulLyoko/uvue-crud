@@ -1,3 +1,7 @@
+export const listOption = {
+  rowKey: "id"
+};
+
 const group = [
   {
     label: "group1",
@@ -50,7 +54,7 @@ const group = [
 // const column = group.map(g => g.column).flat();
 const column = [{ label: "isTabs", prop: "isTabs", type: "switch", dicUrl: "single" }];
 
-export const option = {
+export const formOption = {
   labelWidth: 70,
   tabs: true,
   group,

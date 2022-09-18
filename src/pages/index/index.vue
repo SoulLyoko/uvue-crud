@@ -1,38 +1,59 @@
 <template>
-  <view style="padding: 20rpx">
-    <uvue-form v-model="form" v-model:defaults="defaults" :permission="permission" :option="option" @submit="onSubmit">
-      <template #slot="scoped">
-        <view>{{ scoped }}</view>
-      </template>
-      <template #slot-right>
-        <view>slot-right</view>
-      </template>
-    </uvue-form>
-  </view>
+  <uvue-list
+    v-model:searchValue="searchValue"
+    :data="data"
+    :option="listOption"
+    :loading="loading"
+    :status="status"
+    :scrollTop="scrollTop"
+    @loadmore="loadData(true)"
+    @search-custom="onSearch"
+  >
+    <template #list-item="{ row }">
+      <u-cell :title="row.userName" :label="row.nickName" isLink></u-cell>
+    </template>
+  </uvue-list>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from "vue";
+import { ref } from "vue";
+import { onPullDownRefresh, onPageScroll, onReachBottom } from "@dcloudio/uni-app";
 
-import { option } from "./option";
+import { listOption } from "./option";
 
-const form = ref<any>({ isTabs: "2", input: "", switch: "" });
-const defaults = ref<any>({});
+const data = ref<any[]>([]);
+const status = ref("loadmore");
+const loading = ref(false);
+const searchValue = ref("");
 
-const permission = computed(() => ({
-  tabs: form.value.isTabs === "2"
-}));
+const loadData = (isLoadmore = false, isFirst = false) => {
+  if (isLoadmore && status.value === "nomore") return;
+  const total = 20;
+  status.value = "loading";
+  if (isFirst) loading.value = true;
+  setTimeout(() => {
+    if (!isLoadmore) data.value = [];
+    data.value.push(
+      ...Array.from({ length: 10 }).map((e, i) => {
+        const id = i + data.value.length;
+        return { id, userName: "admin" + id, nickName: "管理员" + id };
+      })
+    );
+    status.value = data.value.length === total ? "nomore" : "loadmore";
+    uni.stopPullDownRefresh();
+    loading.value = false;
+  }, 1000);
+};
+loadData(false, true);
 
-watch(
-  () => form.value.radio,
-  val => {
-    defaults.value.datetime.type = val;
-    defaults.value.datetime.label = val;
-  }
-);
+const scrollTop = ref(0);
+onPageScroll(e => {
+  scrollTop.value = e.scrollTop;
+});
+onPullDownRefresh(loadData);
+onReachBottom(() => loadData(true));
 
-function onSubmit(form: any, loading: () => void) {
-  console.log("🚀 ~ file: index.vue ~ line 58 ~ onSubmit ~ form", form);
-  loading();
+function onSearch() {
+  loadData(false, true);
 }
 </script>
