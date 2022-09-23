@@ -10,7 +10,7 @@
     @search-custom="onSearch"
   >
     <template #list-item="{ row }">
-      <u-cell :title="row.userName" :label="row.nickName" isLink></u-cell>
+      <u-cell :title="row.userName" :label="row.nickName" isLink url="/pages/index/form"></u-cell>
     </template>
   </uvue-list>
 </template>

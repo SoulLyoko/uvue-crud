@@ -1,3 +1,5 @@
+import CustomComponent from "./CustomComponent.vue";
+
 export const listOption = {
   rowKey: "id"
 };
@@ -10,7 +12,8 @@ const group = [
     column: [
       { label: "slot", prop: "slot", type: "slot" },
       { label: "input", prop: "input", type: "input" },
-      { label: "textarea", prop: "textarea", type: "textarea" }
+      { label: "textarea", prop: "textarea", type: "textarea" },
+      { label: "custom", prop: "custom", component: CustomComponent }
     ]
   },
   {

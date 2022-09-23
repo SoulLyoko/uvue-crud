@@ -1,82 +1,19 @@
-<script>
-import { defaultDictOption } from "./option";
+<template>
+  <component :is="'uvue-' + type" v-bind="$attrs" :dic="dic"></component>
+</template>
 
-export default {
-  name: "uvue-dict",
-  props: ["value"],
-  render() {
-    return "";
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    handleDictData(prop, data, option) {
-      const dictOption = {
-        ...defaultDictOption,
-        ...(option || {})
-      };
-      const dictDataType = Object.prototype.toString.call(data);
-      if (dictDataType.includes("Function")) {
-        const dictDataFunction = data;
-        this.setDictStorage(prop, dictDataFunction(), dictOption);
-      } else if (dictDataType.includes("Promise")) {
-        const dictDataPromise = data;
-        dictDataPromise
-          // eslint-disable-next-line no-unused-vars
-          .then(res => {
-            const data = eval(dictOption.res);
-            this.setDictStorage(prop, data, dictOption);
-          })
-          .catch(err => console.error("请求字典错误:" + err));
-      } else if (dictDataType.includes("Array")) {
-        this.setDictStorage(prop, data, dictOption);
-      }
-    },
-    setDictStorage(prop, data, option) {
-      const dictOption = {
-        ...defaultDictOption,
-        ...(option || {})
-      };
-      let dictStorage = this.value || {};
-      dictStorage[prop] = dictMap(data);
-      this.$emit("input", dictStorage);
+<script setup lang="ts">
+import type { PropType } from "vue";
+import type { DicItem } from "../../types";
 
-      function dictMap(dictArr) {
-        return dictArr.map(dict => {
-          // 兼容select的多列模式mutil-column
-          if (Array.isArray(dict)) return dictMap(dict);
+import { useAttrs } from "vue";
 
-          const label = dict[dictOption.label];
-          let value = dict[dictOption.value];
-          let children = dict[dictOption.children];
-          if (children?.length) {
-            children = dictMap(dict.children);
-          }
+import { useConfig, useDict } from "../../composables";
 
-          switch (option.dataType) {
-            case "string":
-              value = String(value);
-              break;
-            case "number":
-              value = Number(value);
-              break;
-            default:
-              break;
-          }
+const props = defineProps({
+  type: { type: String as PropType<"select" | "cascader" | "checkbox" | "radio" | "switch">, default: "select" },
+  dic: { type: Array as PropType<DicItem> }
+});
 
-          return {
-            label,
-            value,
-            text: label,
-            children
-          };
-        });
-      }
-    },
-    getDictStorage(prop) {
-      return this.dictStorage[prop];
-    }
-  }
-};
+const dic = props.dic ?? useDict(useAttrs(), useConfig().request);
 </script>
