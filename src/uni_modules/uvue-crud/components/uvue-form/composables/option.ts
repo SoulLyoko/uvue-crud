@@ -82,12 +82,12 @@ export function handleDynamic(dynamic: any, formType: string) {
   };
 }
 
-export function flatGroupColumn({ column, group }: { column: any[]; group: any[] }) {
-  return [...column, ...group.map(g => g.column).flat()];
+export function flatGroupColumn({ column, group }: Pick<UvueFormOption, "group" | "column">) {
+  return [...column!, ...group!.map(g => g.column!).flat()];
 }
 
 export function useOption(props: any, emit: any) {
-  const option = computed(() => {
+  const option = computed<UvueFormOption>(() => {
     return {
       ...defaultFormOption,
       ...props.option,
@@ -106,7 +106,7 @@ export function useOption(props: any, emit: any) {
 
   const currentTab = ref(0);
   const currentGroup = computed(() => {
-    return option.value.group[currentTab.value] ?? [];
+    return option.value.group?.[currentTab.value] ?? [];
   });
 
   return { option, defaultCollapse, currentTab, currentGroup };

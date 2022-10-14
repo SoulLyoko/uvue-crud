@@ -6,6 +6,6 @@ export const listProps = {
   option: { type: Object as PropType<UvueListOption>, default: () => ({}) },
   searchValue: { type: String },
   loading: { type: Boolean },
-  status: { type: String },
+  status: { type: String as PropType<"loadmore" | "loading" | "nomore"> },
   scrollTop: { type: Number }
 };

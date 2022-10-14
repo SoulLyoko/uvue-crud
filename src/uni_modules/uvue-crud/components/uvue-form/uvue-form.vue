@@ -1,7 +1,7 @@
 <template>
   <u-form class="uvue-form" v-bind="option" ref="formRef" :model="modelValue" :rules="rules">
     <template v-for="(columnItem, columnIndex) in option.column" :key="columnItem.prop || columnIndex">
-      <uvue-form-item v-if="columnItem.display" v-bind="columnItem" v-model="vModel[columnItem.prop]">
+      <uvue-form-item v-if="columnItem.display" v-bind="columnItem" v-model="vModel[columnItem.prop!]">
         <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
           <slot :name="slotName" v-bind="slotProps"></slot>
         </template>
@@ -16,7 +16,7 @@
             <uvue-form-item
               v-if="columnItem.display"
               v-bind="columnItem"
-              v-model="vModel[columnItem.prop]"
+              v-model="vModel[columnItem.prop!]"
               :style="groupIndex === currentTab ? '' : 'display:none'"
             >
               <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
@@ -32,7 +32,7 @@
       <template v-for="(groupItem, groupIndex) in option.group" :key="groupItem.prop || groupIndex">
         <u-collapse-item v-if="groupItem.display" :title="groupItem.label" :name="groupItem.prop">
           <template v-for="(columnItem, columnIndex) in groupItem.column" :key="columnItem.prop || columnIndex">
-            <uvue-form-item v-if="columnItem.display" v-bind="columnItem" v-model="vModel[columnItem.prop]">
+            <uvue-form-item v-if="columnItem.display" v-bind="columnItem" v-model="vModel[columnItem.prop!]">
               <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
                 <slot :name="slotName" v-bind="slotProps"></slot>
               </template>

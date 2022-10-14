@@ -1,7 +1,7 @@
 import type { DicItem, Config } from "../types";
 
 import { ref, watchEffect } from "vue";
-import { treeMap } from "../utils";
+import { serialize, treeMap } from "../utils";
 
 export interface UseDictOptions {
   props?: {
@@ -19,6 +19,8 @@ export interface UseDictOptions {
   dicMethod?: "get" | "post";
 }
 
+const dicStorage: Record<string, DicItem[]> = {};
+
 export function useDict(options: UseDictOptions, request?: Config["request"]) {
   const data = ref<DicItem[]>([]);
 
@@ -33,6 +35,11 @@ export function useDict(options: UseDictOptions, request?: Config["request"]) {
     } = props;
     if (dicData?.length) data.value = dicData;
     if (dicUrl && request) {
+      const cacheKey = dicUrl + (dicQuery ? "?" + serialize(dicQuery) : "");
+      if (dicStorage[cacheKey]) {
+        data.value = dicStorage[cacheKey];
+        return;
+      }
       request[dicMethod](dicUrl, { params: dicQuery, ...dicQuery }).then((res: any) => {
         if (dicFormat) {
           data.value = dicFormat(res);
@@ -46,6 +53,7 @@ export function useDict(options: UseDictOptions, request?: Config["request"]) {
             { childrenKey: children }
           );
         }
+        dicStorage[cacheKey] = data.value;
       });
     }
   });
