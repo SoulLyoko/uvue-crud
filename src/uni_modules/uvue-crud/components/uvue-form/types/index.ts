@@ -3,7 +3,7 @@ import type { AvueFormOption, AvueFormColumn, AvueFormGroup } from "@smallwei/av
 import type { formProps, formEmits } from "../constants";
 
 export type UvueFormProps = ExtractPropTypes<typeof formProps>;
-export type UvueListEmitFn = SetupContext<typeof formEmits>["emit"];
+export type UvueFormEmitFn = SetupContext<typeof formEmits>["emit"];
 
 export interface UvueFormOption<T = any> extends AvueFormOption<T> {
   column?: UvueFormColumn<T>[];

@@ -8,13 +8,11 @@
   "keywords": [
     "vue",
     "uni-app",
-    "uvue-crud",
-    "filter",
-    "list",
-    "form",
-    "filter",
-    "cascader"
+    "uvue-crud"
   ],
+  "exports": {
+    "./*": "./*"
+  },
   "dependencies": {
     "dayjs": "^1.11.5",
     "uview-plus": "^3.1.15"

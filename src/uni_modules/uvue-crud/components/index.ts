@@ -1,12 +1,42 @@
-export { default as UvueCascader } from "./uvue-cascader/uvue-cascader.vue";
-export { default as UvueCheckbox } from "./uvue-checkbox/uvue-checkbox.vue";
-export { default as UvueDatetimePicker } from "./uvue-datetime-picker/uvue-datetime-picker.vue";
-export { default as UvueDict } from "./uvue-dict/uvue-dict.vue";
-export { default as UvueDynamic } from "./uvue-dynamic/uvue-dynamic.vue";
-export * from "./uvue-form/uvue-form.vue";
-export { default as UvueFormItem } from "./uvue-form-item/uvue-form-item.vue";
-export * from "./uvue-list/uvue-list.vue";
-export { default as UvueRadio } from "./uvue-radio/uvue-radio.vue";
-export { default as UvueScrollList } from "./uvue-scroll-list/uvue-scroll-list.vue";
-export { default as UvueSelect } from "./uvue-select/uvue-select.vue";
-export { default as UvueSwitch } from "./uvue-switch/uvue-switch.vue";
+export * from "./uvue-cascader";
+export * from "./uvue-checkbox";
+export * from "./uvue-datetime-picker";
+export * from "./uvue-dict";
+export * from "./uvue-dynamic";
+export * from "./uvue-form";
+export * from "./uvue-form-item";
+export * from "./uvue-list";
+export * from "./uvue-radio";
+export * from "./uvue-scroll-list";
+export * from "./uvue-select";
+export * from "./uvue-switch";
+
+import {
+  UvueCascader,
+  UvueCheckbox,
+  UvueDatetimePicker,
+  UvueDict,
+  UvueDynamic,
+  UvueForm,
+  UvueFormItem,
+  UvueList,
+  UvueRadio,
+  UvueScrollList,
+  UvueSelect,
+  UvueSwitch
+} from ".";
+
+export default {
+  UvueCascader,
+  UvueCheckbox,
+  UvueDatetimePicker,
+  UvueDict,
+  UvueDynamic,
+  UvueForm,
+  UvueFormItem,
+  UvueList,
+  UvueRadio,
+  UvueScrollList,
+  UvueSelect,
+  UvueSwitch
+};

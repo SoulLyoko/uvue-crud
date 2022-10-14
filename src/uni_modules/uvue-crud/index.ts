@@ -1,7 +1,7 @@
 import type { App } from "vue";
 import type { Config } from "./types";
 
-import * as components from "./components";
+import components from "./components";
 import { useConfig } from "./composables";
 
 export * from "./components";
