@@ -1,10 +1,10 @@
 {
   "name": "uvue-crud",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "description": "uvue-crud",
   "author": "Lyoko",
   "license": "MIT",
-  "main": "index.js",
+  "main": "index.ts",
   "keywords": [
     "vue",
     "uni-app",
@@ -17,6 +17,9 @@
   ],
   "dependencies": {
     "dayjs": "^1.11.5",
-    "uview-plus": "^3.1.12"
+    "uview-plus": "^3.1.15"
+  },
+  "devDependencies": {
+    "@yusui/types": "*"
   }
 }

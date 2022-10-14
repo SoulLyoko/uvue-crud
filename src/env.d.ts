@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="@yusui/types/avue/index" />
 
 declare module '*.vue' {
   import { DefineComponent } from 'vue'

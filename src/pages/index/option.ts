@@ -1,7 +1,19 @@
 import CustomComponent from "./CustomComponent.vue";
 
 export const listOption = {
-  rowKey: "id"
+  rowKey: "id",
+  cellGroup: { border: false },
+  cell: { border: false },
+  formatter(row: any) {
+    const { nickName, userName, deptName } = row;
+    return {
+      title: nickName,
+      label: userName,
+      value: deptName,
+      isLink: true,
+      url: "/pages/index/form"
+    };
+  }
 };
 
 const group = [

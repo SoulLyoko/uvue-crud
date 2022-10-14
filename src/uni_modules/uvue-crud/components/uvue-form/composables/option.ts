@@ -1,13 +1,14 @@
 import { computed, ref } from "vue";
+import type { UvueFormOption, UvueFormColumn, UvueFormGroup } from "../types";
 
-export const defaultFormOption = {
+export const defaultFormOption: UvueFormOption = {
   submitBtn: true, // 是否显示提交按钮
   submitText: "提交", // 提交按钮文字
   emptyBtn: true, // 是否显示清空按钮
   emptyText: "清空" // 清空按钮文字
 };
 
-export const defaultColumnOption = {
+export const defaultFormColumn: UvueFormColumn = {
   type: "text",
   display: true,
   addDisplay: true,
@@ -19,7 +20,7 @@ export const defaultColumnOption = {
   clearable: true
 };
 
-export const defaultGroupOption = {
+export const defaultFormGroup: UvueFormGroup = {
   display: true,
   collapse: true
 };
@@ -34,7 +35,7 @@ export const defaultDictOption = {
 export function handleGroup(group: any[] = [], formType: string) {
   return group.map(g => {
     return {
-      ...defaultGroupOption,
+      ...defaultFormGroup,
       ...g,
       column: handleColumn(g.column, formType)
     };
@@ -55,7 +56,7 @@ export function handleColumn(column: any[] = [], formType: string) {
     formType === "view" && displayFlags.push(col.viewDisplay != false);
 
     const result = {
-      ...defaultColumnOption,
+      ...defaultFormColumn,
       placeholder: `请${operation} ${col.label}`,
       disabled: disabledFlags.some(bool => bool),
       display: displayFlags.every(bool => bool),

@@ -8,11 +8,7 @@
     :scrollTop="scrollTop"
     @loadmore="loadData(true)"
     @search-custom="onSearch"
-  >
-    <template #list-item="{ row }">
-      <u-cell :title="row.userName" :label="row.nickName" isLink url="/pages/index/form"></u-cell>
-    </template>
-  </uvue-list>
+  ></uvue-list>
 </template>
 
 <script setup lang="ts">
@@ -36,7 +32,7 @@ const loadData = (isLoadmore = false, isFirst = false) => {
     data.value.push(
       ...Array.from({ length: 10 }).map((e, i) => {
         const id = i + data.value.length;
-        return { id, userName: "admin" + id, nickName: "管理员" + id };
+        return { id, userName: "admin" + id, nickName: "管理员" + id, deptName: "研发部" };
       })
     );
     status.value = data.value.length === total ? "nomore" : "loadmore";

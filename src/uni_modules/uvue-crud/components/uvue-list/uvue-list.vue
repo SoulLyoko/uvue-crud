@@ -1,5 +1,5 @@
 <template>
-  <u-loading-page v-if="option.loading && loading" v-bind="option.loading" :loading="loading"></u-loading-page>
+  <u-loading-page v-if="option.loadingPage && loading" :loading="loading" v-bind="option.loadingPage"></u-loading-page>
   <view v-else class="uvue-list">
     <u-sticky customNavHeight="0" v-bind="option.sticky">
       <slot name="search-top"></slot>
@@ -14,9 +14,27 @@
 
     <slot name="list-top"></slot>
 
-    <template v-for="(row, index) in data" :key="(option.rowKey && row[option.rowKey]) || index">
-      <slot name="list-item" :row="row" :index="index"></slot>
-    </template>
+    <view v-if="$slots['list-item']">
+      <slot
+        v-for="(row, index) in data"
+        :key="(option.rowKey && row[option.rowKey]) || index"
+        name="list-item"
+        :row="row"
+        :index="index"
+      ></slot>
+    </view>
+
+    <u-cell-group v-else v-bind="option.cellGroup">
+      <u-cell
+        v-for="(row, index) in data"
+        :key="(option.rowKey && row[option.rowKey]) || index"
+        v-bind="{ ...option.cell, ...(option.formatter?.(row) ?? row) }"
+      >
+        <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
+          <slot :name="slotName" v-bind="slotProps"></slot>
+        </template>
+      </u-cell>
+    </u-cell-group>
 
     <u-empty v-if="option.empty && !data.length" v-bind="option.empty">
       <template #default v-if="$slots['empty']">
@@ -27,7 +45,8 @@
     <u-loadmore v-if="option.loadmore" :status="status" v-bind="option.loadmore" @loadmore="onLoadmore" />
 
     <slot name="list-bottom"></slot>
-    <u-back-top v-if="option.backtop" :scroll-top="scrollTop" v-bind="option.backtop">
+
+    <u-back-top v-if="option.backTop" :scroll-top="scrollTop" v-bind="option.backTop">
       <template #default v-if="$slots['back-top']">
         <slot name="back-top"></slot>
       </template>
