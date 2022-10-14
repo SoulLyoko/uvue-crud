@@ -1,9 +1,10 @@
-import type { ExtractPropTypes } from "vue";
-import type props from "./props";
+import type { ExtractPropTypes, SetupContext } from "vue";
+import type { listProps, listEmits } from "../constants";
 
-export type Props = ExtractPropTypes<typeof props>;
+export type UvueListProps = ExtractPropTypes<typeof listProps>;
+export type UvueListEmitFn = SetupContext<typeof listEmits>["emit"];
 
-export interface ListOption<T = any> {
+export interface UvueListOption<T = any> {
   /** 唯一键 */
   rowKey?: string;
   /** [吸顶属性](https://uiadmin.net/uview-plus/components/sticky.html#props) */

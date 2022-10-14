@@ -1,5 +1,5 @@
 <template>
-  <u-loading-page v-if="option.loading && loading" v-bind="option.loading" :loading="loading"></u-loading-page>
+  <u-loading-page v-if="option.loadingPage && loading" v-bind="option.loadingPage" :loading="loading"></u-loading-page>
   <u-list v-else class="uvue-list" v-bind="{ ...$attrs, ...option }">
     <u-sticky customNavHeight="0" v-bind="option.sticky">
       <slot name="search-top"></slot>
@@ -31,11 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import componentProps from "../uvue-list/props";
+import { listProps, listEmits } from "../uvue-list/constants";
 import { useOption, useSearch } from "../uvue-list/composables";
 
-const props = defineProps(componentProps);
-const emit = defineEmits(["update:search", "loadmore"]);
+const props = defineProps(listProps);
+const emit = defineEmits(listEmits);
 
 const { option } = useOption(props);
 const { searchValue, searchListeners } = useSearch(props, emit);

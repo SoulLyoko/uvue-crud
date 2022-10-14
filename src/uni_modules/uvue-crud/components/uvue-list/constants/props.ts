@@ -1,9 +1,9 @@
 import type { PropType } from "vue";
-import type { ListOption } from "./types";
+import type { UvueListOption } from "../types";
 
-export default {
+export const listProps = {
   data: { type: Array as PropType<any[]>, default: () => [] },
-  option: { type: Object as PropType<ListOption>, default: () => ({}) },
+  option: { type: Object as PropType<UvueListOption>, default: () => ({}) },
   searchValue: { type: String },
   loading: { type: Boolean },
   status: { type: String },

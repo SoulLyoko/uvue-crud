@@ -68,19 +68,12 @@ export default { inheritAttrs: false };
 </script>
 
 <script setup lang="ts">
-import type { PropType } from "vue";
-
 import { ref, watch } from "vue";
+import { formProps, formEmits } from "./constants";
 import { useOption, useRules, useMethods } from "./composables";
 
-const props = defineProps({
-  modelValue: { type: Object, default: () => ({}) },
-  option: { type: Object, default: () => ({}) },
-  defaults: { type: Object, default: () => ({}) },
-  permission: { type: Object, default: () => ({}) },
-  formType: { type: String as PropType<"add" | "edit" | "view"> }
-});
-const emit = defineEmits(["update:modelValue", "update:defaults", "update:permission", "submit"]);
+const props = defineProps(formProps);
+const emit = defineEmits(formEmits);
 
 const vModel = ref<any>({});
 watch(

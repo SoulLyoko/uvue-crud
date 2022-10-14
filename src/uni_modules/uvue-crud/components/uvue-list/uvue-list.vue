@@ -55,11 +55,11 @@
 </template>
 
 <script setup lang="ts">
-import componentProps from "./props";
+import { listProps, listEmits } from "./constants";
 import { useOption, useSearch } from "./composables";
 
-const props = defineProps(componentProps);
-const emit = defineEmits(["update:search", "loadmore"]);
+const props = defineProps(listProps);
+const emit = defineEmits(listEmits);
 
 const { option } = useOption(props);
 const { searchValue, searchListeners } = useSearch(props, emit);

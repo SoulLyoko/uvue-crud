@@ -2,6 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "allowJs": true,
     "lib": ["esnext", "dom"],
     "paths": {
       "@/*": ["src/*"]

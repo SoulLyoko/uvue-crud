@@ -1,8 +1,8 @@
-import type { ListOption } from "../types";
+import type { UvueListOption } from "../types";
 
 import { computed } from "vue";
 
-export const defaultOption: ListOption = {
+export const defaultOption: UvueListOption = {
   rowKey: "id",
   sticky: {},
   search: {},
@@ -19,7 +19,7 @@ export function useOption(props: any) {
     return {
       ...defaultOption,
       ...props.option
-    } as ListOption;
+    } as UvueListOption;
   });
 
   return { option };
