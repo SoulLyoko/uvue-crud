@@ -10,10 +10,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install and Build
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "pnpm"
+
+      - name: Build Packages
         run: |
-          yarn 
-          yarn build
+          pnpm install
+          pnpm run build
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v4
