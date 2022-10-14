@@ -29,6 +29,7 @@
         v-for="(row, index) in data"
         :key="(option.rowKey && row[option.rowKey]) || index"
         v-bind="{ ...option.cell, ...(option.formatter?.(row) ?? row) }"
+        @click="onItemClick(row, index)"
       >
         <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
           <slot :name="slotName" v-bind="slotProps"></slot>
@@ -66,5 +67,8 @@ const { searchValue, searchListeners } = useSearch(props, emit);
 
 function onLoadmore() {
   emit("loadmore");
+}
+function onItemClick(row: any, index: number) {
+  emit("item-click", row, index);
 }
 </script>

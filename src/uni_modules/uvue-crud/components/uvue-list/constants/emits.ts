@@ -8,5 +8,6 @@ export const listEmits = {
   "search-focus": (e: string) => e,
   "search-clear": () => true,
   "search-click": () => true,
-  "search-click-icon": () => true
+  "search-click-icon": () => true,
+  "item-click": (row: any, index: number) => row
 };
