@@ -1,5 +1,7 @@
+import type { FormType } from "@smallwei/avue";
+import type { UvueFormOption, UvueFormColumn, UvueFormGroup, UvueFormProps, UvueFormEmitFn } from "../types";
+
 import { computed, ref } from "vue";
-import type { UvueFormOption, UvueFormColumn, UvueFormGroup } from "../types";
 
 export const defaultFormOption: UvueFormOption = {
   submitBtn: true, // 是否显示提交按钮
@@ -32,7 +34,7 @@ export const defaultDictOption = {
   res: "res.data"
 };
 
-export function handleGroup(group: any[] = [], formType: string) {
+export function handleGroup(group: UvueFormGroup[] = [], formType: FormType) {
   return group.map(g => {
     return {
       ...defaultFormGroup,
@@ -42,9 +44,10 @@ export function handleGroup(group: any[] = [], formType: string) {
   });
 }
 
-export function handleColumn(column: any[] = [], formType: string) {
+export function handleColumn(column: UvueFormColumn[] = [], formType: FormType) {
   return column.map(col => {
-    const operation = ["select", "cascader", "date", "time", "datetime"].includes(col.type) ? "选择" : "输入";
+    const operation =
+      col.type && ["select", "cascader", "date", "time", "datetime"].includes(col.type) ? "选择" : "输入";
     const disabledFlags = [!!col.disabled];
     formType === "add" && disabledFlags.push(!!col.addDisabled);
     formType === "edit" && disabledFlags.push(!!col.editDisabled);
@@ -71,7 +74,7 @@ export function handleColumn(column: any[] = [], formType: string) {
   });
 }
 
-export function handleDynamic(dynamic: any, formType: string) {
+export function handleDynamic(dynamic: UvueFormColumn["children"] = {}, formType: FormType) {
   return {
     ...dynamic,
     submitBtn: false,
@@ -86,14 +89,14 @@ export function flatGroupColumn({ column, group }: Pick<UvueFormOption, "group" 
   return [...column!, ...group!.map(g => g.column!).flat()];
 }
 
-export function useOption(props: any, emit: any) {
+export function useOption(props: UvueFormProps, emit: UvueFormEmitFn) {
   const option = computed<UvueFormOption>(() => {
     return {
       ...defaultFormOption,
       ...props.option,
       ...props.permission,
-      column: handleColumn(props.option.column, props.formType),
-      group: handleGroup(props.option.group, props.formType)
+      column: handleColumn(props.option.column, props.formType!),
+      group: handleGroup(props.option.group, props.formType!)
     };
   });
 
@@ -101,7 +104,7 @@ export function useOption(props: any, emit: any) {
   emit("update:defaults", defaults);
 
   const defaultCollapse = computed(() => {
-    return option.value.group?.filter((g: any) => g.collapse).map((g: any) => g.prop);
+    return option.value.group?.filter(g => g.collapse).map(g => g.prop);
   });
 
   const currentTab = ref(0);

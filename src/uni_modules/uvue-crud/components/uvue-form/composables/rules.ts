@@ -5,7 +5,7 @@ import { computed, watch } from "vue";
 
 import { flatGroupColumn } from "./option";
 
-export function useRules(option: Ref<UvueFormOption>, form: any, formRef: any) {
+export function useRules(option: Ref<UvueFormOption>, form: Ref<any>, formRef: any) {
   const rules = computed(() => {
     const allColumn = flatGroupColumn(option.value);
     const allColumnRules = allColumn.map(col => [col.prop, col.rules || []]);
