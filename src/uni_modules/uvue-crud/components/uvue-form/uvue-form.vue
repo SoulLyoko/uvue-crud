@@ -1,5 +1,5 @@
 <template>
-  <u-form class="uvue-form" v-bind="option" ref="formRef" :model="modelValue" :rules="rules">
+  <u-form ref="formRef" class="uvue-form" v-bind="option" :model="modelValue" :rules="rules">
     <template v-for="(columnItem, columnIndex) in option.column" :key="columnItem.prop || columnIndex">
       <uvue-form-item v-if="columnItem.display" v-bind="columnItem" v-model="vModel[columnItem.prop!]">
         <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">

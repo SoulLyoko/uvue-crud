@@ -31,8 +31,8 @@
         v-bind="{ ...option.cell, ...(option.formatter?.(row) ?? row) }"
         @click="onItemClick(row, index)"
       >
-        <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
-          <slot :name="slotName" v-bind="slotProps"></slot>
+        <template v-for="(slotIndex, slotName) in $slots" #[slotName]="slotProps">
+          <slot :name="slotName" :row="row" :index="index"></slot>
         </template>
       </u-cell>
     </u-cell-group>

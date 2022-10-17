@@ -23,7 +23,7 @@ const group = [
     collapse: false,
     column: [
       { label: "slot", prop: "slot", type: "slot" },
-      { label: "input", prop: "input", type: "input" },
+      { label: "input", prop: "input", type: "input", required: true, rules: [{ required: true, message: "请输入" }] },
       { label: "textarea", prop: "textarea", type: "textarea" },
       { label: "custom", prop: "custom", component: CustomComponent }
     ]

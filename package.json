@@ -59,7 +59,7 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3060420220922009",
     "@types/lodash-es": "^4.17.6",
     "@vue/tsconfig": "^0.1.3",
-    "@yusui/types": "^1.4.1",
+    "@yusui/types": "^1.4.7",
     "postcss": "^8.4.18",
     "sass": "^1.55.0",
     "typescript": "^4.8.4",

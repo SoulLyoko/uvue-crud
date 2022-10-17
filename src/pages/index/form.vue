@@ -1,18 +1,14 @@
 <template>
-  <uvue-form
-    v-model="form"
-    v-model:defaults="defaults"
-    :permission="permission"
-    :option="formOption"
-    @submit="onSubmit"
-  >
-    <template #slot="scoped">
-      <view>{{ scoped }}</view>
-    </template>
-    <template #slot-right>
-      <view>slot-right</view>
-    </template>
-  </uvue-form>
+  <view style="padding: 20rpx">
+    <uvue-form v-model="form" :option="formOption" :permission="permission" @submit="onSubmit">
+      <template #slot="scoped">
+        <view>{{ scoped }}</view>
+      </template>
+      <template #slot-right>
+        <view>slot-right</view>
+      </template>
+    </uvue-form>
+  </view>
 </template>
 
 <script setup lang="ts">
