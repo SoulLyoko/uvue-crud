@@ -7,6 +7,9 @@
       <template #slot-right>
         <view>slot-right</view>
       </template>
+      <template #column2>
+        <view>dynamicSlot</view>
+      </template>
     </uvue-form>
   </view>
 </template>
