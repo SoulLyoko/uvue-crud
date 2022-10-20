@@ -1,6 +1,7 @@
 import { createSSRApp } from "vue";
-import App from "./App.vue";
 import uviewPlus from "uview-plus";
+
+import App from "./App.vue";
 import uvue from "./uni_modules/uvue-crud";
 
 const dicMap = {

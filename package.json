@@ -1,6 +1,6 @@
 {
   "name": "uvue-crud",
-  "version": "0.0.0",
+  "version": "2.0.0-beta.11",
   "scripts": {
     "dev": "uni",
     "dev:app": "uni -p app",
@@ -31,6 +31,10 @@
     "build:quickapp-webview": "uni build -p quickapp-webview",
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "lint": "eslint --ext .ts,.vue .",
+    "prepare": "husky install",
+    "release": "bump && esno scripts/release.ts",
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
@@ -53,15 +57,26 @@
     "vue-i18n": "^9.2.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@dcloudio/types": "^3.0.15",
     "@dcloudio/uni-automator": "3.0.0-alpha-3060420220922009",
     "@dcloudio/uni-cli-shared": "3.0.0-alpha-3060420220922009",
     "@dcloudio/uni-stacktracey": "3.0.0-alpha-3060420220922009",
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3060420220922009",
+    "@jsdevtools/version-bump-prompt": "^6.1.0",
     "@types/lodash-es": "^4.17.6",
+    "@types/node": "^18.11.0",
     "@vue/tsconfig": "^0.1.3",
+    "@yusui/eslint-config": "*",
+    "@yusui/prettier-config": "*",
     "@yusui/types": "*",
+    "conventional-changelog-cli": "^2.2.2",
+    "eslint": "^8.25.0",
+    "esno": "^0.16.3",
+    "fs-extra": "^10.1.0",
     "postcss": "^8.4.18",
+    "prettier": "^2.7.1",
     "sass": "^1.55.0",
     "typescript": "^4.8.4",
     "vite": "^3.1.8",
