@@ -21,6 +21,8 @@
         </template>
       </uvue-form-item>
     </template>
+
+    <u-line margin="20rpx 0"></u-line>
   </template>
 
   <u-text
@@ -42,7 +44,7 @@ const props = defineProps({
   label: { type: String },
   prop: { type: String }
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "add", "del"]);
 
 const vModel = ref<any[]>([]);
 watch(
@@ -56,9 +58,29 @@ watch(
 watch(vModel, val => emit("update:modelValue", val), { deep: true });
 
 function addItem() {
-  vModel.value.push({});
+  const done = (row: any) => {
+    vModel.value.push(row);
+    emit("add", row);
+  };
+  if (props.children.limit && vModel.value.length === props.children.limit) {
+    return uni.showToast({ title: `最多添加${props.children.limit}条`, icon: "none" });
+  }
+  if (typeof props.children.rowAdd === "function") {
+    props.children.rowAdd(done);
+  } else {
+    done({});
+  }
 }
 function delItem(index: number) {
-  vModel.value = vModel.value.filter((e, i) => i !== index);
+  const row = vModel.value.find((e, i) => i === index);
+  const done = () => {
+    vModel.value = vModel.value.filter((e, i) => i !== index);
+    emit("del", row, index);
+  };
+  if (typeof props.children.rowDel === "function") {
+    props.children.rowDel(row, done);
+  } else {
+    done();
+  }
 }
 </script>

@@ -17,6 +17,7 @@ specifiers:
   '@dcloudio/uni-mp-weixin': 3.0.0-alpha-3060420220922009
   '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3060420220922009
   '@dcloudio/uni-stacktracey': 3.0.0-alpha-3060420220922009
+  '@dcloudio/uni-ui': ^1.4.22
   '@dcloudio/vite-plugin-uni': 3.0.0-alpha-3060420220922009
   '@types/lodash-es': ^4.17.6
   '@vue/tsconfig': ^0.1.3
@@ -44,6 +45,7 @@ dependencies:
   '@dcloudio/uni-mp-toutiao': 3.0.0-alpha-3060420220922009_postcss@8.4.18+vue@3.2.40
   '@dcloudio/uni-mp-weixin': 3.0.0-alpha-3060420220922009_postcss@8.4.18+vue@3.2.40
   '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3060420220922009_postcss@8.4.18+vue@3.2.40
+  '@dcloudio/uni-ui': 1.4.22
   dayjs: 1.11.5
   uview-plus: 3.1.15
   vue: 3.2.40
@@ -772,6 +774,10 @@ packages:
       - supports-color
       - ts-node
       - vue
+    dev: false
+
+  /@dcloudio/uni-ui/1.4.22:
+    resolution: {integrity: sha512-+ymdGhp+If+iZXzgf8rOQNz7mIKenTbzO9T6zkte5YC7WuBQyH4pwWpWRTpatR81XHZwJ2zES1DvJexzSS0Huw==}
     dev: false
 
   /@dcloudio/uni-uts-vite/3.0.0-alpha-3060420220922009_postcss@8.4.18+vue@3.2.40:

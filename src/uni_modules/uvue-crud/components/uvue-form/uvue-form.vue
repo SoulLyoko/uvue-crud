@@ -28,11 +28,24 @@
       </template>
     </template>
 
-    <u-collapse v-if="option.group?.length && !option.tabs" :value="defaultCollapse">
+    <u-collapse ref="collapseRef" v-if="option.group?.length && !option.tabs" :value="defaultCollapse">
       <template v-for="(groupItem, groupIndex) in option.group" :key="groupItem.prop || groupIndex">
-        <u-collapse-item v-if="groupItem.display" :title="groupItem.label" :name="groupItem.prop">
+        <u-collapse-item
+          v-if="groupItem.display"
+          :title="groupItem.label"
+          :name="groupItem.prop"
+          :isLink="groupItem.arrow"
+          v-bind="groupItem"
+          label=""
+        >
           <template v-for="(columnItem, columnIndex) in groupItem.column" :key="columnItem.prop || columnIndex">
-            <uvue-form-item v-if="columnItem.display" v-bind="columnItem" v-model="vModel[columnItem.prop!]">
+            <uvue-form-item
+              v-if="columnItem.display"
+              v-bind="columnItem"
+              v-model="vModel[columnItem.prop!]"
+              @dynamic-add="initCollapse"
+              @dynamic-del="initCollapse"
+            >
               <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
                 <slot :name="slotName" v-bind="slotProps"></slot>
               </template>
@@ -97,5 +110,10 @@ async function onSubmit() {
   submitLoading.value = true;
   const loading = () => (submitLoading.value = false);
   emit("submit", props.modelValue, loading);
+}
+
+const collapseRef = ref();
+function initCollapse() {
+  collapseRef.value?.init();
 }
 </script>

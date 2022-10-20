@@ -24,7 +24,12 @@
 
       <u-textarea v-if="$attrs.type === 'textarea'" v-bind="$attrs"></u-textarea>
 
-      <uvue-dynamic v-if="$attrs.type === 'dynamic'" v-bind="$attrs">
+      <uvue-dynamic
+        v-if="$attrs.type === 'dynamic'"
+        v-bind="$attrs"
+        @add="$emit('dynamic-add')"
+        @del="$emit('dynamic-del')"
+      >
         <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
           <slot :name="slotName" v-bind="slotProps"></slot>
         </template>
