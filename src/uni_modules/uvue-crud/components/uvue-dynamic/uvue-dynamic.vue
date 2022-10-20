@@ -1,5 +1,5 @@
 <template>
-  <template v-for="(dataItem, dataIndex) in vModel">
+  <template v-for="(dataItem, dataIndex) in vModel" :key="dataItem[prop] || dataIndex">
     <u-row>
       <u-col span="10">
         <u-text :text="`${label}${dataIndex}`" type="info"></u-text>

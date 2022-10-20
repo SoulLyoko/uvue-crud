@@ -32,13 +32,13 @@
         @click="onItemClick(row, index)"
       >
         <template v-for="(slotIndex, slotName) in $slots" #[slotName]="slotProps">
-          <slot :name="slotName" :row="row" :index="index"></slot>
+          <slot :name="slotName" :row="row" :index="index" v-bind="slotProps"></slot>
         </template>
       </u-cell>
     </u-cell-group>
 
     <u-empty v-if="option.empty && !data.length" v-bind="option.empty">
-      <template #default v-if="$slots['empty']">
+      <template v-if="$slots['empty']" #default>
         <slot name="empty"></slot>
       </template>
     </u-empty>
@@ -48,7 +48,7 @@
     <slot name="list-bottom"></slot>
 
     <u-back-top v-if="option.backTop" :scroll-top="scrollTop" v-bind="option.backTop">
-      <template #default v-if="$slots['back-top']">
+      <template v-if="$slots['back-top']" #default>
         <slot name="back-top"></slot>
       </template>
     </u-back-top>

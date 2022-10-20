@@ -3,10 +3,10 @@
     <u-col span="4" class="uvue-cascader-left">
       <scroll-view scroll-y :style="{ height: elHeight }">
         <view
-          class="uvue-cascader-tab"
-          :class="currentTab == option.value ? 'active' : ''"
           v-for="option in options"
           :key="option.value"
+          class="uvue-cascader-tab"
+          :class="currentTab == option.value ? 'active' : ''"
           @click="tabClick(option)"
         >
           <text class="uvue-cascader-tab__text">{{ option.label }}</text>
@@ -16,19 +16,19 @@
     <u-col span="8" class="uvue-cascader-right">
       <scroll-view scroll-y :style="{ height: elHeight }">
         <view
-          class="uvue-cascader-item u-flex"
-          :class="value == item.value ? 'active' : ''"
           v-for="item in itemList"
           :key="item.value"
+          class="uvue-cascader-item u-flex"
+          :class="value == item.value ? 'active' : ''"
           @click="itemClick(item)"
         >
           <text class="uvue-cascader-item__text u-flex-11">{{ item.label }}</text>
           <u-icon
+            v-if="value == item.value"
             class="uvue-cascader-item__icon u-flex-1"
             name="checkbox-mark"
             color="#2979FF"
             size="28"
-            v-if="value == item.value"
           ></u-icon>
         </view>
       </scroll-view>

@@ -28,7 +28,7 @@
       </template>
     </template>
 
-    <u-collapse ref="collapseRef" v-if="option.group?.length && !option.tabs" :value="defaultCollapse">
+    <u-collapse v-if="option.group?.length && !option.tabs" ref="collapseRef" :value="defaultCollapse">
       <template v-for="(groupItem, groupIndex) in option.group" :key="groupItem.prop || groupIndex">
         <u-collapse-item
           v-if="groupItem.display"
@@ -82,6 +82,7 @@ export default { inheritAttrs: false };
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
+
 import { formProps, formEmits } from "./constants";
 import { useOption, useRules, useMethods } from "./composables";
 
@@ -98,7 +99,7 @@ watch(vModel, val => emit("update:modelValue", val), { deep: true });
 
 const formRef = ref();
 
-const { option, defaultCollapse, currentTab, currentGroup } = useOption(props, emit);
+const { option, defaultCollapse, currentTab } = useOption(props, emit);
 const rules = useRules(option, vModel, formRef);
 const methods = useMethods(formRef);
 const { validate, resetFields } = methods;

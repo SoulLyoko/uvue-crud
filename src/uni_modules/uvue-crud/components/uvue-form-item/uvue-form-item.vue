@@ -6,16 +6,16 @@
     :prop="$attrs.dynamicProp || $attrs.prop"
   >
     <!-- 自定义的表单项 -->
-    <view class="uvue-form-item__content" v-if="$slots[$attrs.prop as string]">
+    <view v-if="$slots[$attrs.prop as string]" class="uvue-form-item__content">
       <slot :name="$attrs.prop" v-bind="$attrs" :dic="dic"></slot>
     </view>
 
-    <view class="uvue-form-item__content" v-else-if="$attrs.component">
+    <view v-else-if="$attrs.component" class="uvue-form-item__content">
       <component :is="$attrs.component" v-bind="$attrs" :dic="dic"></component>
     </view>
 
     <!-- 默认的表单项 -->
-    <view class="uvue-form-item__content" v-else>
+    <view v-else class="uvue-form-item__content">
       <u-input v-if="inputTypes.includes($attrs.type as string)" v-bind="$attrs"></u-input>
 
       <uvue-datetime-picker v-if="pickerTypes.includes($attrs.type as string)" v-bind="$attrs"></uvue-datetime-picker>

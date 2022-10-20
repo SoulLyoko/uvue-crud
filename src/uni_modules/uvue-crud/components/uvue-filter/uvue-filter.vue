@@ -2,11 +2,11 @@
   <view>
     <uvue-dict ref="dict" v-model="dictStorage"></uvue-dict>
     <u-dropdown
+      v-if="filterOption && filterOption.items && filterOption.items.length"
       v-bind="filterOption"
+      ref="uDropdown"
       class="uvue-filter"
       :class="{ 'is-open': isOpen }"
-      ref="uDropdown"
-      v-if="filterOption && filterOption.items && filterOption.items.length"
       @open="dropdownOpen"
       @close="dropdownClose"
       @hook:mounted="dropdownMounted"
@@ -23,12 +23,12 @@
             <view class="uvue-filter-multiple">
               <u-checkbox-group @change="checkboxChange">
                 <u-checkbox
-                  v-for="option in dictStorage[filterItem.prop]"
-                  :key="option.value"
-                  v-model="option.checked"
-                  :name="option.value"
+                  v-for="item in dictStorage[filterItem.prop]"
+                  :key="item.value"
+                  v-model="item.checked"
+                  :name="item.value"
                 >
-                  {{ option.label }}
+                  {{ item.label }}
                 </u-checkbox>
               </u-checkbox-group>
               <u-row gutter="20" style="margin-top: 20px">

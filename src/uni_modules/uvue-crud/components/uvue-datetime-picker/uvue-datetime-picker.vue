@@ -24,7 +24,7 @@ import type { PropType } from "vue";
 import { ref, useAttrs } from "vue";
 import dayjs from "dayjs";
 
-const props = defineProps({
+defineProps({
   modelValue: { type: [String, Number, Array] as PropType<string | number | string[] | number[]> }
 });
 const emit = defineEmits(["update:modelValue"]);

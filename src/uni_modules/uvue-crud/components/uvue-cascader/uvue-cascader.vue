@@ -25,6 +25,7 @@ import type { PropType } from "vue";
 import type { DicItem } from "../../types";
 
 import { ref, computed, watch } from "vue";
+
 import { findTree } from "../../utils";
 
 const props = defineProps({

@@ -1,6 +1,7 @@
 import type { DicItem, Config } from "../types";
 
 import { ref, watchEffect } from "vue";
+
 import { serialize, treeMap } from "../utils";
 
 export interface UseDictOptions {
@@ -40,7 +41,7 @@ export function useDict(options: UseDictOptions, request?: Config["request"]) {
         data.value = dicStorage[cacheKey];
         return;
       }
-      request[dicMethod](dicUrl, { params: dicQuery, ...dicQuery }).then((res: any) => {
+      request[dicMethod](dicUrl, { params: dicQuery, headers: dicHeaders, ...dicQuery }).then((res: any) => {
         if (dicFormat) {
           data.value = dicFormat(res);
         } else {

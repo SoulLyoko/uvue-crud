@@ -36,7 +36,7 @@ const dicMap = {
 
 const request = {
   get: (url: keyof typeof dicMap) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         resolve({ data: dicMap[url] });
       }, 1000);

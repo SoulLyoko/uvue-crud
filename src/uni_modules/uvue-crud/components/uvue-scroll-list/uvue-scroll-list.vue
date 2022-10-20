@@ -19,7 +19,7 @@
     </u-list-item>
 
     <u-empty v-if="option.empty && !data.length" v-bind="option.empty">
-      <template #default v-if="$slots['empty']">
+      <template v-if="$slots['empty']" #default>
         <slot name="empty"></slot>
       </template>
     </u-empty>

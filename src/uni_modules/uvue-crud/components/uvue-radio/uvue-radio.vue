@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
 
-const props = defineProps({
+defineProps({
   dic: { type: Array as PropType<{ label?: string; value?: string }[]>, default: () => [] }
 });
 </script>

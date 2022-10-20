@@ -8,18 +8,18 @@
         <slot name="searchTop"></slot>
 
         <u-search
+          v-if="search"
           class="uvue-search"
           v-bind="search"
           :value="searchValue"
           @search="$emit('search', $event)"
           @custom="actionClick"
           @input="$emit('update:searchValue', $event)"
-          v-if="search"
         ></u-search>
 
         <slot name="filterTop"></slot>
 
-        <uvue-filter ref="uvueFilter" :option="filter" :filterForm.sync="filterFormData" v-if="filter"></uvue-filter>
+        <uvue-filter v-if="filter" ref="uvueFilter" v-model:filterForm="filterFormData" :option="filter"></uvue-filter>
       </view>
     </u-sticky>
 
@@ -36,13 +36,13 @@
         @body-click="cardClick('body', row, index)"
         @foot-click="cardClick('foot', row, index)"
       >
-        <template slot="head">
+        <template #head>
           <slot name="head" :row="row" :index="index"></slot>
         </template>
-        <template slot="body">
+        <template #body>
           <slot name="body" :row="row" :index="index"></slot>
         </template>
-        <template slot="foot">
+        <template #foot>
           <slot name="foot" :row="row" :index="index"></slot>
         </template>
       </u-card>
@@ -50,11 +50,11 @@
 
     <u-empty v-if="!data.length && status !== 'loading'"></u-empty>
 
-    <u-loadmore :status="status" v-bind="loadmore" @loadmore="$emit('loadmore', $event)" v-if="loadmore && status" />
+    <u-loadmore v-if="loadmore && status" :status="status" v-bind="loadmore" @loadmore="$emit('loadmore', $event)" />
 
     <slot name="listBottom"></slot>
 
-    <u-back-top :scroll-top="scrollTop" v-if="scrollTop"></u-back-top>
+    <u-back-top v-if="scrollTop" :scroll-top="scrollTop"></u-back-top>
   </view>
 </template>
 

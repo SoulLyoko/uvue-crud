@@ -9,5 +9,5 @@ export const listEmits = {
   "search-clear": () => true,
   "search-click": () => true,
   "search-click-icon": () => true,
-  "item-click": (row: any, index: number) => row
+  "item-click": (row: any, index: number) => row && typeof index === "number"
 };
