@@ -5,7 +5,7 @@
     :modelValue="modelValue"
     suffixIcon="arrow-right"
     readonly
-    @click="!$attrs.disabled && (show = true)"
+    @tap="onShow"
   ></u-input>
   <u-datetime-picker
     closeOnClickOverlay
@@ -29,18 +29,21 @@ defineProps({
 });
 const emit = defineEmits(["update:modelValue"]);
 
-const show = ref(false);
-
 const formatMap = {
   date: "YYYY-MM-DD",
   time: "HH:mm:ss",
   datetime: "YYYY-MM-DD HH:mm:ss"
 };
 
-const { valueFormat } = useAttrs();
-
+const attrs = useAttrs();
+const show = ref(false);
+function onShow() {
+  if (attrs.disabled) return;
+  show.value = true;
+}
 function onConfirm({ value, mode }: { value: number; mode: "date" | "time" | "datetime" }) {
-  const f = valueFormat || formatMap[mode];
+  console.log("🚀 ~ file: uvue-datetime-picker.vue ~ line 46 ~ onConfirm ~ value", value);
+  const f = attrs.valueFormat || formatMap[mode];
   const d = dayjs(value).format(f as string);
   emit("update:modelValue", d);
   show.value = false;

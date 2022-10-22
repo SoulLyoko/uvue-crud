@@ -1,8 +1,8 @@
 <template>
   <view style="padding: 20rpx">
     <uvue-form v-model="form" :option="formOption" :permission="permission" @submit="onSubmit">
-      <template #slot="scoped">
-        <view>{{ scoped }}</view>
+      <template #slot>
+        <view>slot</view>
       </template>
       <template #slot-right>
         <view>slot-right</view>
@@ -18,12 +18,11 @@
 import { ref, computed, watch } from "vue";
 
 import { formOption } from "./option";
-
-const form = ref<any>({ isTabs: "2", input: "", switch: "" });
+const form = ref<any>({ isTabs: true, input: "", switch: "" });
 const defaults = ref<any>({});
 
 const permission = computed(() => ({
-  tabs: form.value.isTabs === "2"
+  tabs: form.value.isTabs
 }));
 
 watch(

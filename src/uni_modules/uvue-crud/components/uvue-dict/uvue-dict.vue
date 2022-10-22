@@ -1,5 +1,34 @@
 <template>
-  <component :is="'uvue-' + type" v-bind="$attrs" :dic="dic"></component>
+  <uvue-select
+    v-if="type === 'select'"
+    v-bind="$attrs"
+    :dic="dic"
+    @update:modelValue="$emit('update:modelValue', $event)"
+  ></uvue-select>
+  <uvue-cascader
+    v-if="type === 'cascader'"
+    v-bind="$attrs"
+    :dic="dic"
+    @update:modelValue="$emit('update:modelValue', $event)"
+  ></uvue-cascader>
+  <uvue-checkbox
+    v-if="type === 'checkbox'"
+    v-bind="$attrs"
+    :dic="dic"
+    @update:modelValue="$emit('update:modelValue', $event)"
+  ></uvue-checkbox>
+  <uvue-radio
+    v-if="type === 'radio'"
+    v-bind="$attrs"
+    :dic="dic"
+    @update:modelValue="$emit('update:modelValue', $event)"
+  ></uvue-radio>
+  <uvue-switch
+    v-if="type === 'switch'"
+    v-bind="$attrs"
+    :dic="dic"
+    @update:modelValue="$emit('update:modelValue', $event)"
+  ></uvue-switch>
 </template>
 
 <script setup lang="ts">

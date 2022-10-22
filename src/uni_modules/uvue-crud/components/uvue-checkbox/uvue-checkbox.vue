@@ -1,5 +1,5 @@
 <template>
-  <u-checkbox-group v-bind="$attrs">
+  <u-checkbox-group v-bind="$attrs" @update:modelValue="$emit('update:modelValue', $event)">
     <u-checkbox v-for="item in dic" :key="item.value" v-bind="item" :label="item.label" :name="item.value"></u-checkbox>
   </u-checkbox-group>
 </template>

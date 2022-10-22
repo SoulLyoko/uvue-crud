@@ -5,7 +5,7 @@
     :modelValue="selectedLabel"
     suffixIcon="arrow-right"
     readonly
-    @click="!$attrs.disabled && (show = true)"
+    @tap="onShow"
   ></u-input>
   <u-picker
     ref="pickerRef"
@@ -24,7 +24,7 @@
 import type { PropType } from "vue";
 import type { DicItem } from "../../types";
 
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, useAttrs } from "vue";
 
 import { findTree } from "../../utils";
 
@@ -54,17 +54,21 @@ watch(
   { immediate: true }
 );
 
-const show = ref(false);
-
 function onChange(e: any) {
   const { columnIndex, value } = e;
   if (value[columnIndex]?.children) {
     pickerRef.value.setColumnValues(columnIndex + 1, [...value[columnIndex].children]);
   }
 }
-function onConfirm(e: any) {
-  const { value } = e;
-  emit("update:modelValue", value[value.length - 1]?.value);
+
+const attrs = useAttrs();
+const show = ref(false);
+function onShow() {
+  if (attrs.disabled) return;
+  show.value = true;
+}
+function onConfirm({ value }: any) {
+  emit("update:modelValue", value[0]?.value);
   show.value = false;
 }
 </script>

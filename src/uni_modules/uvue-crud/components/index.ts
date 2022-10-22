@@ -7,7 +7,6 @@ export * from "./uvue-form";
 export * from "./uvue-form-item";
 export * from "./uvue-list";
 export * from "./uvue-radio";
-export * from "./uvue-scroll-list";
 export * from "./uvue-select";
 export * from "./uvue-switch";
 
@@ -21,7 +20,6 @@ import {
   UvueFormItem,
   UvueList,
   UvueRadio,
-  UvueScrollList,
   UvueSelect,
   UvueSwitch
 } from ".";
@@ -36,7 +34,6 @@ export default {
   UvueFormItem,
   UvueList,
   UvueRadio,
-  UvueScrollList,
   UvueSelect,
   UvueSwitch
 };

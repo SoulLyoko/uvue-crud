@@ -7,38 +7,59 @@
   >
     <!-- 自定义的表单项 -->
     <view v-if="$slots[$attrs.prop as string]" class="uvue-form-item__content">
-      <slot :name="$attrs.prop" v-bind="$attrs" :dic="dic"></slot>
+      <slot :name="$attrs.prop"></slot>
     </view>
 
+    <!-- #ifndef MP -->
     <view v-else-if="$attrs.component" class="uvue-form-item__content">
       <component :is="$attrs.component" v-bind="$attrs" :dic="dic"></component>
     </view>
+    <!-- #endif -->
 
     <!-- 默认的表单项 -->
     <view v-else class="uvue-form-item__content">
-      <u-input v-if="inputTypes.includes($attrs.type as string)" v-bind="$attrs"></u-input>
+      <u-input
+        v-if="inputTypes.includes($attrs.type as string)"
+        v-bind="$attrs"
+        @update:modelValue="$emit('update:modelValue', $event)"
+      ></u-input>
 
-      <uvue-datetime-picker v-if="pickerTypes.includes($attrs.type as string)" v-bind="$attrs"></uvue-datetime-picker>
+      <uvue-datetime-picker
+        v-if="pickerTypes.includes($attrs.type as string)"
+        v-bind="$attrs"
+        @update:modelValue="$emit('update:modelValue', $event)"
+      ></uvue-datetime-picker>
 
-      <uvue-dict v-if="dicTypes.includes($attrs.type as string)" v-bind="$attrs"></uvue-dict>
+      <uvue-dict
+        v-if="dicTypes.includes($attrs.type as string)"
+        v-bind="$attrs"
+        @update:modelValue="$emit('update:modelValue', $event)"
+      ></uvue-dict>
 
-      <u-textarea v-if="$attrs.type === 'textarea'" v-bind="$attrs"></u-textarea>
+      <u-textarea
+        v-if="$attrs.type === 'textarea'"
+        v-bind="$attrs"
+        @update:modelValue="$emit('update:modelValue', $event)"
+      ></u-textarea>
 
       <uvue-dynamic
         v-if="$attrs.type === 'dynamic'"
         v-bind="$attrs"
         @add="$emit('dynamic-add')"
         @del="$emit('dynamic-del')"
+        @update:modelValue="$emit('update:modelValue', $event)"
       >
+        <!-- #ifndef MP -->
         <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
           <slot :name="slotName" v-bind="slotProps"></slot>
         </template>
+        <!-- #endif -->
       </uvue-dynamic>
     </view>
 
     <!-- 表单项的右插槽 -->
     <template #right>
-      <slot :name="$attrs.prop + '-right'" v-bind="$attrs" :dic="dic"></slot>
+      <slot :name="$attrs.prop + '-right'"></slot>
     </template>
   </u-form-item>
 </template>

@@ -1,28 +1,30 @@
 <template>
-  <u-input
-    v-bind="$attrs"
-    type="text"
-    :modelValue="selectedLabel"
-    suffixIcon="arrow-right"
-    readonly
-    @click="!$attrs.disabled && (show = true)"
-  ></u-input>
-  <u-picker
-    closeOnClickOverlay
-    v-bind="$attrs"
-    :show="show"
-    :columns="columns"
-    keyName="label"
-    @confirm="onConfirm"
-    @cancel="show = false"
-    @close="show = false"
-  ></u-picker>
+  <view>
+    <u-input
+      v-bind="$attrs"
+      type="text"
+      :modelValue="selectedLabel"
+      suffixIcon="arrow-right"
+      readonly
+      @tap="onShow"
+    ></u-input>
+    <u-picker
+      closeOnClickOverlay
+      v-bind="$attrs"
+      :show="show"
+      :columns="columns"
+      keyName="label"
+      @confirm="onConfirm"
+      @cancel="show = false"
+      @close="show = false"
+    ></u-picker>
+  </view>
 </template>
 
 <script setup lang="ts">
 import type { PropType } from "vue";
 
-import { ref, computed } from "vue";
+import { ref, computed, useAttrs } from "vue";
 
 const props = defineProps({
   modelValue: { type: [String, Number, Array] as PropType<string | number | string[] | number[]> },
@@ -38,8 +40,12 @@ const columns = computed(() => {
   return [props.dic];
 });
 
+const attrs = useAttrs();
 const show = ref(false);
-
+function onShow() {
+  if (attrs.disabled) return;
+  show.value = true;
+}
 function onConfirm({ value }: any) {
   emit("update:modelValue", value[0]?.value);
   show.value = false;

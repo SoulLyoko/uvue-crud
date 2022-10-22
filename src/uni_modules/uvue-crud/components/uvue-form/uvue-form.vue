@@ -1,33 +1,57 @@
 <template>
   <u-form ref="formRef" class="uvue-form" v-bind="option" :model="modelValue" :rules="rules">
+    <!-- 渲染column -->
     <template v-for="(columnItem, columnIndex) in option.column" :key="columnItem.prop || columnIndex">
-      <uvue-form-item v-if="columnItem.display" v-bind="columnItem" v-model="vModel[columnItem.prop!]">
-        <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
-          <slot :name="slotName" v-bind="slotProps"></slot>
+      <uvue-form-item
+        v-if="columnItem.display && $slots[columnItem.prop as string]"
+        v-bind="columnItem"
+        v-model="vModel[columnItem.prop!]"
+      >
+        <template #[getSlotName(columnItem)]>
+          <slot :name="getSlotName(columnItem)"></slot>
+        </template>
+        <template #[getSlotName(columnItem,true)]>
+          <slot :name="getSlotName(columnItem, true)"></slot>
         </template>
       </uvue-form-item>
+      <uvue-form-item
+        v-else-if="columnItem.display"
+        v-bind="columnItem"
+        v-model="vModel[columnItem.prop!]"
+      ></uvue-form-item>
     </template>
 
+    <!-- 渲染group isTabs=true -->
     <template v-if="option.group?.length && option.tabs">
       <u-tabs :list="option.group" :current="currentTab" keyName="label" @change="currentTab = $event.index"></u-tabs>
       <template v-for="(groupItem, groupIndex) in option.group" :key="groupItem.prop || groupIndex">
         <template v-if="groupItem.display">
           <template v-for="(columnItem, columnIndex) in groupItem.column" :key="columnItem.prop || columnIndex">
             <uvue-form-item
-              v-if="columnItem.display"
+              v-if="columnItem.display && $slots[columnItem.prop as string]"
               v-bind="columnItem"
               v-model="vModel[columnItem.prop!]"
               :style="groupIndex === currentTab ? '' : 'display:none'"
             >
-              <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
-                <slot :name="slotName" v-bind="slotProps"></slot>
+              <template #[getSlotName(columnItem)]>
+                <slot :name="columnItem.prop"></slot>
+              </template>
+              <template #[getSlotName(columnItem,true)]>
+                <slot :name="getSlotName(columnItem, true)"></slot>
               </template>
             </uvue-form-item>
+            <uvue-form-item
+              v-else-if="columnItem.display"
+              v-bind="columnItem"
+              v-model="vModel[columnItem.prop!]"
+              :style="groupIndex === currentTab ? '' : 'display:none'"
+            ></uvue-form-item>
           </template>
         </template>
       </template>
     </template>
 
+    <!-- 渲染group isTabs=false -->
     <u-collapse v-if="option.group?.length && !option.tabs" ref="collapseRef" :value="defaultCollapse">
       <template v-for="(groupItem, groupIndex) in option.group" :key="groupItem.prop || groupIndex">
         <u-collapse-item
@@ -40,16 +64,24 @@
         >
           <template v-for="(columnItem, columnIndex) in groupItem.column" :key="columnItem.prop || columnIndex">
             <uvue-form-item
-              v-if="columnItem.display"
+              v-if="columnItem.display && $slots[columnItem.prop as string]"
               v-bind="columnItem"
               v-model="vModel[columnItem.prop!]"
               @dynamic-add="initCollapse"
               @dynamic-del="initCollapse"
             >
-              <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
-                <slot :name="slotName" v-bind="slotProps"></slot>
+              <template #[getSlotName(columnItem)]>
+                <slot :name="columnItem.prop"></slot>
+              </template>
+              <template #[getSlotName(columnItem,true)]>
+                <slot :name="getSlotName(columnItem, true)"></slot>
               </template>
             </uvue-form-item>
+            <uvue-form-item
+              v-else-if="columnItem.display"
+              v-bind="columnItem"
+              v-model="vModel[columnItem.prop!]"
+            ></uvue-form-item>
           </template>
         </u-collapse-item>
       </template>
@@ -116,5 +148,8 @@ async function onSubmit() {
 const collapseRef = ref();
 function initCollapse() {
   collapseRef.value?.init();
+}
+function getSlotName(columnItem: any, right = false) {
+  return columnItem.prop + (right ? "-right" : "");
 }
 </script>

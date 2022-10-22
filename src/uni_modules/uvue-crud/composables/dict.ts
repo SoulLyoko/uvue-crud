@@ -2,7 +2,7 @@ import type { DicItem, Config } from "../types";
 
 import { ref, watchEffect } from "vue";
 
-import { serialize, treeMap } from "../utils";
+import { get, serialize, treeMap } from "../utils";
 
 export interface UseDictOptions {
   props?: {
@@ -45,7 +45,7 @@ export function useDict(options: UseDictOptions, request?: Config["request"]) {
         if (dicFormat) {
           data.value = dicFormat(res);
         } else {
-          const d = eval(dataPath);
+          const d = get({ res }, dataPath, []);
           data.value = treeMap(
             d,
             item => {

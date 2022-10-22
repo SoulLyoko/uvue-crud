@@ -1,5 +1,5 @@
 <template>
-  <u-radio-group v-bind="$attrs">
+  <u-radio-group v-bind="$attrs" @update:modelValue="$emit('update:modelValue', $event)">
     <u-radio v-for="item in dic" :key="item.value" v-bind="item" :label="item.label" :name="item.value"></u-radio>
   </u-radio-group>
 </template>

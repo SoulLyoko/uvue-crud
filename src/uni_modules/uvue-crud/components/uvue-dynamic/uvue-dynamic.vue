@@ -16,9 +16,11 @@
         v-model="dataItem[columnItem.prop]"
         :dynamicProp="`${prop}.${dataIndex}.${columnItem.prop}`"
       >
+        <!-- #ifndef MP -->
         <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
           <slot :name="slotName" v-bind="slotProps"></slot>
         </template>
+        <!-- #endif -->
       </uvue-form-item>
     </template>
 

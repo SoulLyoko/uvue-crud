@@ -68,7 +68,7 @@ const group = [
 ];
 
 // const column = group.map(g => g.column).flat();
-const column = [{ label: "isTabs", prop: "isTabs", type: "switch", dicUrl: "single" }];
+const column = [{ label: "isTabs", prop: "isTabs", type: "switch" }];
 
 export const formOption = {
   labelWidth: 70,
