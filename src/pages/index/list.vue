@@ -4,7 +4,6 @@
       v-model:searchValue="searchValue"
       :data="data"
       :option="listOption"
-      :loading="loading"
       :status="status"
       :scrollTop="scrollTop"
       @loadmore="loadData(true)"
@@ -21,14 +20,12 @@ import { listOption } from "./option";
 
 const data = ref<any[]>([]);
 const status = ref("loadmore");
-const loading = ref(false);
 const searchValue = ref("");
 
-const loadData = (isLoadmore = false, isFirst = false) => {
+const loadData = (isLoadmore = false) => {
   if (isLoadmore && status.value === "nomore") return;
   const total = 20;
   status.value = "loading";
-  if (isFirst) loading.value = true;
   setTimeout(() => {
     if (!isLoadmore) data.value = [];
     data.value.push(
@@ -39,10 +36,9 @@ const loadData = (isLoadmore = false, isFirst = false) => {
     );
     status.value = data.value.length === total ? "nomore" : "loadmore";
     uni.stopPullDownRefresh();
-    loading.value = false;
   }, 1000);
 };
-loadData(false, true);
+loadData(false);
 
 const scrollTop = ref(0);
 onPageScroll(e => {
@@ -52,6 +48,6 @@ onPullDownRefresh(loadData);
 onReachBottom(() => loadData(true));
 
 function onSearch() {
-  loadData(false, true);
+  loadData(false);
 }
 </script>
