@@ -1,24 +1,22 @@
 <template>
-  <view>
-    <u-input
-      v-bind="$attrs"
-      type="text"
-      :modelValue="selectedLabel"
-      suffixIcon="arrow-right"
-      readonly
-      @tap="onShow"
-    ></u-input>
-    <u-picker
-      closeOnClickOverlay
-      v-bind="$attrs"
-      :show="show"
-      :columns="columns"
-      keyName="label"
-      @confirm="onConfirm"
-      @cancel="show = false"
-      @close="show = false"
-    ></u-picker>
-  </view>
+  <u-input
+    v-bind="$attrs"
+    type="text"
+    :modelValue="selectedLabel"
+    suffixIcon="arrow-right"
+    readonly
+    @tap="onShow"
+  ></u-input>
+  <u-picker
+    closeOnClickOverlay
+    v-bind="$attrs"
+    :show="show"
+    :columns="columns"
+    keyName="label"
+    @confirm="onConfirm"
+    @cancel="show = false"
+    @close="show = false"
+  ></u-picker>
 </template>
 
 <script setup lang="ts">

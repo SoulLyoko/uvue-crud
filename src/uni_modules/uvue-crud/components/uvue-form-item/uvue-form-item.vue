@@ -6,55 +6,39 @@
     :prop="$attrs.dynamicProp || $attrs.prop"
   >
     <!-- 自定义的表单项 -->
-    <view v-if="$slots[$attrs.prop as string]" class="uvue-form-item__content">
-      <slot :name="$attrs.prop"></slot>
-    </view>
+    <view class="uvue-form-item__content">
+      <slot v-if="$slots[$attrs.prop as string]" :name="$attrs.prop"></slot>
 
-    <!-- #ifndef MP -->
-    <view v-else-if="$attrs.component" class="uvue-form-item__content">
-      <component :is="$attrs.component" v-bind="$attrs" :dic="dic"></component>
-    </view>
-    <!-- #endif -->
+      <!-- #ifndef MP -->
+      <component :is="$attrs.component" v-else-if="$attrs.component" v-bind="$attrs" :dic="dic"></component>
+      <!-- #endif -->
 
-    <!-- 默认的表单项 -->
-    <view v-else class="uvue-form-item__content">
-      <u-input
-        v-if="inputTypes.includes($attrs.type as string)"
-        v-bind="$attrs"
-        @update:modelValue="$emit('update:modelValue', $event)"
-      ></u-input>
+      <!-- 默认的表单项 -->
+      <template v-else>
+        <u-input
+          v-if="inputTypes.includes($attrs.type as string)"
+          v-bind="$attrs"
+          @update:modelValue="$emit('update:modelValue', $event)"
+        ></u-input>
 
-      <uvue-datetime-picker
-        v-if="pickerTypes.includes($attrs.type as string)"
-        v-bind="$attrs"
-        @update:modelValue="$emit('update:modelValue', $event)"
-      ></uvue-datetime-picker>
+        <uvue-datetime-picker
+          v-if="pickerTypes.includes($attrs.type as string)"
+          v-bind="$attrs"
+          @update:modelValue="$emit('update:modelValue', $event)"
+        ></uvue-datetime-picker>
 
-      <uvue-dict
-        v-if="dicTypes.includes($attrs.type as string)"
-        v-bind="$attrs"
-        @update:modelValue="$emit('update:modelValue', $event)"
-      ></uvue-dict>
+        <uvue-dict
+          v-if="dicTypes.includes($attrs.type as string)"
+          v-bind="$attrs"
+          @update:modelValue="$emit('update:modelValue', $event)"
+        ></uvue-dict>
 
-      <u-textarea
-        v-if="$attrs.type === 'textarea'"
-        v-bind="$attrs"
-        @update:modelValue="$emit('update:modelValue', $event)"
-      ></u-textarea>
-
-      <uvue-dynamic
-        v-if="$attrs.type === 'dynamic'"
-        v-bind="$attrs"
-        @add="$emit('dynamic-add')"
-        @del="$emit('dynamic-del')"
-        @update:modelValue="$emit('update:modelValue', $event)"
-      >
-        <!-- #ifndef MP -->
-        <template v-for="(index, slotName) in $slots" #[slotName]="slotProps">
-          <slot :name="slotName" v-bind="slotProps"></slot>
-        </template>
-        <!-- #endif -->
-      </uvue-dynamic>
+        <u-textarea
+          v-if="$attrs.type === 'textarea'"
+          v-bind="$attrs"
+          @update:modelValue="$emit('update:modelValue', $event)"
+        ></u-textarea>
+      </template>
     </view>
 
     <!-- 表单项的右插槽 -->
@@ -69,15 +53,18 @@ export default { inheritAttrs: false };
 </script>
 
 <script setup lang="ts">
-import { useAttrs } from "vue";
+import { useAttrs, watch } from "vue";
 
 import { useConfig, useDict } from "../../composables";
+
+const emit = defineEmits(["update:dic"]);
 
 const inputTypes = ["input", "text", "password", "number"]; // 显示input组件的类型
 const pickerTypes = ["date", "time", "datetime"]; // 显示picker组件的类型
 const dicTypes = ["select", "cascader", "checkbox", "radio", "switch"]; // 显示picker组件的类型
 
 const dic = useDict(useAttrs(), useConfig().request);
+watch(dic, val => emit("update:dic", val));
 </script>
 
 <style lang="scss" scoped>

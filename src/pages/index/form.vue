@@ -1,13 +1,22 @@
 <template>
   <view style="padding: 20rpx">
-    <uvue-form v-model="form" :option="formOption" :permission="permission" @submit="onSubmit">
+    <uvue-form
+      v-model="form"
+      v-model:defaults="defaults"
+      :option="formOption"
+      :permission="permission"
+      @submit="onSubmit"
+    >
       <template #slot>
         <view>slot</view>
       </template>
       <template #slot-right>
         <view>slot-right</view>
       </template>
-      <template #column2>
+      <template #column3>
+        <view>dynamicSlot</view>
+      </template>
+      <template #column3-right>
         <view>dynamicSlot</view>
       </template>
     </uvue-form>

@@ -25,9 +25,9 @@ specifiers:
   '@types/lodash-es': ^4.17.6
   '@types/node': ^18.11.3
   '@vue/tsconfig': ^0.1.3
-  '@yusui/eslint-config': latest
-  '@yusui/prettier-config': latest
-  '@yusui/types': latest
+  '@yusui/eslint-config': ^1.4.13
+  '@yusui/prettier-config': ^1.4.13
+  '@yusui/types': ^1.4.13
   conventional-changelog-cli: ^2.2.2
   dayjs: ^1.11.6
   eslint: ^8.25.0
@@ -77,9 +77,9 @@ devDependencies:
   '@types/lodash-es': 4.17.6
   '@types/node': 18.11.3
   '@vue/tsconfig': 0.1.3_@types+node@18.11.3
-  '@yusui/eslint-config': 1.4.12_jgy3n4355e6bfws3px3ickn7ti
-  '@yusui/prettier-config': 1.4.12
-  '@yusui/types': 1.4.12
+  '@yusui/eslint-config': 1.4.13_jgy3n4355e6bfws3px3ickn7ti
+  '@yusui/prettier-config': 1.4.13
+  '@yusui/types': 1.4.13
   conventional-changelog-cli: 2.2.2
   eslint: 8.25.0
   esno: 0.16.3
@@ -1706,8 +1706,8 @@ packages:
       '@types/node': 18.11.3
     dev: true
 
-  /@yusui/eslint-config/1.4.12_jgy3n4355e6bfws3px3ickn7ti:
-    resolution: {integrity: sha512-CF9WipZSd2Ff1eog1GDoDbrW66EHmhrLs9nY5TErKSZvXR7FtzXZyvQ6cmNO4geu2uaRGQDGhSAX+RiJ1nvsKg==}
+  /@yusui/eslint-config/1.4.13_jgy3n4355e6bfws3px3ickn7ti:
+    resolution: {integrity: sha512-G8HGS2rmEZEvEsvg2gVlWUpSUfOyE6qBE+K3fMACe7vCVGOvQnO9If00zlsO/0kpuh2Jvt4bZEYAOIhorPBevQ==}
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.40.1_ukgdydjtebaxmxfqp5v5ulh64y
       '@typescript-eslint/parser': 5.40.1_z4bbprzjrhnsfa24uvmcbu7f5q
@@ -1724,12 +1724,12 @@ packages:
       - typescript
     dev: true
 
-  /@yusui/prettier-config/1.4.12:
-    resolution: {integrity: sha512-886RFBBfgMCBG0k+PmLF50eIiM6b8J4dqmhQ4UCOpClSIz9mDYR76LGf7gpRvp4gG6asnCVfH99QpFTpE8laMA==}
+  /@yusui/prettier-config/1.4.13:
+    resolution: {integrity: sha512-IXkv8ddq1u2OTzZKnynw2GO0uQN5wdazlMoBemq7v8VYYAjb6RwE2BWmM/QMKI/HAWlLUg3LT5+CAvUxxsbY1A==}
     dev: true
 
-  /@yusui/types/1.4.12:
-    resolution: {integrity: sha512-Xqq3cUPohV74LAdRWYJYaV2Y9+dL6JhUN73XKa3R0fS0ymXU7WUrp2RzRkCl/svlbpSyZ3bFhPVG2B3fFCHioQ==}
+  /@yusui/types/1.4.13:
+    resolution: {integrity: sha512-jqONdWBNvT3/esxPldW8fvLcuSIgM54OPsEE4ejnrfaFC2JfuqbR84rRDYTA6k+10+38YmifVl+7H3euEmJm+w==}
     dependencies:
       async-validator: 4.2.5
     dev: true

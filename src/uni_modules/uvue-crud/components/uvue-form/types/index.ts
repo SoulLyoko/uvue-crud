@@ -20,7 +20,13 @@ export interface UvueFormColumn<T = any> extends AvueFormColumn<T> {
   leftIcon?: string;
   leftIconStyle?: string | object;
   required?: boolean;
-  children?: { addBtn?: boolean; delBtn?: boolean } & UvueFormOption;
+  children?: {
+    addBtn?: boolean;
+    delBtn?: boolean;
+    limit?: number;
+    rowAdd?: (done: (row: any) => void) => void;
+    rowDel?: (row: any, done: () => void) => void;
+  } & UvueFormOption;
 }
 export interface UvueFormGroup<T = any> extends AvueFormGroup<T> {
   column?: UvueFormColumn<T>[];

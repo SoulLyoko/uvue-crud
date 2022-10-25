@@ -8,7 +8,11 @@
       :scrollTop="scrollTop"
       @loadmore="loadData(true)"
       @search-custom="onSearch"
-    ></uvue-list>
+    >
+      <template #value="{}">
+        <view>slot</view>
+      </template>
+    </uvue-list>
   </view>
 </template>
 

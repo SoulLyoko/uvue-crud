@@ -1,57 +1,119 @@
 <template>
   <u-form ref="formRef" class="uvue-form" v-bind="option" :model="modelValue" :rules="rules">
-    <!-- 渲染column -->
+    <!-- 渲染表单项 -->
     <template v-for="(columnItem, columnIndex) in option.column" :key="columnItem.prop || columnIndex">
-      <uvue-form-item
-        v-if="columnItem.display && $slots[columnItem.prop as string]"
+      <u-form-item
+        v-if="columnItem.display"
+        class="uvue-form-item"
         v-bind="columnItem"
-        v-model="vModel[columnItem.prop!]"
+        :label="columnItem.type === 'dynamic' ? '' : columnItem.label"
       >
-        <template #[getSlotName(columnItem)]>
-          <slot :name="getSlotName(columnItem)"></slot>
-        </template>
-        <template #[getSlotName(columnItem,true)]>
-          <slot :name="getSlotName(columnItem, true)"></slot>
-        </template>
-      </uvue-form-item>
-      <uvue-form-item
-        v-else-if="columnItem.display"
-        v-bind="columnItem"
-        v-model="vModel[columnItem.prop!]"
-      ></uvue-form-item>
+        <view class="uvue-form-item__content">
+          <!-- 插槽 -->
+          <slot v-if="$slots[columnItem.prop!]" :name="columnItem.prop"></slot>
+          <!-- 子表单 -->
+          <uvue-dynamic
+            v-else-if="columnItem.type === 'dynamic'"
+            v-bind="columnItem"
+            v-model="vModel[columnItem.prop!]"
+            @add="initCollapse"
+            @del="initCollapse"
+          >
+            <template #default="{ dataIndex }">
+              <template
+                v-for="(childColumnItem, childColumnIndex) in columnItem.children?.column"
+                :key="childColumnItem.prop || childColumnIndex"
+              >
+                <u-form-item
+                  v-if="childColumnItem.display"
+                  class="uvue-form-item"
+                  v-bind="childColumnItem"
+                  :prop="`${columnItem.prop}.${dataIndex}.${childColumnItem.prop}`"
+                >
+                  <slot v-if="$slots[childColumnItem.prop!]" :name="childColumnItem.prop"></slot>
+                  <form-item-default
+                    v-else
+                    v-bind="childColumnItem"
+                    v-model="vModel[columnItem.prop!][dataIndex][childColumnItem.prop!]"
+                  ></form-item-default>
+                  <template #right>
+                    <slot :name="childColumnItem.prop + '-right'"></slot>
+                  </template>
+                </u-form-item>
+              </template>
+            </template>
+          </uvue-dynamic>
+          <!-- 默认 -->
+          <form-item-default v-else v-bind="columnItem" v-model="vModel[columnItem.prop!]"></form-item-default>
+          <template #right>
+            <slot :name="columnItem.prop + '-right'"></slot>
+          </template>
+        </view>
+      </u-form-item>
     </template>
 
-    <!-- 渲染group isTabs=true -->
+    <!-- 渲染分组表单项 isTabs -->
     <template v-if="option.group?.length && option.tabs">
       <u-tabs :list="option.group" :current="currentTab" keyName="label" @change="currentTab = $event.index"></u-tabs>
+      <!-- 自定义分组表单项 isTabs -->
       <template v-for="(groupItem, groupIndex) in option.group" :key="groupItem.prop || groupIndex">
         <template v-if="groupItem.display">
           <template v-for="(columnItem, columnIndex) in groupItem.column" :key="columnItem.prop || columnIndex">
-            <uvue-form-item
-              v-if="columnItem.display && $slots[columnItem.prop as string]"
+            <u-form-item
+              v-if="columnItem.display"
+              class="uvue-form-item"
               v-bind="columnItem"
-              v-model="vModel[columnItem.prop!]"
+              :label="columnItem.type === 'dynamic' ? '' : columnItem.label"
               :style="groupIndex === currentTab ? '' : 'display:none'"
             >
-              <template #[getSlotName(columnItem)]>
-                <slot :name="columnItem.prop"></slot>
-              </template>
-              <template #[getSlotName(columnItem,true)]>
-                <slot :name="getSlotName(columnItem, true)"></slot>
-              </template>
-            </uvue-form-item>
-            <uvue-form-item
-              v-else-if="columnItem.display"
-              v-bind="columnItem"
-              v-model="vModel[columnItem.prop!]"
-              :style="groupIndex === currentTab ? '' : 'display:none'"
-            ></uvue-form-item>
+              <view class="uvue-form-item__content">
+                <!-- 插槽 -->
+                <slot v-if="$slots[columnItem.prop!]" :name="columnItem.prop"></slot>
+                <!-- 子表单 -->
+                <uvue-dynamic
+                  v-else-if="columnItem.type === 'dynamic'"
+                  v-bind="columnItem"
+                  v-model="vModel[columnItem.prop!]"
+                  @add="initCollapse"
+                  @del="initCollapse"
+                >
+                  <template #default="{ dataIndex }">
+                    <template
+                      v-for="(childColumnItem, childColumnIndex) in columnItem.children?.column"
+                      :key="childColumnItem.prop || childColumnIndex"
+                    >
+                      <u-form-item
+                        v-if="childColumnItem.display"
+                        class="uvue-form-item"
+                        v-bind="childColumnItem"
+                        :prop="`${columnItem.prop}.${dataIndex}.${childColumnItem.prop}`"
+                      >
+                        <slot v-if="$slots[childColumnItem.prop!]" :name="childColumnItem.prop"></slot>
+                        <form-item-default
+                          v-else
+                          v-bind="childColumnItem"
+                          v-model="vModel[columnItem.prop!][dataIndex][childColumnItem.prop!]"
+                        ></form-item-default>
+                        <template #right>
+                          <slot :name="childColumnItem.prop + '-right'"></slot>
+                        </template>
+                      </u-form-item>
+                    </template>
+                  </template>
+                </uvue-dynamic>
+                <!-- 默认 -->
+                <form-item-default v-else v-bind="columnItem" v-model="vModel[columnItem.prop!]"></form-item-default>
+                <template #right>
+                  <slot :name="columnItem.prop + '-right'"></slot>
+                </template>
+              </view>
+            </u-form-item>
           </template>
         </template>
       </template>
     </template>
 
-    <!-- 渲染group isTabs=false -->
+    <!-- 渲染分组表单项 -->
     <u-collapse v-if="option.group?.length && !option.tabs" ref="collapseRef" :value="defaultCollapse">
       <template v-for="(groupItem, groupIndex) in option.group" :key="groupItem.prop || groupIndex">
         <u-collapse-item
@@ -63,30 +125,60 @@
           label=""
         >
           <template v-for="(columnItem, columnIndex) in groupItem.column" :key="columnItem.prop || columnIndex">
-            <uvue-form-item
-              v-if="columnItem.display && $slots[columnItem.prop as string]"
+            <u-form-item
+              v-if="columnItem.display"
+              class="uvue-form-item"
               v-bind="columnItem"
-              v-model="vModel[columnItem.prop!]"
-              @dynamic-add="initCollapse"
-              @dynamic-del="initCollapse"
+              :label="columnItem.type === 'dynamic' ? '' : columnItem.label"
             >
-              <template #[getSlotName(columnItem)]>
-                <slot :name="columnItem.prop"></slot>
-              </template>
-              <template #[getSlotName(columnItem,true)]>
-                <slot :name="getSlotName(columnItem, true)"></slot>
-              </template>
-            </uvue-form-item>
-            <uvue-form-item
-              v-else-if="columnItem.display"
-              v-bind="columnItem"
-              v-model="vModel[columnItem.prop!]"
-            ></uvue-form-item>
+              <view class="uvue-form-item__content">
+                <!-- 插槽 -->
+                <slot v-if="$slots[columnItem.prop!]" :name="columnItem.prop"></slot>
+                <!-- 子表单 -->
+                <uvue-dynamic
+                  v-else-if="columnItem.type === 'dynamic'"
+                  v-bind="columnItem"
+                  v-model="vModel[columnItem.prop!]"
+                  @add="initCollapse"
+                  @del="initCollapse"
+                >
+                  <template #default="{ dataIndex }">
+                    <template
+                      v-for="(childColumnItem, childColumnIndex) in columnItem.children?.column"
+                      :key="childColumnItem.prop || childColumnIndex"
+                    >
+                      <u-form-item
+                        v-if="childColumnItem.display"
+                        class="uvue-form-item"
+                        v-bind="childColumnItem"
+                        :prop="`${columnItem.prop}.${dataIndex}.${childColumnItem.prop}`"
+                      >
+                        <slot v-if="$slots[childColumnItem.prop!]" :name="childColumnItem.prop"></slot>
+                        <form-item-default
+                          v-else
+                          v-bind="childColumnItem"
+                          v-model="vModel[columnItem.prop!][dataIndex][childColumnItem.prop!]"
+                        ></form-item-default>
+                        <template #right>
+                          <slot :name="childColumnItem.prop + '-right'"></slot>
+                        </template>
+                      </u-form-item>
+                    </template>
+                  </template>
+                </uvue-dynamic>
+                <!-- 默认 -->
+                <form-item-default v-else v-bind="columnItem" v-model="vModel[columnItem.prop!]"></form-item-default>
+                <template #right>
+                  <slot :name="columnItem.prop + '-right'"></slot>
+                </template>
+              </view>
+            </u-form-item>
           </template>
         </u-collapse-item>
       </template>
     </u-collapse>
 
+    <!-- 按钮 -->
     <u-button
       v-if="option.submitBtn && formType !== 'view'"
       class="uvue-form__submit"
@@ -113,10 +205,11 @@ export default { inheritAttrs: false };
 </script>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 
 import { formProps, formEmits } from "./constants";
 import { useOption, useRules, useMethods } from "./composables";
+import FormItemDefault from "./components/form-item-default.vue";
 
 const props = defineProps(formProps);
 const emit = defineEmits(formEmits);
@@ -146,10 +239,21 @@ async function onSubmit() {
 }
 
 const collapseRef = ref();
-function initCollapse() {
+async function initCollapse() {
+  await nextTick();
+  await nextTick();
   collapseRef.value?.init();
 }
-function getSlotName(columnItem: any, right = false) {
-  return columnItem.prop + (right ? "-right" : "");
-}
 </script>
+
+<style lang="scss" scoped>
+.uvue-form {
+  width: 100%;
+  .uvue-form-item {
+    width: 100%;
+    &__content {
+      width: 100%;
+    }
+  }
+}
+</style>
