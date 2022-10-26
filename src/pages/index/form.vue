@@ -1,7 +1,8 @@
 <template>
   <view style="padding: 20rpx">
+    <view>{{ formConsole }}</view>
     <uvue-form
-      v-model="form"
+      v-model="formData"
       v-model:defaults="defaults"
       :option="formOption"
       :permission="permission"
@@ -17,7 +18,7 @@
         <view>dynamicSlot</view>
       </template>
       <template #column3-right>
-        <view>dynamicSlot</view>
+        <view>dynamicSlotRight</view>
       </template>
     </uvue-form>
   </view>
@@ -27,15 +28,19 @@
 import { ref, computed, watch } from "vue";
 
 import { formOption } from "./option";
-const form = ref<any>({ isTabs: true, input: "", switch: "" });
+const formData = ref<any>({ isTabs: true, input: "", switch: "" });
 const defaults = ref<any>({});
 
+const formConsole = computed(() => {
+  return JSON.stringify(formData.value);
+});
+
 const permission = computed(() => ({
-  tabs: form.value.isTabs
+  tabs: formData.value.isTabs
 }));
 
 watch(
-  () => form.value.radio,
+  () => formData.value.radio,
   val => {
     defaults.value.datetime.type = val;
     defaults.value.datetime.label = val;
@@ -45,6 +50,11 @@ watch(
 function onSubmit(form: any, loading: () => void) {
   console.log("🚀 ~ file: index.vue ~ line 58 ~ onSubmit ~ form", form);
   loading();
+  uni.showToast({
+    title: JSON.stringify(form),
+    icon: "none",
+    duration: 2000
+  });
 }
 </script>
 
