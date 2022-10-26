@@ -11,8 +11,8 @@
     "uvue-crud"
   ],
   "dependencies": {
-    "dayjs": "^1.11.5",
-    "uview-plus": "^3.1.15"
+    "dayjs": "^1.11.6",
+    "uview-plus": "^3.1.16"
   },
   "devDependencies": {
     "@yusui/types": "*"
