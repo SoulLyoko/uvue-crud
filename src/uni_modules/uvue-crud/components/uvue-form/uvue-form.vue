@@ -191,24 +191,14 @@
     </u-collapse>
 
     <!-- 按钮 -->
-    <u-button
-      v-if="option.submitBtn && formType !== 'view'"
-      class="uvue-form__submit"
-      type="primary"
-      :loading="submitLoading"
-      @click="onSubmit"
-    >
-      {{ option.submitText }}
-    </u-button>
-    <u-button
-      v-if="option.emptyBtn && formType !== 'view'"
-      class="uvue-form__empty"
-      type="default"
-      :loading="submitLoading"
-      @click="resetFields"
-    >
-      {{ option.emptyText }}
-    </u-button>
+    <view v-if="option.menuBtn && formType !== 'view'" class="uvue-form-menu">
+      <u-button v-if="option.submitBtn" type="primary" :loading="submitLoading" @click="onSubmit">
+        {{ option.submitText }}
+      </u-button>
+      <u-button v-if="option.emptyBtn" type="default" :loading="submitLoading" @click="resetFields">
+        {{ option.emptyText }}
+      </u-button>
+    </view>
   </u-form>
 </template>
 
