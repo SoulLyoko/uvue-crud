@@ -1,11 +1,11 @@
 import type { Ref } from "vue";
 import type { UvueFormOption } from "../types";
 
-import { computed, watch } from "vue";
+import { computed, watch, unref } from "vue";
 
 import { flatGroupColumn } from "./option";
 
-export function useRules(option: Ref<UvueFormOption>, form: Ref<any>, formRef: any) {
+export function useRules(option: Ref<UvueFormOption>, form: any, formRef: Ref<any>) {
   const rules = computed(() => {
     const allColumn = flatGroupColumn(option.value);
     const allColumnRules = allColumn.map(col => [col.prop, col.rules || []]);
@@ -13,12 +13,12 @@ export function useRules(option: Ref<UvueFormOption>, form: Ref<any>, formRef: a
     const dynamicColumn = allColumn.filter(e => e.type == "dynamic");
     const dynamicColumnRules = dynamicColumn
       .map(dcol => {
-        if (!Array.isArray(form.value?.[dcol.prop!])) return [];
+        if (!Array.isArray(unref(form)?.[dcol.prop!])) return [];
         return (
-          form.value?.[dcol.prop!]?.map((item: any, index: number) => {
+          unref(form)?.[dcol.prop!]?.map((item: any, index: number) => {
             return (
               dcol.children?.column?.map((col: any) => {
-                return [`${dcol.prop as string}.${index}.${col.prop}`, col.rules || []];
+                return [`${dcol.prop}.${index}.${col.prop}`, col.rules || []];
               }) ?? []
             );
           }) ?? []

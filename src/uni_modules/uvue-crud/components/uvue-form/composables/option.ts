@@ -4,6 +4,7 @@ import type { UvueFormOption, UvueFormColumn, UvueFormGroup, UvueFormProps, Uvue
 import { computed, ref } from "vue";
 
 export const defaultFormOption: UvueFormOption = {
+  menuBtn: true, // 是否显示按钮
   submitBtn: true, // 是否显示提交按钮
   submitText: "提交", // 提交按钮文字
   emptyBtn: true, // 是否显示清空按钮
@@ -90,18 +91,24 @@ export function flatGroupColumn({ column, group }: Pick<UvueFormOption, "group" 
 }
 
 export function useOption(props: UvueFormProps, emit: UvueFormEmitFn) {
+  const defaultValues = ref({});
   const option = computed<UvueFormOption>(() => {
-    return {
+    console.log("computedcomputedcomputed");
+    const result = {
       ...defaultFormOption,
       ...props.option,
       ...props.permission,
       column: handleColumn(props.option.column, props.formType!),
       group: handleGroup(props.option.group, props.formType!)
     };
-  });
 
-  const defaults = Object.fromEntries(flatGroupColumn(option.value).map(col => [col.prop, col]));
-  emit("update:defaults", defaults);
+    const allColumns = flatGroupColumn(result);
+    const defaults = Object.fromEntries(allColumns.map(col => [col.prop, col]));
+    emit("update:defaults", defaults);
+    defaultValues.value = Object.fromEntries(allColumns.filter(e => "value" in e).map(col => [col.prop, col.value]));
+
+    return result;
+  });
 
   const defaultCollapse = computed(() => {
     return option.value.group?.filter(g => g.collapse).map(g => g.prop);
@@ -112,5 +119,5 @@ export function useOption(props: UvueFormProps, emit: UvueFormEmitFn) {
     return option.value.group?.[currentTab.value] ?? [];
   });
 
-  return { option, defaultCollapse, currentTab, currentGroup };
+  return { option, defaultCollapse, currentTab, currentGroup, defaultValues };
 }

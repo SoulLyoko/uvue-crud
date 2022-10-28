@@ -59,7 +59,7 @@ const group = [
           limit: 3,
           column: [
             { label: "column1", prop: "column1", rules: [{ required: true, message: "请输入" }] },
-            { label: "column2", prop: "column2" },
+            { label: "column2", prop: "column2", value: "column2" },
             { label: "column3", prop: "column3" }
           ]
         }
@@ -69,7 +69,7 @@ const group = [
 ];
 
 // const column = group.map(g => g.column).flat();
-const column = [{ label: "isTabs", prop: "isTabs", type: "switch" }];
+const column = [{ label: "isTabs", prop: "isTabs", type: "switch", value: true }];
 
 export const formOption = {
   labelWidth: 70,

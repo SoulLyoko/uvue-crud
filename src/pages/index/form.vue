@@ -2,9 +2,10 @@
   <view style="padding: 20rpx">
     <view>{{ formConsole }}</view>
     <uvue-form
+      ref="formRef"
       v-model="formData"
       v-model:defaults="defaults"
-      :option="formOption"
+      :option="option"
       :permission="permission"
       @submit="onSubmit"
     >
@@ -28,7 +29,13 @@
 import { ref, computed, watch } from "vue";
 
 import { formOption } from "./option";
-const formData = ref<any>({ isTabs: true, input: "", switch: "" });
+
+const option = ref({});
+setTimeout(() => {
+  option.value = formOption;
+}, 1000);
+
+const formData = ref<any>({});
 const defaults = ref<any>({});
 
 const formConsole = computed(() => {

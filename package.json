@@ -52,6 +52,7 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3060720221018006",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3060720221018006",
     "@dcloudio/uni-ui": "^1.4.23",
+    "@vueuse/core": "^9.4.0",
     "dayjs": "^1.11.6",
     "uview-plus": "^3.1.16",
     "vue": "^3.2.41",

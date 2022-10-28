@@ -42,7 +42,6 @@ function onShow() {
   show.value = true;
 }
 function onConfirm({ value, mode }: { value: number; mode: "date" | "time" | "datetime" }) {
-  console.log("🚀 ~ file: uvue-datetime-picker.vue ~ line 46 ~ onConfirm ~ value", value);
   const f = attrs.valueFormat || formatMap[mode];
   const d = dayjs(value).format(f as string);
   emit("update:modelValue", d);

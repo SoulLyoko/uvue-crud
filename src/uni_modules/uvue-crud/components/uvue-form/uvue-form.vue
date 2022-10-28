@@ -1,5 +1,5 @@
 <template>
-  <u-form ref="formRef" class="uvue-form" v-bind="option" :model="vModel" :rules="rules">
+  <u-form ref="formRef" class="uvue-form" v-bind="option" :model="{ $model: '', ...vModel }" :rules="rules">
     <!-- 渲染表单项 -->
     <template v-for="(columnItem, columnIndex) in option.column" :key="columnItem.prop || columnIndex">
       <u-form-item
@@ -205,6 +205,7 @@
 <script setup lang="ts">
 import { nextTick, ref, watch } from "vue";
 
+import { useVModel } from "../../composables";
 import { formProps, formEmits } from "./constants";
 import { useOption, useRules, useMethods } from "./composables";
 import FormItemDefault from "./components/form-item-default.vue";
@@ -212,17 +213,13 @@ import FormItemDefault from "./components/form-item-default.vue";
 const props = defineProps(formProps);
 const emit = defineEmits(formEmits);
 
-const vModel = ref<any>({});
-watch(
-  () => props.modelValue,
-  val => (vModel.value = val),
-  { immediate: true, deep: true }
-);
-watch(vModel, val => emit("update:modelValue", val), { deep: true });
+const vModel = useVModel(props, "modelValue", emit, { deep: true });
+const { option, defaultCollapse, currentTab, defaultValues } = useOption(props, emit);
+watch(defaultValues, () => {
+  vModel.value = Object.assign(vModel.value, { ...defaultValues.value, ...vModel.value });
+});
 
 const formRef = ref();
-
-const { option, defaultCollapse, currentTab } = useOption(props, emit);
 const rules = useRules(option, vModel, formRef);
 const methods = useMethods(formRef);
 const { validate, resetFields } = methods;

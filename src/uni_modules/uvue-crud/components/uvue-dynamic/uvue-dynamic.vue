@@ -34,7 +34,7 @@
 import type { PropType } from "vue";
 import type { UvueFormColumn } from "../uvue-form";
 
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 
 const props = defineProps({
   modelValue: { type: Array, default: () => [] },
@@ -55,6 +55,16 @@ watch(
 );
 watch(vModel, val => emit("update:modelValue", val), { deep: true });
 
+const defaultValues = computed(() => {
+  const values: any = {};
+  props.children.column?.forEach(e => {
+    if ("value" in e) {
+      values[e.prop!] = e.value;
+    }
+  });
+  return values;
+});
+
 function addItem() {
   const done = (row: any) => {
     vModel.value.push(row);
@@ -66,7 +76,7 @@ function addItem() {
   if (typeof props.children?.rowAdd === "function") {
     props.children.rowAdd(done);
   } else {
-    done({});
+    done(defaultValues.value);
   }
 }
 function delItem(index: number) {
