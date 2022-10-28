@@ -8,10 +8,11 @@
     @tap="onShow"
   ></u-input>
   <u-datetime-picker
-    closeOnClickOverlay
     v-bind="$attrs"
+    :modelValue="defaultValue"
     :show="show"
     :mode="$attrs.type"
+    closeOnClickOverlay
     @confirm="onConfirm"
     @cancel="show = false"
     @close="show = false"
@@ -21,13 +22,15 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
 
-import { ref, useAttrs } from "vue";
+import { ref, useAttrs, computed } from "vue";
 import dayjs from "dayjs";
 
-defineProps({
-  modelValue: { type: [String, Number, Array] as PropType<string | number | string[] | number[]> }
+const props = defineProps({
+  modelValue: { type: [String, Number] as PropType<string | number> }
 });
 const emit = defineEmits(["update:modelValue"]);
+
+const defaultValue = computed(() => props.modelValue || Date.now());
 
 const formatMap = {
   date: "YYYY-MM-DD",
