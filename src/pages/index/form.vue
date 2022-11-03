@@ -51,6 +51,13 @@ watch(
   val => {
     defaults.value.datetime.type = val;
     defaults.value.datetime.label = val;
+    defaults.value.input.display = false;
+  }
+);
+watch(
+  () => formData.value.switch,
+  val => {
+    defaults.value.input.display = val !== "2";
   }
 );
 

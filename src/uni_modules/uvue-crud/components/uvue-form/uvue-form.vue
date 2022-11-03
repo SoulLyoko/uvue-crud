@@ -214,13 +214,13 @@ const props = defineProps(formProps);
 const emit = defineEmits(formEmits);
 
 const vModel = useVModel(props, "modelValue", emit, { deep: true });
-const { option, defaultCollapse, currentTab, defaultValues } = useOption(props, emit);
+const { option, defaults, defaultCollapse, currentTab, defaultValues } = useOption(props, emit);
 watch(defaultValues, () => {
   vModel.value = Object.assign(vModel.value, { ...defaultValues.value, ...vModel.value });
 });
 
 const formRef = ref();
-const rules = useRules(option, vModel, formRef);
+const rules = useRules(option, defaults, vModel, formRef);
 const methods = useMethods(formRef);
 const { validate, resetFields } = methods;
 defineExpose(methods);

@@ -1,5 +1,12 @@
 import type { FormType } from "@smallwei/avue";
-import type { UvueFormOption, UvueFormColumn, UvueFormGroup, UvueFormProps, UvueFormEmitFn } from "../types";
+import type {
+  UvueFormOption,
+  UvueFormColumn,
+  UvueFormGroup,
+  UvueFormProps,
+  UvueFormEmitFn,
+  UvueFormDefaults
+} from "../types";
 
 import { computed, ref } from "vue";
 
@@ -92,8 +99,8 @@ export function flatGroupColumn({ column, group }: Pick<UvueFormOption, "group" 
 
 export function useOption(props: UvueFormProps, emit: UvueFormEmitFn) {
   const defaultValues = ref({});
+  const defaults = ref<UvueFormDefaults>({});
   const option = computed<UvueFormOption>(() => {
-    console.log("computedcomputedcomputed");
     const result = {
       ...defaultFormOption,
       ...props.option,
@@ -103,8 +110,8 @@ export function useOption(props: UvueFormProps, emit: UvueFormEmitFn) {
     };
 
     const allColumns = flatGroupColumn(result);
-    const defaults = Object.fromEntries(allColumns.map(col => [col.prop, col]));
-    emit("update:defaults", defaults);
+    defaults.value = Object.fromEntries(allColumns.map(col => [col.prop, col]));
+    emit("update:defaults", defaults.value);
     defaultValues.value = Object.fromEntries(allColumns.filter(e => "value" in e).map(col => [col.prop, col.value]));
 
     return result;
@@ -119,5 +126,5 @@ export function useOption(props: UvueFormProps, emit: UvueFormEmitFn) {
     return option.value.group?.[currentTab.value] ?? [];
   });
 
-  return { option, defaultCollapse, currentTab, currentGroup, defaultValues };
+  return { option, defaultCollapse, currentTab, currentGroup, defaultValues, defaults };
 }
