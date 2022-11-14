@@ -35,7 +35,7 @@ export function useRules(option: Ref<UvueFormOption>, defaults: Ref<any>, form: 
       const allRules = [...allColumnRules, ...dynamicColumnRules];
       rules.value = Object.fromEntries(allRules);
     },
-    { deep: true }
+    { deep: true, immediate: true }
   );
 
   watch(
