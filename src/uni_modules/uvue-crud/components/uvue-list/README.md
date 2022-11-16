@@ -4,120 +4,92 @@
 
 ```html
 <template>
-  <view>
-    <uvue-list :option="option" :data="listData">
-      <template #body="{ row }">
-        <view>{{ row.content }}</view>
-      </template>
-      <template #foot="{ row }">
-        <view>{{ row.footer }}</view>
-      </template>
-    </uvue-list>
-  </view>
+  <uvue-list :option="option" :data="data" @item-click="onItemClick"></uvue-list>
 </template>
 
-<script>
-  export default {
-    data() {
+<script setup>
+  const option = {
+    rowKey: "id",
+    formatter(row) {
       return {
-        option: {
-          formPath: "/pages/form/form"
-        },
-        data: [
-          {
-            title: "title1",
-            subTitle: new Date().toLocaleDateString(),
-            content: "content1",
-            footer: "footer1"
-          },
-          {
-            title: "title2",
-            subTitle: new Date().toLocaleDateString(),
-            content: "content2",
-            footer: "footer2"
-          }
-        ]
+        title: row.title,
+        label: row.bar,
+        value: row.foo
       };
     }
   };
+  const data = [
+    {
+      id: "1",
+      title: "title1",
+      bar: "bar1",
+      foo: "foo1"
+    },
+    {
+      id: "2",
+      title: "title2",
+      bar: "bar2",
+      foo: "foo2"
+    }
+  ];
+  function onItemClick(row, index) {
+    console.log(row, index);
+  }
 </script>
 ```
 
 ## Props
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-| --- | --- | --- | --- | --- |
-| option | 列表配置，见下方说明 | Object | - | - |
-| search | 搜索栏配置，见下方说明，传入 false 则不显示 | Object/Boolean | - | {} |
-| filter | 过滤器配置，见下方说明，传入 false 则不显示 | Object/Boolean | - | {} |
-| loadmore | 加载更多配置，见下方说明，传入 false 则不显示 | Object/Boolean | - | {} |
-| data | 列表数据，见下方说明 | Array | - | - |
-| searchValue.sync | 搜索栏绑定值 | String/Number/Boolean | - | - |
-| filterForm.sync | 过滤器绑定值 | Object | - | - |
-| status | 加载状态 | String | loadmore / loading / nomore | loadmore |
-| scrollTop | 页面的滚动距离，通过 onPageScroll 生命周期获取，传入该值则表示显示“回到顶部”按钮 | String/Number | - | 0 |
+| 参数                | 说明                                                                                          | 类型   | 可选值                  | 默认值   |
+| ------------------- | --------------------------------------------------------------------------------------------- | ------ | ----------------------- | -------- |
+| data                | 列表数据，`u-cell`的传入属性优先级为`{ ...option.cell, ...(option.formatter?.(row) ?? row) }` | Array  | -                       | []       |
+| option              | 列表配置，见下方说明                                                                          | Object | -                       | {}       |
+| v-model:searchValue | 搜索栏绑定值                                                                                  | String | -                       | -        |
+| status              | 加载状态                                                                                      | String | loadmore/loading/nomore | loadmore |
+| scrollTop           | 页面的滚动距离，通过 onPageScroll 生命周期获取                                                | Number | -                       | 0        |
 
 ## Option
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-| --- | --- | --- | --- | --- |
-| `u-card` 的所有属性 | [官方文档](https://uviewui.com/components/card.html#props) | - | - | - |
-| rowKey | 每条数据的唯一键 | String | - | - |
-| formPath | 跳转到表单页的路径，需要先在 pages.json 注册 | String | - | - |
-| formKeys | 跳转到表单携带的参数，以避免 url 过长，默认是整条数据 | Array | - | [] |
-| sticky | 搜索栏和过滤栏是否吸顶 | Object/Boolean | - | {enable:true } |
-
-## Search
-
-| 参数                  | 说明                                                         | 类型 | 可选值 | 默认值 |
-| --------------------- | ------------------------------------------------------------ | ---- | ------ | ------ |
-| `u-search` 的所有属性 | [官方文档](https://uviewui.com/components/search.html#props) | -    | -      | -      |
-
-## Filter
-
-查看[uvue-filter 文档](https://github.com/SoulLyoko/uvue-crud/blob/master/uvue-crud/components/uvue-filter/README.md)
-
-## Loadmore
-
-| 参数                    | 说明                                                         | 类型 | 可选值 | 默认值 |
-| ----------------------- | ------------------------------------------------------------ | ---- | ------ | ------ |
-| `u-loadmore` 的所有属性 | [官方文档](https://uviewui.com/components/search.html#props) | -    | -      | -      |
-
-## Data
-
-| 参数                     | 说明                                                    | 类型 | 可选值 | 默认值 |
-| ------------------------ | ------------------------------------------------------- | ---- | ------ | ------ |
-| 支持 `u-card` 的所有属性 | 与`u-card` props 属性相同的字段会覆盖为`u-card`上的属性 | -    | -      | -      |
+| 参数      | 说明                                                                                             | 类型                           | 可选值 | 默认值 |
+| --------- | ------------------------------------------------------------------------------------------------ | ------------------------------ | ------ | ------ |
+| rowKey    | 唯一键                                                                                           | string                         | -      | id     |
+| sticky    | 吸顶属性 [文档](https://uiadmin.net/uview-plus/components/sticky.html#props)                     | object                         | -      | {}     |
+| search    | 搜索栏属性，false 不显示 [文档](https://uiadmin.net/uview-plus/components/search.html#props)     | Object/false                   | -      | {}     |
+| empty     | 空内容属性，false 不显示 [文档](https://uiadmin.net/uview-plus/components/empty.html#props)      | Object/false                   | -      | {}     |
+| loadmore  | 加载更多属性，false 不显示 [文档](https://uiadmin.net/uview-plus/components/loadmore.html#props) | Object/false                   | -      | {}     |
+| backTop   | 回到顶部属性，false 不显示 [文档](https://uiadmin.net/uview-plus/components/backTop.html#props)  | Object/false                   | -      | {}     |
+| cellGroup | 单元格组属性 [文档](https://uiadmin.net/uview-plus/components/cell.html#cellgroup-props)         | Object/false                   | -      | {}     |
+| cell      | 单元格属性 [文档](https://uiadmin.net/uview-plus/components/cell.html#cell-props)                | Object/false                   | -      | {}     |
+| formatter | 动态单元格属性                                                                                   | (row:数据项)=>需返回单元格属性 | -      | -      |
 
 ## Events
 
-| 事件名        | 说明                                                                 | 参数                  |
-| ------------- | -------------------------------------------------------------------- | --------------------- |
-| search        | 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发 | value:输入框的值      |
-| loadmore      | 加载状态 status 为 loadmore 时，点击组件会发出此事件                 | -                     |
-| filter-change | 用户选定过滤器中的项时触发                                           | filterForm:过滤器的值 |
-| action-click  | 点击搜索栏的操作按钮时触发                                           | -                     |
-| item-click    | 列表项卡片任意位置被点击时触发                                       | {row,index}           |
-| head-click    | 列表项卡片头部被点击时触发                                           | {row,index}           |
-| body-click    | 列表项卡片主体部分被点击时触发                                       | {row,index}           |
-| foot-click    | 列表项卡片底部部分被点击时触发                                       | {row,index}           |
-
-## Methods
-
-| 方法名 | 说明 | 参数 |
-| --- | --- | --- |
-| rowAdd | 跳转到新增表单页，url：`${formPath}?formType=add&formData=${encodeURIComponent(JSON.Stringify(row))}` | row:默认表单数据 |
-| rowEdit | 跳转到编辑表单页，url：`${formPath}?formType=edit&formData=${encodeURIComponent(JSON.Stringify(row))}` | row:行数据 |
-| rowView | 跳转到查看表单页，url：`${formPath}?formType=view&formData=${encodeURIComponent(JSON.Stringify(row))}` | row:行数据 |
+| 事件名           | 说明                                                                                 | 参数             |
+| ---------------- | ------------------------------------------------------------------------------------ | ---------------- |
+| loadmore         | 加载更多组件事件，加载状态 status 为 loadmore 时，点击组件会发出此事件               | -                |
+| search           | 搜索栏组件事件，用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发 | value:输入框的值 |
+| search-change    | 搜索栏组件事件，输入框内容发生变化时触发                                             | value:输入框的值 |
+| search-custom    | 搜索栏组件事件，用户点击右侧控件时触发                                               | value:输入框的值 |
+| search-blur      | 搜索栏组件事件，输入框失去焦点时触发                                                 | value:输入框的值 |
+| search-focus     | 搜索栏组件事件，输入框获得焦点时触发                                                 | value:输入框的值 |
+| search-clear     | 搜索栏组件事件，配置了 clearabled 后，清空内容时会发出此事件                         | -                |
+| search-click     | 搜索栏组件事件，disabled 为 true 时，点击输入框，发出此事件，用于跳转搜索页          | -                |
+| search-clickIcon | 搜索栏组件事件，左侧 icon 点击时候时触发                                             | -                |
+| item-click       | 列表项单元格点击时触发                                                               | (row,index)      |
 
 ## Slots
 
-| name       | 说明                      | 参数        |
-| ---------- | ------------------------- | ----------- |
-| head       | 列表项卡片头部内容        | {row,index} |
-| body       | 列表项卡片主体内容        | {row,index} |
-| foot       | 列表项卡片底部部分内容    | {row,index} |
-| searchTop  | 搜索栏上方                | -           |
-| filterTop  | 过滤器上方                | -           |
-| listTop    | 列表上方                  | -           |
-| listBottom | 列表下方(loadmore 的下方) | -           |
+| name            | 说明         | 参数        |
+| --------------- | ------------ | ----------- |
+| title           | 单元格插槽   | {row,index} |
+| label           | 单元格插槽   | {row,index} |
+| value           | 单元格插槽   | {row,index} |
+| icon            | 单元格插槽   | {row,index} |
+| right-icon      | 单元格插槽   | {row,index} |
+| search-top      | 搜索栏上方   | -           |
+| search-bottom   | 搜索栏下方   | -           |
+| list-top        | 列表上方     | -           |
+| list-bottom     | 列表下方     | -           |
+| list-item       | 列表项       | {row,index} |
+| loadmore-top    | 加载更多上方 | -           |
+| loadmore-bottom | 加载更多下方 | -           |

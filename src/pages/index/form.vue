@@ -30,10 +30,7 @@ import { ref, computed, watch } from "vue";
 
 import { formOption } from "./option";
 
-const option = ref({});
-setTimeout(() => {
-  option.value = formOption;
-}, 1000);
+const option = ref(formOption);
 
 const formData = ref<any>({});
 const defaults = ref<any>({});

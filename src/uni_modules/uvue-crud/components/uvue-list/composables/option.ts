@@ -9,7 +9,6 @@ export const defaultOption: UvueListOption = {
   empty: {},
   loadmore: {},
   backTop: {},
-  loadingPage: {},
   cellGroup: {},
   cell: {}
 };

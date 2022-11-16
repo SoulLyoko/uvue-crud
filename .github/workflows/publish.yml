@@ -2,7 +2,7 @@ name: NPM Publish
 on:
   push:
     branches:
-      - vue3
+      - main
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -15,4 +15,3 @@ jobs:
         with:
           token: ${{ secrets.NPM_ACCESS_TOKEN }}
           package: ./src/uni_modules/uvue-crud/package.json
-          tag: "next"

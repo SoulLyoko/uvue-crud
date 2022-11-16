@@ -17,12 +17,10 @@ export interface UvueListOption<T = any> {
   loadmore?: object | false;
   /** [返回顶部属性](https://uiadmin.net/uview-plus/components/backTop.html#props) */
   backTop?: object | false;
-  /** [加载页属性](https://uiadmin.net/uview-plus/components/loadingPage.html#props) */
-  loadingPage?: object | false;
   /** [单元格组属性](https://uiadmin.net/uview-plus/components/cell.html#cellgroup-props) */
   cellGroup?: object;
   /** [单元格属性](https://uiadmin.net/uview-plus/components/cell.html#cell-props) */
   cell?: object;
   /** 对列表数据格式化 */
-  formatter?: (row: T) => any;
+  formatter?: (row: T) => object;
 }
