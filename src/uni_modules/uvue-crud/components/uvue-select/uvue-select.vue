@@ -28,7 +28,7 @@ const props = defineProps({
   modelValue: { type: [String, Number, Array] as PropType<string | number | string[] | number[]> },
   dic: { type: Array as PropType<{ label?: string; value?: string }[]>, default: () => [] }
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "change"]);
 
 const selectedLabel = computed(() => {
   return props.dic?.find(e => e.value == props.modelValue)?.label ?? "";
@@ -46,6 +46,7 @@ function onShow() {
 }
 function onConfirm({ value }: any) {
   emit("update:modelValue", value[0]?.value);
+  emit("change", value[0]?.value);
   show.value = false;
 }
 </script>

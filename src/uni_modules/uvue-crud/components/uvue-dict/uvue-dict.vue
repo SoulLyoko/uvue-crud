@@ -4,30 +4,35 @@
     v-bind="$attrs"
     :dic="dic"
     @update:modelValue="$emit('update:modelValue', $event)"
+    @change="$emit('change', $event)"
   ></uvue-select>
   <uvue-cascader
     v-if="type === 'cascader'"
     v-bind="$attrs"
     :dic="dic"
     @update:modelValue="$emit('update:modelValue', $event)"
+    @change="$emit('change', $event)"
   ></uvue-cascader>
   <uvue-checkbox
     v-if="type === 'checkbox'"
     v-bind="$attrs"
     :dic="dic"
     @update:modelValue="$emit('update:modelValue', $event)"
+    @change="$emit('change', $event)"
   ></uvue-checkbox>
   <uvue-radio
     v-if="type === 'radio'"
     v-bind="$attrs"
     :dic="dic"
     @update:modelValue="$emit('update:modelValue', $event)"
+    @change="$emit('change', $event)"
   ></uvue-radio>
   <uvue-switch
     v-if="type === 'switch'"
     v-bind="$attrs"
     :dic="dic"
     @update:modelValue="$emit('update:modelValue', $event)"
+    @change="$emit('change', $event)"
   ></uvue-switch>
 </template>
 

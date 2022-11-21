@@ -28,7 +28,7 @@ import dayjs from "dayjs";
 const props = defineProps({
   modelValue: { type: [String, Number] as PropType<string | number> }
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "change"]);
 
 const defaultValue = computed(() => props.modelValue || Date.now());
 
@@ -48,6 +48,7 @@ function onConfirm({ value, mode }: { value: number; mode: "date" | "time" | "da
   const f = attrs.valueFormat || formatMap[mode];
   const d = dayjs(value).format(f as string);
   emit("update:modelValue", d);
+  emit("change", d);
   show.value = false;
 }
 </script>
