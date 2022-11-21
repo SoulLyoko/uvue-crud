@@ -1,3 +1,12 @@
+## [2.0.1](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.0...v2.0.1) (2022-11-21)
+
+
+### Features
+
+* **uvue-form:** 表单项支持change事件 ([3375198](https://github.com/SoulLyoko/uvue-crud/commit/3375198dd1b665e687c7d539297a6b10258725c1))
+
+
+
 # 2.0.0 (2022-11-16)
 
 
