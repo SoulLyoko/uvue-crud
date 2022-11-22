@@ -1,3 +1,12 @@
+## [2.0.2](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.1...v2.0.2) (2022-11-22)
+
+
+### Bug Fixes
+
+* uvue-list和uvue-form增加padding ([16700fa](https://github.com/SoulLyoko/uvue-crud/commit/16700fa03159aac6c2c9a2a2694c466a358098ba))
+
+
+
 ## [2.0.1](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.0...v2.0.1) (2022-11-21)
 
 
