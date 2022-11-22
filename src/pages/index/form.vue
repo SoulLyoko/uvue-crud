@@ -1,28 +1,26 @@
 <template>
-  <view style="padding: 20rpx">
-    <view>{{ formConsole }}</view>
-    <uvue-form
-      ref="formRef"
-      v-model="formData"
-      v-model:defaults="defaults"
-      :option="option"
-      :permission="permission"
-      @submit="onSubmit"
-    >
-      <template #slot>
-        <view>slot</view>
-      </template>
-      <template #slot-right>
-        <view>slot-right</view>
-      </template>
-      <template #column3>
-        <view>dynamicSlot</view>
-      </template>
-      <template #column3-right>
-        <view>dynamicSlotRight</view>
-      </template>
-    </uvue-form>
-  </view>
+  <view>{{ formConsole }}</view>
+  <uvue-form
+    ref="formRef"
+    v-model="formData"
+    v-model:defaults="defaults"
+    :option="option"
+    :permission="permission"
+    @submit="onSubmit"
+  >
+    <template #slot>
+      <view>slot</view>
+    </template>
+    <template #slot-right>
+      <view>slot-right</view>
+    </template>
+    <template #column3>
+      <view>dynamicSlot</view>
+    </template>
+    <template #column3-right>
+      <view>dynamicSlotRight</view>
+    </template>
+  </uvue-form>
 </template>
 
 <script setup lang="ts">

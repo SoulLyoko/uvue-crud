@@ -97,3 +97,9 @@ function getSlotName(name: string) {
   return slots[name] ? name : "";
 }
 </script>
+
+<style lang="scss" scoped>
+.uvue-list {
+  padding: 20rpx;
+}
+</style>

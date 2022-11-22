@@ -243,7 +243,7 @@ async function initCollapse() {
 
 <style lang="scss" scoped>
 .uvue-form {
-  width: 100%;
+  padding: 20rpx;
   .uvue-form-item {
     width: 100%;
     &__content {

@@ -1,19 +1,17 @@
 <template>
-  <view style="padding: 20rpx">
-    <uvue-list
-      v-model:searchValue="searchValue"
-      :data="data"
-      :option="listOption"
-      :status="status"
-      :scrollTop="scrollTop"
-      @loadmore="loadData(true)"
-      @search-custom="onSearch"
-    >
-      <template #value="{}">
-        <view>slot</view>
-      </template>
-    </uvue-list>
-  </view>
+  <uvue-list
+    v-model:searchValue="searchValue"
+    :data="data"
+    :option="listOption"
+    :status="status"
+    :scrollTop="scrollTop"
+    @loadmore="loadData(true)"
+    @search-custom="onSearch"
+  >
+    <template #value="{}">
+      <view>slot</view>
+    </template>
+  </uvue-list>
 </template>
 
 <script setup lang="ts">
