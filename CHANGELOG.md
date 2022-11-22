@@ -1,3 +1,12 @@
+## [2.0.3](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.2...v2.0.3) (2022-11-22)
+
+
+### Bug Fixes
+
+* uvue-form padding ([22b8625](https://github.com/SoulLyoko/uvue-crud/commit/22b86258c278f913d3f000b33530c00ec4d76c3f))
+
+
+
 ## [2.0.2](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.1...v2.0.2) (2022-11-22)
 
 
