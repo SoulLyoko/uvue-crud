@@ -14,9 +14,9 @@ export interface UseDictOptions {
   };
   dicData?: DicItem[];
   dicUrl?: string;
-  dicQuery?: any;
-  dicHeaders?: any;
-  dicFormat?: (res: any) => DicItem[];
+  dicQuery?: object;
+  dicHeaders?: object;
+  dicFormatter?: (res: any) => DicItem[];
   dicMethod?: "get" | "post";
 }
 
@@ -26,13 +26,13 @@ export function useDict(options: UseDictOptions, request?: Config["request"]) {
   const data = ref<DicItem[]>([]);
 
   watchEffect(() => {
-    const { props = {}, dicData, dicUrl, dicQuery = {}, dicHeaders, dicFormat, dicMethod = "get" } = options;
+    const { props = {}, dicData, dicUrl, dicQuery = {}, dicHeaders, dicFormatter, dicMethod = "get" } = options;
     const {
       label = "label",
       value = "value",
       children = "children",
       disabled = "disabled",
-      res: dataPath = "res.data"
+      res: dataPath = "data"
     } = props;
     if (dicData?.length) data.value = dicData;
     if (dicUrl && request) {
@@ -42,10 +42,10 @@ export function useDict(options: UseDictOptions, request?: Config["request"]) {
         return;
       }
       request[dicMethod](dicUrl, { params: dicQuery, headers: dicHeaders, ...dicQuery }).then((res: any) => {
-        if (dicFormat) {
-          data.value = dicFormat(res);
+        if (dicFormatter) {
+          data.value = dicFormatter(res);
         } else {
-          const d = get({ res }, dataPath, []);
+          const d = get(res, dataPath, []);
           data.value = treeMap(
             d,
             item => {

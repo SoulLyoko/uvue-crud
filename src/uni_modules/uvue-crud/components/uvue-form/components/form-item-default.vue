@@ -45,7 +45,6 @@ const dic = useDict(attrs, useConfig().request);
 watch(dic, val => emit("update:dic", val));
 
 function onChange(value: any) {
-  console.log("🚀 ~ file: form-item-default.vue ~ line 48 ~ onChange ~ value", value);
   attrs.change?.({ value });
 }
 </script>

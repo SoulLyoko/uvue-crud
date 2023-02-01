@@ -204,7 +204,7 @@
         <u-button v-if="option.submitBtn" type="primary" :loading="submitLoading" @click="onSubmit">
           {{ option.submitText }}
         </u-button>
-        <u-button v-if="option.emptyBtn" type="default" :loading="submitLoading" @click="resetFields">
+        <u-button v-if="option.emptyBtn" :loading="submitLoading" @click="resetFields">
           {{ option.emptyText }}
         </u-button>
       </view>

@@ -36,6 +36,14 @@ const group: UvueFormOption["group"] = [
         }
       },
       {
+        label: "number",
+        prop: "number",
+        type: "number",
+        change(e) {
+          console.log("🚀 ~ file: option.ts ~ line 33 ~ input ~ e", e);
+        }
+      },
+      {
         label: "textarea",
         prop: "textarea",
         type: "textarea",
@@ -134,7 +142,7 @@ const group: UvueFormOption["group"] = [
 ];
 
 // const column = group.map(g => g.column).flat();
-const column: UvueFormOption["column"] = [{ label: "isTabs", prop: "isTabs", type: "switch", value: true }];
+const column: UvueFormOption["column"] = [{ label: "isTabs", prop: "isTabs", type: "switch", value: false }];
 
 export const formOption = {
   labelWidth: 70,
