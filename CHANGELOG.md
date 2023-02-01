@@ -1,3 +1,12 @@
+## [2.0.4](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.3...v2.0.4) (2023-02-01)
+
+
+### Bug Fixes
+
+* dicProps ([6230493](https://github.com/SoulLyoko/uvue-crud/commit/6230493c1fe512c2173c16798d5cee52fd351f3b))
+
+
+
 ## [2.0.3](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.2...v2.0.3) (2022-11-22)
 
 
