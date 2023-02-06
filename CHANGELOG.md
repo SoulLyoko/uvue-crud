@@ -1,3 +1,12 @@
+## [2.0.5](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.4...v2.0.5) (2023-02-06)
+
+
+### Features
+
+* **uvue-select:** 支持allowCreate ([5f00fd7](https://github.com/SoulLyoko/uvue-crud/commit/5f00fd7b415e440c5618d48703032c2142bac7e2))
+
+
+
 ## [2.0.4](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.3...v2.0.4) (2023-02-01)
 
 
