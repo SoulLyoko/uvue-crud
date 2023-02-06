@@ -63,6 +63,7 @@ const group: UvueFormOption["group"] = [
         prop: "select",
         type: "select",
         dicUrl: "single",
+        allowCreate: true,
         change(e) {
           console.log("🚀 ~ file: option.ts ~ line 33 ~ select ~ e", e);
         }
