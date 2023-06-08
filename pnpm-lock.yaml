@@ -40,7 +40,7 @@ specifiers:
   prettier: ^2.8.3
   sass: ^1.58.0
   typescript: ^4.9.5
-  uview-plus: ^3.1.26
+  uview-plus: ^3.1.31
   vite: 4.0.3
   vue: ^3.2.45
   vue-i18n: ^9.1.9
@@ -63,7 +63,7 @@ dependencies:
   '@dcloudio/uni-ui': 1.4.26
   '@vueuse/core': 9.12.0_vue@3.2.45
   dayjs: 1.11.7
-  uview-plus: 3.1.26
+  uview-plus: 3.1.31
   vue: 3.2.45
   vue-i18n: 9.2.2_vue@3.2.45
   vuex: 4.1.0_vue@3.2.45
@@ -6170,8 +6170,8 @@ packages:
     hasBin: true
     dev: true
 
-  /uview-plus/3.1.26:
-    resolution: {integrity: sha512-ZbuW02t+CV+cSue9JMsKaDlm7xBhJD5xBJtBoiA3DYhEftOCLAN2eSeuuyBsRdtvqz7bJhghF7d98UkGOyAPoA==}
+  /uview-plus/3.1.31:
+    resolution: {integrity: sha512-fIeD+6lx9urUCQ95A4+LazahufFPaQ9dTx5+ntq1Gqtp+K37Fwv+MaZZUhtVT5R/O7QX/kwRd72kPHSuflPH+Q==}
     engines: {HBuilderX: ^3.1.0}
     dependencies:
       clipboard: 2.0.11
