@@ -1,3 +1,12 @@
+## [2.0.6](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.5...v2.0.6) (2023-06-08)
+
+
+### Bug Fixes
+
+* 从vueuse同步v-model ([debfdb3](https://github.com/SoulLyoko/uvue-crud/commit/debfdb3e2fd83d40941dff9c765600181d73c97b))
+
+
+
 ## [2.0.5](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.4...v2.0.5) (2023-02-06)
 
 
