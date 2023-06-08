@@ -1,3 +1,12 @@
+## [2.0.8](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.7...v2.0.8) (2023-06-08)
+
+
+### Bug Fixes
+
+* 替换为vueuse的useVModel ([2fc1ea6](https://github.com/SoulLyoko/uvue-crud/commit/2fc1ea64726cd6021b343c0a1de440d157853bc8))
+
+
+
 ## [2.0.7](https://github.com/SoulLyoko/uvue-crud/compare/v2.0.6...v2.0.7) (2023-06-08)
 
 

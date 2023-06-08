@@ -1,6 +1,6 @@
 {
   "name": "uvue-crud",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "scripts": {
     "dev": "uni",
     "dev:app": "uni -p app",
