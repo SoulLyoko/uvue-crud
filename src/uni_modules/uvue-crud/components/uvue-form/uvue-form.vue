@@ -214,8 +214,8 @@
 
 <script setup lang="ts">
 import { nextTick, ref, watch } from "vue";
+import { useVModel } from "@vueuse/core";
 
-import { useVModel } from "../../composables";
 import { formProps, formEmits } from "./constants";
 import { useOption, useRules, useMethods } from "./composables";
 import FormItemDefault from "./components/form-item-default.vue";

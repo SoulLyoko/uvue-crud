@@ -11,10 +11,12 @@
     "uvue-crud"
   ],
   "dependencies": {
-    "dayjs": "^1.11.7",
-    "uview-plus": "^3.1.26"
+    "dayjs": "^1.11.8",
+    "uview-plus": "^3.1.31",
+    "@vueuse/core": "^10.1.2"
   },
   "devDependencies": {
-    "@yusui/types": "*"
+    "@yusui/types": "*",
+    "vue": "^3.3.4"
   }
 }

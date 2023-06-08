@@ -1,6 +1,6 @@
 import type { UvueListProps, UvueListEmitFn } from "../types";
 
-import { useVModel } from "../../../composables";
+import { useVModel } from "@vueuse/core";
 
 export function useSearch(props: UvueListProps, emit: UvueListEmitFn) {
   const searchValue = useVModel(props, "searchValue");

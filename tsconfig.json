@@ -1,9 +1,8 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.json",
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
+    "moduleResolution": "Node",
     "baseUrl": ".",
-    "allowJs": true,
-    "lib": ["esnext", "dom"],
     "paths": {
       "@/*": ["src/*"]
     },
